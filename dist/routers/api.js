@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Router = require("koa-router");
+const devices_1 = require("./api/devices");
+const events_1 = require("./api/events");
 const apiRouter = new Router({
     prefix: '/api/v1',
 });
@@ -17,4 +19,9 @@ apiRouter.get('/', (ctx, next) => __awaiter(void 0, void 0, void 0, function* ()
     ctx.body = { version: 'v1', status: 'current version' };
     yield next();
 }));
+// Devices
+apiRouter.use('/devices', devices_1.default);
+// Events
+apiRouter.use('/events', events_1.default);
+// Export
 exports.default = apiRouter;
