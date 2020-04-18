@@ -1,4 +1,4 @@
-export default class TodoService {
+export default class ListService {
   readonly defaultPage = 1;
 
   readonly defaultItemsPerPage = 24;
@@ -12,15 +12,12 @@ export default class TodoService {
   async call() {
     const body = {
       devices: [],
-      time: Date.now(),
       page: this.page,
       itemsPerPage: this.defaultItemsPerPage,
+      time: Date.now()
     };
     const status = 200;
 
-    return {
-      body,
-      status,
-    };
+    return { body, status };
   }
 }

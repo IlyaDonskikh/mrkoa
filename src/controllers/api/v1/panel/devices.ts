@@ -1,4 +1,4 @@
-import ListService from '../../../services/devices/list';
+import ListService from '../../../../services/devices/listService';
 
 const index = async (ctx, next) => {
   const service = new ListService(

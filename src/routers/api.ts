@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
-import devicesRoutes from './api/devices';
-import eventsRoutes from './api/events';
+import devicesRoutes from './api/v1/panel/devices';
+import eventsRoutes from './api/v1/panel/events';
 
 
 const apiRouter = new Router({
@@ -14,10 +14,10 @@ apiRouter.get('/', async (ctx, next) => {
 });
 
 // Devices
-apiRouter.use('/devices', devicesRoutes);
+apiRouter.use('/panel/devices', devicesRoutes);
 
 // Events
-apiRouter.use('/events', eventsRoutes);
+apiRouter.use('/panel/events', eventsRoutes);
 
 // Export
 export default apiRouter;
