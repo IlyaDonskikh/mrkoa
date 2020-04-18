@@ -9,7 +9,7 @@ const router = new Router();
 
 // Hello world
 router.get("/", async (ctx, next) => {
-  ctx.body = { msg: "Hello world!" };
+  ctx.body = { msg: "Hello world1!" };
 
   await next();
 });
@@ -17,6 +17,7 @@ router.get("/", async (ctx, next) => {
 // Middlewares
 app.use(json());
 app.use(logger());
+app.use(bodyParser());
 
 // Routes
 app.use(router.routes()).use(router.allowedMethods());

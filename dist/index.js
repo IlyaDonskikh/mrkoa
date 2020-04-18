@@ -17,12 +17,13 @@ const app = new Koa();
 const router = new Router();
 // Hello world
 router.get("/", (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
-    ctx.body = { msg: "Hello world!" };
+    ctx.body = { msg: "Hello world1!" };
     yield next();
 }));
 // Middlewares
 app.use(json());
 app.use(logger());
+app.use(bodyParser());
 // Routes
 app.use(router.routes()).use(router.allowedMethods());
 app.listen(3000, () => {
