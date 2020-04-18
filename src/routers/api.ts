@@ -14,10 +14,10 @@ apiRouter.get('/', async (ctx, next) => {
 });
 
 // Devices
-apiRouter.use('/devices', devicesRoutes)
+apiRouter.use('/devices', devicesRoutes);
 
 // Events
-apiRouter.use('/events', eventsRoutes)
+apiRouter.use('/events', eventsRoutes);
 
 // Export
 export default apiRouter;
