@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
-import apiRouter from './routers/api';
+import router from './routers/index';
 
 const app = new Koa();
 
@@ -12,7 +12,7 @@ app.use(logger());
 app.use(bodyParser());
 
 // Routes
-app.use(apiRouter.routes()).use(apiRouter.allowedMethods());
+app.use(router.routes()).use(router.allowedMethods());
 
 // Listen
 app.listen(3000);
