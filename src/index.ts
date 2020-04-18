@@ -1,19 +1,10 @@
 import * as Koa from 'koa';
-import * as Router from 'koa-router';
-
 import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
+import apiRouter from './routers/index';
 
 const app = new Koa();
-const router = new Router();
-
-// Hello world
-router.get('/', async (ctx, next) => {
-  ctx.body = { msg: 'Hello world1!' };
-
-  await next();
-});
 
 // Middlewares
 app.use(json());
@@ -21,8 +12,7 @@ app.use(logger());
 app.use(bodyParser());
 
 // Routes
-app.use(router.routes()).use(router.allowedMethods());
+app.use(apiRouter.routes()).use(apiRouter.allowedMethods());
 
-app.listen(3000, () => {
-  console.log('Koa started');
-});
+// Listen
+app.listen(3000);
