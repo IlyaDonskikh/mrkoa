@@ -14,7 +14,7 @@ export default class ListService {
       devices: [],
       page: this.page,
       itemsPerPage: this.defaultItemsPerPage,
-      time: Date.now()
+      time: Date.now(),
     };
     const status = 200;
 

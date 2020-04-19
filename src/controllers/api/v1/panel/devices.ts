@@ -18,5 +18,4 @@ const show = async (ctx, next) => {
   await next;
 };
 
-
 export { index, show };

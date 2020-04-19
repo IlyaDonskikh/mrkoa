@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/bluebird": "^3.5.30",
+    "@types/validator": "^13.0.0",
     "body-parser": "^1.19.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.1",
-    "koa-router": "^8.0.8"
+    "koa-router": "^8.0.8",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^5.21.6",
+    "sequelize-typescript": "^1.1.0"
   },
   "devDependencies": {
     "@types/koa": "^2.11.3",
