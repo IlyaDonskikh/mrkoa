@@ -1,7 +1,7 @@
-import * as Sequelize from 'sequelize';
+import { Sequelize, Model } from 'sequelize';
 
 export interface DbInterface {
-  sequelize: Sequelize.Sequelize;
+  sequelize: Sequelize;
   Sequelize: any;
-  Device: Sequelize.Model;
+  Device: Model;
 }

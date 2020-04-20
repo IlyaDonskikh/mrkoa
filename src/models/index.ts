@@ -10,10 +10,10 @@ export const createModels = (): DbInterface => {
   const db: DbInterface = {
     sequelize,
     Sequelize,
-    Device: initDevice(sequelize)
+    Device: initDevice(sequelize),
   };
 
-  Object.keys(db).forEach(modelName => {
+  Object.keys(db).forEach((modelName) => {
     if (db[modelName].associate) {
       db[modelName].associate(db);
     }
@@ -21,4 +21,3 @@ export const createModels = (): DbInterface => {
 
   return db;
 };
-

@@ -33,7 +33,7 @@ export const initDevice = (sequelize: Sequelize): Model => {
       type: DataTypes.DATE,
       allowNull: false,
       field: 'updated_at',
-    }
+    },
   }, {
     sequelize,
     tableName: 'devices',
