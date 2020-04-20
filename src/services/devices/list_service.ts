@@ -13,12 +13,17 @@ export default class ListService {
   }
 
   async call() {
-    const devices = await this.db.Device.findAll();
+    const devices = await this.db.Device.findAndCountAll({
+      limit: this.defaultItemsPerPage,
+      offset: this.defaultItemsPerPage * (this.page - 1),
+    });
 
     const body = {
-      devices,
+      devices: devices.rows,
       page: this.page,
       itemsPerPage: this.defaultItemsPerPage,
+      totalPages: Math.ceil(devices.count / (this.defaultItemsPerPage * this.page)),
+      totalItems: devices.count,
       time: Date.now(),
     };
     const status = 200;

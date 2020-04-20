@@ -5,10 +5,10 @@ const index = async (ctx, next) => {
   const service = new ListService(
     ctx.db, ctx.request.query.page,
   );
-  const data = await service.call();
+  const { body, status } = await service.call();
 
-  ctx.body = data.body;
-  ctx.status = data.status;
+  ctx.body = body;
+  ctx.status = status;
 
   await next;
 };
@@ -25,10 +25,10 @@ const create = async (ctx, next) => {
   const service = new CreateService(
     ctx.db, ctx.request.body,
   );
-  const data = await service.call();
+  const { body, status } = await service.call();
 
-  ctx.body = data.body;
-  ctx.status = data.status;
+  ctx.body = body;
+  ctx.status = status;
 
   await next;
 };
