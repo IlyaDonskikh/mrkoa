@@ -1,8 +1,8 @@
-import ListService from '../../../../services/devices/listService';
+import ListService from '../../../../services/devices/list_service';
 
 const index = async (ctx, next) => {
   const service = new ListService(
-    ctx.request.query.page,
+    ctx.db, ctx.request.query.page,
   );
   const data = await service.call();
 

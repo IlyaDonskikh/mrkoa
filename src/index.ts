@@ -8,9 +8,8 @@ import router from './routers/index';
 const app = new Koa();
 const db = createModels();
 
-//console.log(db)
-db.Device.findAll()
-  .then(devices => console.log(devices))
+// Context
+app.context.db = db;
 
 // Middlewares
 app.use(json());

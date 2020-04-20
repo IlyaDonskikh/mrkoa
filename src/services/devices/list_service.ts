@@ -4,14 +4,18 @@ export default class ListService {
   readonly defaultItemsPerPage = 24;
 
   page: number;
+  db: any;
 
-  constructor(page: number) {
+  constructor(db: any, page: number) {
+    this.db = db
     this.page = page || this.defaultPage;
   }
 
   async call() {
+    const devices = await this.db.Device.findAll()
+
     const body = {
-      devices: [],
+      devices: devices,
       page: this.page,
       itemsPerPage: this.defaultItemsPerPage,
       time: Date.now(),
