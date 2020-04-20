@@ -16,6 +16,7 @@ export default class ListService {
     const devices = await this.db.Device.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (this.page - 1),
+      order: [['created_at', 'DESC']],
     });
 
     const body = {
