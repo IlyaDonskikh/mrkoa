@@ -15,12 +15,14 @@ export default class ListService {
   }
 
   async call() {
-    const body = {
-      params: this.params.device,
-    };
+    const body: object = {};
     const deviceParams = this.params.device;
+    let device: object | null;
 
-    if (deviceParams) { this.db.Device.create(deviceParams); }
+    if (deviceParams) {
+      device = await this.db.Device.create(deviceParams);
+      body.device = device;
+    }
 
     const status = 200;
 

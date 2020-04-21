@@ -13,16 +13,11 @@ export default class ShowService {
   async call() {
     const device = await this.db.Device.findByPk(this.id);
     let body: object | null;
-    let status: number;
+    let status: number = 404; ;
 
     if (device) {
-      body = {
-        device,
-        time: Date.now(),
-      };
+      body = { device, time: Date.now() };
       status = 200;
-    } else {
-      status = 404;
     }
 
     return { body, status };
