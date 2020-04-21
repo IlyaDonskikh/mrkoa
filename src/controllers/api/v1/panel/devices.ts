@@ -1,5 +1,6 @@
 import ListService from '../../../../services/devices/list_service';
 import CreateService from '../../../../services/devices/create_service';
+import ShowService from '../../../../services/devices/show_service';
 
 const index = async (ctx, next) => {
   const service = new ListService(
@@ -14,14 +15,18 @@ const index = async (ctx, next) => {
 };
 
 const show = async (ctx, next) => {
-  ctx.body = { test: 'test' };
+  const service = new ShowService(
+    ctx.db, ctx.params.id
+  );
+  const { body, status } = await service.call();
+
+  ctx.body = body;
+  ctx.status = status;
 
   await next;
 };
 
 const create = async (ctx, next) => {
-  console.log(ctx.request.body)
-
   const service = new CreateService(
     ctx.db, ctx.request.body,
   );

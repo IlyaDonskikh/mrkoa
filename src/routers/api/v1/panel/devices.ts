@@ -1,12 +1,12 @@
 import * as Router from 'koa-router';
-import * as events from '../../../../controllers/api/v1/panel/devices';
+import * as devices from '../../../../controllers/api/v1/panel/devices';
 
 const router = new Router();
 
 // Devices
-router.get('/', events.index);
-router.get('/:id', events.show);
-router.post('/', events.create);
+router.get('/', devices.index);
+router.get('/:id', devices.show);
+router.post('/', devices.create);
 
 // Export
 export default router.routes();
