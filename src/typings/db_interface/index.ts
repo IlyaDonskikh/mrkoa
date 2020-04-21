@@ -3,5 +3,5 @@ import { Sequelize, Model } from 'sequelize';
 export interface DbInterface {
   sequelize: Sequelize;
   Sequelize: any;
-  Device: Model;
+  Device: Model<any, any>;
 }

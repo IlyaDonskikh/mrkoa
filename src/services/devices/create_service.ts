@@ -1,12 +1,14 @@
+import { DbInterface } from '../../typings/db_interface';
+
 export default class ListService {
   readonly defaultPage = 1;
 
   readonly defaultItemsPerPage = 24;
 
-  db: any;
+  db: DbInterface;
   params: any;
 
-  constructor(db: any, params: any) {
+  constructor(db: DbInterface, params: any) {
     this.db = db;
     this.params = params;
   }

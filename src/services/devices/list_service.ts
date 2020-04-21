@@ -1,3 +1,5 @@
+import { DbInterface } from '../../typings/db_interface';
+
 export default class ListService {
   readonly defaultPage = 1;
 
@@ -5,9 +7,9 @@ export default class ListService {
 
   page: number;
 
-  db: any;
+  db: DbInterface;
 
-  constructor(db: any, page: number) {
+  constructor(db: DbInterface, page: number) {
     this.db = db;
     this.page = page || this.defaultPage;
   }

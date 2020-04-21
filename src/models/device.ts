@@ -1,7 +1,6 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
-import { SequelizeAttributes } from '../typings/sequelize_attributes';
 
-export class Device extends Model {
+class Device extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
 
   public externalId!: string;
@@ -39,5 +38,5 @@ export const initDevice = (sequelize: Sequelize): Model => {
     tableName: 'devices',
   });
 
-  return Device;
+  return Device; // ?
 };
