@@ -11,7 +11,7 @@ class Device extends Model {
   public readonly updatedAt!: Date;
 }
 
-export const initDevice = (sequelize: Sequelize): Model => {
+const initDevice = (sequelize: Sequelize): Model => {
   Device.init({
     id: {
       type: DataTypes.INTEGER, // you can omit the `new` but this is discouraged
@@ -40,3 +40,5 @@ export const initDevice = (sequelize: Sequelize): Model => {
 
   return Device; // ?
 };
+
+export default initDevice;

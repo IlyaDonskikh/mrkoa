@@ -6,6 +6,7 @@ export default class ListService {
   readonly defaultItemsPerPage = 24;
 
   db: DbInterface;
+
   params: any;
 
   constructor(db: DbInterface, params: any) {
@@ -14,14 +15,12 @@ export default class ListService {
   }
 
   async call() {
-    console.log(this.params)
-
     const body = {
-      params: this.params.device
+      params: this.params.device,
     };
-    const deviceParams = this.params.device
+    const deviceParams = this.params.device;
 
-    if (deviceParams) { this.db.Device.create(deviceParams) }
+    if (deviceParams) { this.db.Device.create(deviceParams); }
 
     const status = 200;
 

@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
-import { createModels } from './models';
+import createModels from './models';
 import router from './routers/index';
 
 const app = new Koa();

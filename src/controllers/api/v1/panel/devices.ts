@@ -16,7 +16,7 @@ const index = async (ctx, next) => {
 
 const show = async (ctx, next) => {
   const service = new ShowService(
-    ctx.db, ctx.params.id
+    ctx.db, ctx.params.id,
   );
   const { body, status } = await service.call();
 
