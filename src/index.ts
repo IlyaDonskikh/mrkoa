@@ -1,7 +1,5 @@
 require('dotenv').config()
 
-// process.env.NODE_ENV = 'development'
-
 import * as Koa from 'koa';
 import * as logger from 'koa-logger';
 import * as json from 'koa-json';

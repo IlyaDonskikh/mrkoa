@@ -2,7 +2,7 @@ import { Sequelize } from 'sequelize';
 import { DbInterface } from '../typings/db_interface';
 import initDevice from './device';
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV;
 const config = require('../../db/config.json')[env];
 
 const createModels = (): DbInterface => {
