@@ -21,3 +21,7 @@ app.use(router.routes()).use(router.allowedMethods());
 
 // Listen
 app.listen(3000);
+
+module.exports = {
+  app
+};
