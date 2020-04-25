@@ -5,9 +5,9 @@ describe("Devices Controller", () => {
 
   // index
   describe("#index", () => {
-    it("return 200 response", done => {
-      const path = "/api/v1/panel/devices";
+    const path = "/api/v1/panel/devices";
 
+    it("return 200 response", done => {
       chai
         .request(server)
         .get(path)
@@ -18,8 +18,6 @@ describe("Devices Controller", () => {
     });
 
     it("return empty devices list", done => {
-      const path = "/api/v1/panel/devices";
-
       chai
         .request(server)
         .get(path)
@@ -37,8 +35,6 @@ describe("Devices Controller", () => {
       });
 
       it("return device list include device", done => {
-        const path = "/api/v1/panel/devices";
-
         chai
           .request(server)
           .get(path)
