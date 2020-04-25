@@ -17,4 +17,4 @@ after(async () => {
   server.close();
 });
 
-module.exports = { server, chai, expect };
+module.exports = { server, chai, expect, db };
