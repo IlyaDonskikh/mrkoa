@@ -13,4 +13,8 @@ beforeEach('Clean Database', function () {
   return db.sequelize.sync({ force: true });
 });
 
+after(async () => {
+  server.close();
+});
+
 module.exports = { server, chai, expect };

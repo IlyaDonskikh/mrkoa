@@ -16,16 +16,14 @@ app.context.db = db;
 // console.log('hello');
 
 // Middlewares
+if (process.env.NODE_ENV != 'test') { app.use(logger()); }
 app.use(json());
-app.use(logger());
 app.use(bodyParser());
 
 // Routes
 app.use(router.routes()).use(router.allowedMethods());
 
 // Listen
-if (process.argv[2] && process.argv[2][0] != 't') {
-  app.listen(3000);
-}
+if (process.env.NODE_ENV != 'test') { app.listen(3000); }
 
 module.exports = app;
