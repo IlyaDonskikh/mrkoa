@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-beforeEach('Clean Database', function () {
+beforeEach('Clean Database', () => {
   return db.sequelize.sync({ force: true });
 });
 

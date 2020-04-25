@@ -32,7 +32,7 @@ describe("Devices Controller", () => {
     context("when one device exists", () => {
       let device;
 
-      beforeEach('Setup', async function () {
+      beforeEach('Setup device', async function () {
         device = await deviceFactory();
       });
 
