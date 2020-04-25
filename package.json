@@ -38,7 +38,7 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "test": "mocha test/**/*.spec.js --exit"
+    "test": "mocha test/**/**/*.spec.js --exit"
   },
   "keywords": [],
   "author": "",

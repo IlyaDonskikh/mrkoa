@@ -1,10 +1,10 @@
 const { server, chai, expect } = require('../../../../setup');
-const userFactory = require('../../../../factories/user');
+const deviceFactory = require('../../../../factories/user');
 
 describe("Devices Controller", () => {
-  describe("#index", () => {
-    let user;
 
+  // index
+  describe("#index", () => {
     it("return 200 response", done => {
       const path = "/api/v1/panel/devices";
 
@@ -17,19 +17,33 @@ describe("Devices Controller", () => {
         });
     });
 
-    context("when one user exists", () => {
+    it("return empty devices list", done => {
+      const path = "/api/v1/panel/devices";
+
+      chai
+        .request(server)
+        .get(path)
+        .end((err, res) => {
+          expect(res.body.devices).to.eql([]);
+          done();
+        });
+    });
+
+    context("when one device exists", () => {
+      let device;
+
       beforeEach('Setup', async function () {
-        user = await userFactory();
+        device = await deviceFactory();
       });
 
-      it("device list include user", done => {
+      it("return device list include device", done => {
         const path = "/api/v1/panel/devices";
 
         chai
           .request(server)
           .get(path)
           .end((err, res) => {
-            expect(res.body.devices[0].id).to.equal(user.id);
+            expect(res.body.devices[0].id).to.equal(device.id);
             done();
           });
       });
