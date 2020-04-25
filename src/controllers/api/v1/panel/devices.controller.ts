@@ -1,6 +1,6 @@
-import ListService from '../../../../services/devices/list_service';
-import CreateService from '../../../../services/devices/create_service';
-import ShowService from '../../../../services/devices/show_service';
+import ListService from '../../../../services/device/list.service';
+import CreateService from '../../../../services/device/create.service';
+import ShowService from '../../../../services/device/show.service';
 
 const index = async (ctx, next) => {
   const service = new ListService(

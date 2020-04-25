@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import * as events from '../../../../controllers/api/v1/panel/events';
+import * as events from '../../../../controllers/api/v1/panel/events.controller';
 
 const router = new Router();
 

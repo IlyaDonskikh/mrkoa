@@ -1,6 +1,6 @@
 const { db, expect } = require('../../setup');
 const deviceFactory = require('../../factories/user');
-const ListService = require('../../../dist/services/devices/list_service');
+const ListService = require('../../../dist/services/device/list.service');
 
 describe("Devices List Service", () => {
 
