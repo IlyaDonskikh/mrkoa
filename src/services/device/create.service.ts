@@ -1,31 +1,39 @@
 import { DbInterface } from '../../typings/db_interface';
 
 export default class ListService {
-  readonly defaultPage = 1;
-
-  readonly defaultItemsPerPage = 24;
-
   db: DbInterface;
 
-  params: any;
+  attrs: any;
+  errors: any;
 
-  constructor(db: DbInterface, params: any) {
+  constructor(db: DbInterface, attrs: any) {
     this.db = db;
-    this.params = params;
+    this.attrs = attrs;
+    this.errors = {}
   }
 
   async call() {
-    const body: object = {};
-    const deviceParams = this.params.device;
-    let device: object | null;
+    validate(this)
 
-    if (deviceParams) {
-      device = await this.db.Device.create(deviceParams);
+    const body: object = {};
+    let device: object | null;
+    let status = 422;
+
+    if isSuccess(this) {
+      device = await this.db.Device.create(this.attrs);
       body.device = device;
+      status = 200
     }
 
-    const status = 200;
-
     return { body, status };
+  }
+
+  function validate(object) {
+    if (object.attrs === null) { object.errors['attrs'] = ['format'] }
+    if (object.attrs.externalId == undefined) { object.errors['externalId'] = ['presence'] }
+  }
+
+  function isSuccess(object) {
+    return Object.keys(object.errors).length === 0
   }
 }

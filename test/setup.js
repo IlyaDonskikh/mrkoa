@@ -10,7 +10,7 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-beforeEach('Clean Database', () => db.sequelize.sync({ force: true }));
+beforeEach('Clean Database', () => db.sequelize.sync({ force: true })); // Upd to migrations
 
 after(async () => {
   server.close();

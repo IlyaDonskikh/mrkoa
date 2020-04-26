@@ -28,7 +28,7 @@ const show = async (ctx, next) => {
 
 const create = async (ctx, next) => {
   const service = new CreateService(
-    ctx.db, ctx.request.body,
+    ctx.db, ctx.request.body.device,
   );
   const { body, status } = await service.call();
 

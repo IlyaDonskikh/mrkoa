@@ -1,6 +1,8 @@
 'use strict';
+const Sequelize = require('sequelize')
+
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface) => {
     return queryInterface.createTable('devices', {
       id: {
         allowNull: false,
@@ -26,7 +28,7 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable('devices');
   }
 };
