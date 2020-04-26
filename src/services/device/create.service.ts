@@ -1,15 +1,17 @@
+import BaseService from '../base.service';
 import { DbInterface } from '../../typings/db_interface';
 
-export default class ListService {
+export default class ListService extends BaseService {
   db: DbInterface;
 
   attrs: any;
   errors: any;
 
   constructor(db: DbInterface, attrs: any) {
+    super()
+
     this.db = db;
     this.attrs = attrs;
-    this.errors = {}
   }
 
   async call() {
@@ -19,7 +21,7 @@ export default class ListService {
     let device: object | null;
     let status = 422;
 
-    if isSuccess(this) {
+    if super.isSuccess() {
       device = await this.db.Device.create(this.attrs);
       body.device = device;
       status = 200
@@ -31,9 +33,5 @@ export default class ListService {
   function validate(object) {
     if (object.attrs === null) { object.errors['attrs'] = ['format'] }
     if (object.attrs.externalId == undefined) { object.errors['externalId'] = ['presence'] }
-  }
-
-  function isSuccess(object) {
-    return Object.keys(object.errors).length === 0
   }
 }
