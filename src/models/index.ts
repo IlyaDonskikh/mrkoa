@@ -1,6 +1,8 @@
 import { Sequelize } from 'sequelize';
 import { DbInterface } from '../typings/db_interface';
-import initDevice from './device';
+import initDevice from './device.model';
+
+require('dotenv').config();
 
 const env = process.env.NODE_ENV;
 const config = require('../../db/config.json')[env];
