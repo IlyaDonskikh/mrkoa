@@ -1,25 +1,23 @@
+import BaseService from '../base.service';
 import { DbInterface } from '../../typings/db_interface';
 
-export default class ShowService {
+export default class ShowService extends BaseService {
   db: DbInterface;
 
   id: number;
 
-  constructor(db: DbInterface, id: number) {
-    this.db = db;
-    this.id = id;
-  }
+  // Return vars
+  body: object = {};
 
-  async call() {
+  status: number = 404;
+
+  // Etc.
+  async process() {
     const device = await this.db.Device.findByPk(this.id);
-    let body: object | null;
-    let status: number = 404;
 
     if (device) {
-      body = { device, time: Date.now() };
-      status = 200;
+      this.body = { device: device, time: Date.now() };
+      this.status = 200;
     }
-
-    return { body, status };
   }
 }

@@ -3,16 +3,16 @@ import deviceFactory from '../../factories/user';
 import CreateService from '../../../dist/services/device/create.service';
 
 describe('Devices Services', () => {
-  describe('List', () => {
+  describe('Create', () => {
     // index
     describe('#call', () => {
       it('return status 200', (done) => {
-        const attrs = {
+        const deviceAttrs = {
           'externalId': 'a'
         }
+        const attrs = { db: db, attrs: deviceAttrs }
 
-        const service = new CreateService(db, attrs);
-        service.call().then((value) => {
+        CreateService.call(attrs).then((value) => {
           const { status } = value;
 
           expect(status).to.eq(200);
@@ -21,12 +21,12 @@ describe('Devices Services', () => {
         });
       });
 
-      context('when attrs is empty object', () => {
+      context('when deviceAttrs is empty object', () => {
         it('return status 422', (done) => {
-          const attrs = {}
+          const deviceAttrs = {}
+          const attrs = { db: db, attrs: deviceAttrs }
 
-          const service = new CreateService(db, attrs);
-          service.call().then((value) => {
+          CreateService.call(attrs).then((value) => {
             const { status } = value;
 
             expect(status).to.eq(422);

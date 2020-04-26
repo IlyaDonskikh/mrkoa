@@ -1,36 +1,39 @@
+import BaseService from '../base.service';
 import { DbInterface } from '../../typings/db_interface';
 
-export default class ListService {
-  readonly defaultPage = 1;
-
+export default class ListService extends BaseService {
   readonly defaultItemsPerPage = 24;
 
+  db: DbInterface;
   page: number;
 
-  db: DbInterface;
+  // Return vars
+  body: object = {};
 
-  constructor(db: DbInterface, page: number) {
-    this.db = db;
-    this.page = page || this.defaultPage;
-  }
+  status: number = 422;
 
-  async call() {
+  // Etc.
+  async process() {
+    const page = this.page || 1
     const devices = await this.db.Device.findAndCountAll({
       limit: this.defaultItemsPerPage,
-      offset: this.defaultItemsPerPage * (this.page - 1),
+      offset: this.defaultItemsPerPage * (page - 1),
       order: [['created_at', 'DESC']],
     });
 
-    const body = {
+    // return
+    this.body = this.buildBodyBy(devices, page);
+    this.status = 200;
+  }
+
+  buildBodyBy(devices, page) {
+    return {
       devices: devices.rows,
-      page: this.page,
+      page: page,
       itemsPerPage: this.defaultItemsPerPage,
-      totalPages: Math.ceil(devices.count / (this.defaultItemsPerPage * this.page)),
+      totalPages: Math.ceil(devices.count / (this.defaultItemsPerPage * page)),
       totalItems: devices.count,
       time: Date.now(),
-    };
-    const status = 200;
-
-    return { body, status };
+    }
   }
 }

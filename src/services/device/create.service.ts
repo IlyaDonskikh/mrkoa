@@ -5,29 +5,25 @@ export default class ListService extends BaseService {
   db: DbInterface;
 
   attrs: any;
-  errors: any;
 
-  constructor(db: DbInterface, attrs: any) {
-    super()
+  // Return
+  body: object = {};
 
-    this.db = db;
-    this.attrs = attrs;
-  }
+  status: number = 422;
 
-  async call() {
+  // Etc.
+  async process() {
     validate(this)
 
-    const body: object = {};
     let device: object | null;
     let status = 422;
 
     if super.isSuccess() {
       device = await this.db.Device.create(this.attrs);
-      body.device = device;
-      status = 200
-    }
 
-    return { body, status };
+      this.body.device = device;
+      this.status = 200
+    }
   }
 
   function validate(object) {

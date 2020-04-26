@@ -3,10 +3,8 @@ import CreateService from '../../../../services/device/create.service';
 import ShowService from '../../../../services/device/show.service';
 
 const index = async (ctx, next) => {
-  const service = new ListService(
-    ctx.db, ctx.request.query.page,
-  );
-  const { body, status } = await service.call();
+  const attrs = { db: ctx.db, page: ctx.request.query.page };
+  const { body, status } = await ListService.call(attrs);
 
   ctx.body = body;
   ctx.status = status;
@@ -15,10 +13,8 @@ const index = async (ctx, next) => {
 };
 
 const show = async (ctx, next) => {
-  const service = new ShowService(
-    ctx.db, ctx.params.id,
-  );
-  const { body, status } = await service.call();
+  const attrs = { db: ctx.db, id: ctx.params.id }
+  const { body, status } = await ShowService.call(attrs);
 
   ctx.body = body;
   ctx.status = status;
@@ -27,10 +23,8 @@ const show = async (ctx, next) => {
 };
 
 const create = async (ctx, next) => {
-  const service = new CreateService(
-    ctx.db, ctx.request.body.device,
-  );
-  const { body, status } = await service.call();
+  const attrs = { db: ctx.db, attrs: ctx.request.body.device };
+  const { body, status } = await CreateService.call(attrs);
 
   ctx.body = body;
   ctx.status = status;

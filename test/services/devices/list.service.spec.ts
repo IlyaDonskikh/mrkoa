@@ -7,8 +7,7 @@ describe('Devices Services', () => {
     // index
     describe('#call', () => {
       it('return status 200', (done) => {
-        const service = new ListService(db);
-        service.call().then((value) => {
+        ListService.call({ db: db }).then((value) => {
           const { status } = value;
 
           expect(status).to.eq(200);
@@ -18,8 +17,7 @@ describe('Devices Services', () => {
       });
 
       it('return empty list of devices', (done) => {
-        const service = new ListService(db);
-        service.call().then((value) => {
+        ListService.call({ db: db }).then((value) => {
           const { body } = value;
 
           expect(body.devices).to.eql([]);
@@ -34,14 +32,27 @@ describe('Devices Services', () => {
         });
 
         it('return one device', (done) => {
-          const service = new ListService(db);
-          service.call().then((value) => {
+          ListService.call({ db: db }).then((value) => {
             const expectedDeviceNumber = 1;
             const { body } = value;
 
             expect(body.devices.length).to.equal(expectedDeviceNumber);
 
             done();
+          });
+        });
+
+        context('when second page', () => {
+          it('return empty list of devices', (done) => {
+            const page = 2
+
+            ListService.call({ db: db, page: page }).then((value) => {
+              const { body } = value;
+
+              expect(body.devices).to.eql([]);
+
+              done();
+            });
           });
         });
       });

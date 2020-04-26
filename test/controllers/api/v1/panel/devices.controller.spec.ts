@@ -26,4 +26,30 @@ describe('Devices Controller', () => {
         });
     });
   });
+
+  // show
+  describe('#show', () => {
+    context('when one device exists', () => {
+      let device;
+      let path;
+
+      beforeEach('Setup device', async () => {
+        device = await deviceFactory();
+      });
+
+      beforeEach('Setup path', () => {
+        path = '/api/v1/panel/devices/' + device.id;
+      });
+
+      it('return 200 response', (done) => {
+        chai
+          .request(server)
+          .get(path)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+      });
+    });
+  });
 });
