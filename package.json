@@ -41,6 +41,7 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
+    "lint": "eslint test/**/**.ts src/**/**.ts --fix",
     "test": "mocha -r ts-node/register test/**/*.spec.ts --exit  --recursive"
   },
   "keywords": [],
