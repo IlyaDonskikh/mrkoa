@@ -6,11 +6,8 @@ export default class ListService extends BaseService {
 
   db: DbInterface;
   page: number;
-
-  // Return vars
-  body: object = {};
-
-  status: number = 422;
+  public body: object = {};
+  public status: number = 422;
 
   // Etc.
   async process() {

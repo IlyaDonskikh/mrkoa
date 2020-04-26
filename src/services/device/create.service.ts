@@ -3,13 +3,9 @@ import { DbInterface } from '../../typings/db_interface';
 
 export default class ListService extends BaseService {
   db: DbInterface;
-
   attrs: any;
-
-  // Return
-  body: object = {};
-
-  status: number = 422;
+  public body: object = {};
+  public status: number = 422;
 
   // Etc.
   async process() {

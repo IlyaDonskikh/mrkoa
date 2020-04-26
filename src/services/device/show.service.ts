@@ -3,13 +3,9 @@ import { DbInterface } from '../../typings/db_interface';
 
 export default class ShowService extends BaseService {
   db: DbInterface;
-
   id: number;
-
-  // Return vars
-  body: object = {};
-
-  status: number = 404;
+  public body: object = {};
+  public status: number = 404;
 
   // Etc.
   async process() {
