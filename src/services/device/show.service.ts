@@ -2,6 +2,7 @@ import BaseService from '../base.service';
 import { DbInterface } from '../../typings/db_interface';
 
 export default class ShowService extends BaseService {
+  // Attrs
   db: DbInterface;
   id: number;
   public body: object = {};

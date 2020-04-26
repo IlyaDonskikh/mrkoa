@@ -4,6 +4,7 @@ import { DbInterface } from '../../typings/db_interface';
 export default class ListService extends BaseService {
   readonly defaultItemsPerPage = 24;
 
+  // Attrs
   db: DbInterface;
   page: number;
   public body: object = {};
