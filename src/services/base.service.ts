@@ -1,7 +1,7 @@
 export default class BaseService {
   [key: string]: any;
 
-  errors: any;
+  errors: object;
 
   constructor(params: object = {}) {
     Object.entries(params).forEach(([key, value]) => {

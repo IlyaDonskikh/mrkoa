@@ -13,12 +13,12 @@ export default class ListService extends BaseService {
 
   // Etc.
   async process() {
-    validate(this)
+    this.validate()
 
     let device: object | null;
     let status = 422;
 
-    if super.isSuccess() {
+    if (super.isSuccess()) {
       device = await this.db.Device.create(this.attrs);
 
       this.body.device = device;
@@ -26,8 +26,8 @@ export default class ListService extends BaseService {
     }
   }
 
-  function validate(object) {
-    if (object.attrs === null) { object.errors['attrs'] = ['format'] }
-    if (object.attrs.externalId == undefined) { object.errors['externalId'] = ['presence'] }
+  validate() {
+    if (this.attrs === null) { this.errors['attrs'] = ['format'] }
+    if (this.attrs.externalId == undefined) { this.errors['externalId'] = ['presence'] }
   }
 }
