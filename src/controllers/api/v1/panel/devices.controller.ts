@@ -30,7 +30,7 @@ const create = async (ctx, next) => {
   const attrs = { db: ctx.db, attrs: ctx.request.body.device };
   const service = await CreateService.call(attrs);
 
-  if service.isSuccess() {
+  if (service.isSuccess()) {
     ctx.body = service.body;
     ctx.status = 200;
   } else {

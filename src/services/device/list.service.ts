@@ -5,9 +5,9 @@ export default class ListService extends BaseService {
   // Attrs
   db: DbInterface;
   page: number;
-  public body: object = {};
   readonly defaultItemsPerPage = 24;
   readonly defaultPage = 1;
+  public body: object = {};
 
   // Etc.
   async process() {
@@ -18,7 +18,6 @@ export default class ListService extends BaseService {
       order: [['created_at', 'DESC']],
     });
 
-    // return
     this.body = this.buildBodyBy(devices, page);
   }
 

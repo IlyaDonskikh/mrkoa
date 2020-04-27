@@ -1,4 +1,4 @@
-import ErrorsService from './errors.service'
+import ErrorsService from './errors.service';
 
 export default class BaseService {
   [key: string]: any;
@@ -13,6 +13,12 @@ export default class BaseService {
 
   static call(params: object = {}) {
     return new this(params).call();
+  }
+
+  async isValid() {
+    await this.validate();
+
+    return this.isSuccess();
   }
 
   isSuccess() {

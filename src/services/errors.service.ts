@@ -6,12 +6,13 @@ export default class ErrorsService {
   }
 
   messages() {
-    return this.errors // To structurize, localize and other magic before return into response
+    return this.errors; // To structurize, localize and other magic before return into response
   }
 
   add(name: string, code: string) {
-    if (this.errors[name] == undefined) { this.errors[name] = [] }
+    if (this.errors[name] === undefined) { this.errors[name] = []; }
+    if (this.errors[name].includes(code)) { return; }
 
-    this.errors[name].push(code)
+    this.errors[name].push(code);
   }
 }

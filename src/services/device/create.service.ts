@@ -9,18 +9,14 @@ export default class ListService extends BaseService {
 
   // Etc.
   async process() {
-    await this.validate()
+    if (!(await this.isValid())) { return }
 
-    let device: object | null;
+    const device: object = await this.db.Device.create(this.attrs);
 
-    if (super.isSuccess()) {
-      device = await this.db.Device.create(this.attrs);
-
-      this.body.device = device;
-    }
+    this.body.device = device;
   }
 
-  async validate() {
+  private async validate() {
     var externalIdUniq;
 
     if (this.attrs === null) { this.errors.add('attrs', 'format') }
