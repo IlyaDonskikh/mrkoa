@@ -61,6 +61,36 @@ describe('Devices Services', () => {
           });
         });
       });
+
+      context('when device with same externalId exists', () => {
+        let device;
+
+        beforeEach('Create device', async () => {
+          device = await deviceFactory();
+        });
+
+        beforeEach('Update externalId attribute', () => {
+          deviceAttrs.externalId = device.externalId;
+        });
+
+        it('failed', (done) => {
+          serviceCall(deviceAttrs).then((value) => {
+            expect(value.isFailed()).to.be.true;
+
+            done();
+          });
+        });
+
+        it('return externalId uniq error', (done) => {
+          serviceCall(deviceAttrs).then((value) => {
+            const externalIdErrors = value.errors.errors.externalId;
+
+            expect(externalIdErrors).to.include('uniq');
+
+            done();
+          });
+        });
+      });
     });
   });
 });
