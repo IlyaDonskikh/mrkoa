@@ -24,7 +24,7 @@ export default class ListService extends BaseService {
   }
 
   validate() {
-    if (this.attrs === null) { this.errors['attrs'] = ['format'] }
-    if (this.attrs.externalId == undefined) { this.errors['externalId'] = ['presence'] }
+    if (this.attrs === null) { this.errors.add('attrs', 'format') }
+    if (this.attrs.externalId == undefined) { this.errors.add('externalId', 'presence') }
   }
 }

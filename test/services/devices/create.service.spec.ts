@@ -4,32 +4,60 @@ import CreateService from '../../../dist/services/device/create.service';
 
 describe('Devices Services', () => {
   describe('Create', () => {
+    function serviceCall(deviceAttrs: object) {
+      const attrs = { db: db, attrs: deviceAttrs }
+
+      return CreateService.call(attrs)
+    }
+
+    let deviceAttrs = {
+      'externalId': 'a'
+    }
+
     // index
     describe('#call', () => {
-      it('return status 200', (done) => {
-        const deviceAttrs = {
-          'externalId': 'a'
-        }
-        const attrs = { db: db, attrs: deviceAttrs }
-
-        CreateService.call(attrs).then((value) => {
-          const { status } = value;
-
-          expect(status).to.eq(200);
+      it('success', (done) => {
+        serviceCall(deviceAttrs).then((value) => {
+          expect(value.isSuccess()).to.eq(true);
 
           done();
         });
       });
 
-      context('when deviceAttrs is empty object', () => {
-        it('return status 422', (done) => {
-          const deviceAttrs = {}
-          const attrs = { db: db, attrs: deviceAttrs }
+      it('return empty errors', (done) => {
+        serviceCall(deviceAttrs).then((value) => {
+          expect(value.errors.errors).to.eql({});
 
-          CreateService.call(attrs).then((value) => {
-            const { status } = value;
+          done();
+        });
+      });
 
-            expect(status).to.eq(422);
+      context('when deviceAttrs not contains externalId', () => {
+        beforeEach('Clean Database', () => {
+          delete deviceAttrs.externalId;
+        });
+
+        it('failed', (done) => {
+          serviceCall(deviceAttrs).then((value) => {
+            expect(value.isFailed()).to.eq(true);
+
+            done();
+          });
+        });
+
+        it('return errors', (done) => {
+          serviceCall(deviceAttrs).then((value) => {
+            expect(value.errors.errors).not.to.eql({});
+
+            done();
+          });
+        });
+
+        it('return externalId error', (done) => {
+          serviceCall(deviceAttrs).then((value) => {
+            const externalIdErrorsLength = value.errors.errors.externalId.length;
+
+            expect(externalIdErrorsLength).to.eql(1);
 
             done();
           });

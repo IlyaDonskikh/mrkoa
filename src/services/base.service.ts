@@ -1,27 +1,31 @@
+import ErrorsService from './errors.service'
+
 export default class BaseService {
   [key: string]: any;
 
-  errors: object;
+  public errors: object = new ErrorsService();
 
   constructor(params: object = {}) {
     Object.entries(params).forEach(([key, value]) => {
       this[key] = value;
     });
-
-    this.errors = {};
   }
 
   static call(params: object = {}) {
     return new this(params).call();
   }
 
-  async call() {
+  isSuccess() {
+    return (Object.keys(this.errors.errors).length === 0);
+  }
+
+  isFailed() {
+    return !this.isSuccess();
+  }
+
+  private async call() {
     await this.process();
 
     return this;
-  }
-
-  isSuccess() {
-    return (Object.keys(this.errors).length === 0);
   }
 }
