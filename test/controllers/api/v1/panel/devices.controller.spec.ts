@@ -52,4 +52,40 @@ describe('Devices Controller', () => {
       });
     });
   });
+
+   // create
+  describe('#create', () => {
+    context('when one device exists', () => {
+      let path = '/api/v1/panel/devices';
+      let deviceAttrs = { externalId: 'test' }
+
+      it('return 200 response', (done) => {
+        chai
+          .request(server)
+          .post(path)
+          .send({ device: deviceAttrs })
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            done();
+          });
+      });
+
+      context('when deviceAttrs not contains externalId', () => {
+        beforeEach('Clean Database', () => {
+          delete deviceAttrs.externalId;
+        });
+
+        it('return 422 response', (done) => {
+          chai
+            .request(server)
+            .post(path)
+            .send({ device: deviceAttrs })
+            .end((err, res) => {
+              expect(res).to.have.status(422);
+              done();
+            });
+        });
+      });
+    });
+  });
 });

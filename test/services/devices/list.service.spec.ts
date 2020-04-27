@@ -6,11 +6,9 @@ describe('Devices Services', () => {
   describe('List', () => {
     // index
     describe('#call', () => {
-      it('return status 200', (done) => {
+      it('success', (done) => {
         ListService.call({ db: db }).then((value) => {
-          const { status } = value;
-
-          expect(status).to.eq(200);
+          expect(value.isSuccess()).to.be.true;
 
           done();
         });

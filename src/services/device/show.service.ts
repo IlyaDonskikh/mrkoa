@@ -5,16 +5,16 @@ export default class ShowService extends BaseService {
   // Attrs
   db: DbInterface;
   id: number;
-  public body: object = {};
-  public status: number = 404;
+  public body: object | undefined = {};
+  public notFound: boolean = true;
 
   // Etc.
   async process() {
     const device = await this.db.Device.findByPk(this.id);
 
     if (device) {
+      this.notFound = false
       this.body = { device: device, time: Date.now() };
-      this.status = 200;
     }
   }
 }

@@ -5,6 +5,10 @@ export default class ErrorsService {
     return new this(params).call();
   }
 
+  messages() {
+    return this.errors // To structurize, localize and other magic before return into response
+  }
+
   add(name: string, code: string) {
     if (this.errors[name] == undefined) { this.errors[name] = [] }
 

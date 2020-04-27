@@ -6,7 +6,6 @@ export default class ListService extends BaseService {
   db: DbInterface;
   page: number;
   public body: object = {};
-  public status: number = 422;
   readonly defaultItemsPerPage = 24;
   readonly defaultPage = 1;
 
@@ -21,7 +20,6 @@ export default class ListService extends BaseService {
 
     // return
     this.body = this.buildBodyBy(devices, page);
-    this.status = 200;
   }
 
   private buildBodyBy(devices, page) {

@@ -6,11 +6,11 @@ describe('Devices Services', () => {
   describe('Show', () => {
     // index
     describe('#call', () => {
-      it('return status 404', (done) => {
+      it('return notFound as true', (done) => {
         ShowDevice.call({ db: db, id: 0 }).then((value) => {
-          const { status } = value;
+          const { notFound } = value;
 
-          expect(status).to.eq(404);
+          expect(notFound).to.be.true;
 
           done();
         });
@@ -23,11 +23,9 @@ describe('Devices Services', () => {
           device = await deviceFactory();
         });
 
-        it('return device', (done) => {
+        it('success', (done) => {
           ShowDevice.call({ db: db, id: device.id }).then((value) => {
-            const { status } = value;
-
-            expect(status).to.eq(200);
+            expect(value.isSuccess()).to.be.true;
 
             done();
           });

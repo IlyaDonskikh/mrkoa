@@ -4,30 +4,39 @@ import ShowService from '../../../../services/device/show.service';
 
 const index = async (ctx, next) => {
   const attrs = { db: ctx.db, page: ctx.request.query.page };
-  const { body, status } = await ListService.call(attrs);
+  const { body } = await ListService.call(attrs);
 
   ctx.body = body;
-  ctx.status = status;
+  ctx.status = 200;
 
   await next;
 };
 
 const show = async (ctx, next) => {
   const attrs = { db: ctx.db, id: ctx.params.id }
-  const { body, status } = await ShowService.call(attrs);
+  const { body, notFound } = await ShowService.call(attrs);
 
-  ctx.body = body;
-  ctx.status = status;
+  if (!notFound) {
+    ctx.body = body;
+    ctx.status = 200;
+  } else {
+    ctx.status = 404;
+  }
 
   await next;
 };
 
 const create = async (ctx, next) => {
   const attrs = { db: ctx.db, attrs: ctx.request.body.device };
-  const { body, status } = await CreateService.call(attrs);
+  const service = await CreateService.call(attrs);
 
-  ctx.body = body;
-  ctx.status = status;
+  if service.isSuccess() {
+    ctx.body = service.body;
+    ctx.status = 200;
+  } else {
+    ctx.body = { errors: service.errors.messages() };
+    ctx.status = 422;
+  }
 
   await next;
 };

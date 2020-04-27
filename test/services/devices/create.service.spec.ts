@@ -10,15 +10,13 @@ describe('Devices Services', () => {
       return CreateService.call(attrs)
     }
 
-    let deviceAttrs = {
-      'externalId': 'a'
-    }
+    let deviceAttrs = { 'externalId': 'a' }
 
     // index
     describe('#call', () => {
       it('success', (done) => {
         serviceCall(deviceAttrs).then((value) => {
-          expect(value.isSuccess()).to.eq(true);
+          expect(value.isSuccess()).to.be.true;
 
           done();
         });
@@ -39,7 +37,7 @@ describe('Devices Services', () => {
 
         it('failed', (done) => {
           serviceCall(deviceAttrs).then((value) => {
-            expect(value.isFailed()).to.eq(true);
+            expect(value.isFailed()).to.be.true;
 
             done();
           });
@@ -57,7 +55,7 @@ describe('Devices Services', () => {
           serviceCall(deviceAttrs).then((value) => {
             const externalIdErrorsLength = value.errors.errors.externalId.length;
 
-            expect(externalIdErrorsLength).to.eql(1);
+            expect(externalIdErrorsLength).to.be.eq(1);
 
             done();
           });
