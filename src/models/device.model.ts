@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
 
 class Device extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
@@ -11,7 +11,9 @@ class Device extends Model {
   public readonly updatedAt!: Date;
 }
 
-const initDevice = (sequelize: Sequelize): Model => {
+type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
+
+const initDevice = (sequelize: Sequelize): ModelStatic => {
   Device.init({
     id: {
       type: DataTypes.INTEGER, // you can omit the `new` but this is discouraged

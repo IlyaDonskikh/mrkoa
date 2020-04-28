@@ -1,9 +1,11 @@
-export default class ErrorsService {
-  public errors: object = {};
+export interface ErrorsInstanceInterface {
+  messages: () => void;
+  add: (name, code) => void;
+  errors: object;
+}
 
-  static call(params: object = {}) {
-    return new this(params).call();
-  }
+export class ErrorsService {
+  public errors: object = {};
 
   messages() {
     return this.errors; // To structurize, localize and other magic before return into response

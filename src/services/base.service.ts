@@ -1,9 +1,9 @@
-import ErrorsService from './errors.service';
+import { ErrorsService, ErrorsInstanceInterface } from './errors.service';
 
 export default class BaseService {
   [key: string]: any;
 
-  public errors: object = new ErrorsService();
+  public errors: ErrorsInstanceInterface = new ErrorsService();
 
   constructor(params: object = {}) {
     Object.entries(params).forEach(([key, value]) => {

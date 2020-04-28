@@ -1,11 +1,15 @@
 import BaseService from '../base.service';
 import { DbInterface } from '../../typings/db_interface';
 
+interface ListServiceBodyInterface {
+  device?: object;
+}
+
 export default class ListService extends BaseService {
   // Attrs
   db: DbInterface;
   attrs: any;
-  public body: object = {};
+  public body: ListServiceBodyInterface = {};
 
   // Etc.
   async process() {
