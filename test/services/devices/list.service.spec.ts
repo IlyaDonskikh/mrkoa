@@ -1,5 +1,5 @@
 import { db, expect } from '../../setup';
-import deviceFactory from '../../factories/user';
+import * as deviceFactory from '../../factories/user';
 import ListService from '../../../dist/services/device/list.service';
 
 describe('Devices Services', () => {
@@ -26,7 +26,7 @@ describe('Devices Services', () => {
 
       context('when one device exists', () => {
         beforeEach('Setup device', async () => {
-          await deviceFactory();
+          await deviceFactory.create();
         });
 
         it('return one device', (done) => {

@@ -9,5 +9,6 @@ const data = async (props = {}) => {
 };
 
 const create = async (props = {}) => models().Device.create(await data(props));
+const build = async (props = {}) => models().Device.build(await data(props));
 
-export default create;
+export { create, build };

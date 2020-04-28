@@ -1,5 +1,5 @@
 import { server, chai, expect } from '../../../../setup';
-import deviceFactory from '../../../../factories/user';
+import * as deviceFactory from '../../../../factories/user';
 
 describe('Devices Controller', () => {
   // index
@@ -34,7 +34,7 @@ describe('Devices Controller', () => {
       let path;
 
       beforeEach('Setup device', async () => {
-        device = await deviceFactory();
+        device = await deviceFactory.create();
       });
 
       beforeEach('Setup path', () => {

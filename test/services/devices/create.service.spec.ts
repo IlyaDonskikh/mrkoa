@@ -1,5 +1,5 @@
 import { db, expect } from '../../setup';
-import deviceFactory from '../../factories/user';
+import * as deviceFactory from '../../factories/user';
 import CreateService from '../../../dist/services/device/create.service';
 
 describe('Devices Services', () => {
@@ -66,7 +66,7 @@ describe('Devices Services', () => {
         let device;
 
         beforeEach('Create device', async () => {
-          device = await deviceFactory();
+          device = await deviceFactory.create();
         });
 
         beforeEach('Update externalId attribute', () => {
