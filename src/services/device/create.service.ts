@@ -1,9 +1,6 @@
 import BaseService from '../base.service';
 import { Device } from '../../models/device.model';
-
-interface ListServiceBodyInterface {
-  device?: object;
-}
+import { BodyInterface as ListServiceBodyInterface } from '../../typings/services/device/list_service/body.interface';
 
 export default class CreateService extends BaseService {
   // Attrs

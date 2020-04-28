@@ -1,9 +1,3 @@
-export interface ErrorsInstanceInterface {
-  messages: () => void;
-  add: (name, code) => void;
-  errors: object;
-}
-
 export class ErrorsService {
   public errors: object = {};
 
