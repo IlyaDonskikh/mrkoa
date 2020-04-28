@@ -7,6 +7,7 @@ const router = new Router();
 router.get('/', devices.index);
 router.get('/:id', devices.show);
 router.post('/', devices.create);
+router.put('/:id', devices.update);
 
 // Export
 export default router.routes();

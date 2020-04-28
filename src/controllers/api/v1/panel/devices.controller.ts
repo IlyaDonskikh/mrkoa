@@ -1,5 +1,6 @@
 import ListService from '../../../../services/device/list.service';
 import CreateService from '../../../../services/device/create.service';
+import UpdateService from '../../../../services/device/update.service';
 import ShowService from '../../../../services/device/show.service';
 
 const index = async (ctx, next) => {
@@ -41,4 +42,19 @@ const create = async (ctx, next) => {
   await next;
 };
 
-export { index, show, create };
+const update = async (ctx, next) => {
+  const attrs = { id: ctx.params.id, attrs: ctx.request.body.device };
+  const service = await UpdateService.call(attrs);
+
+  if (service.isSuccess()) {
+    ctx.body = service.body;
+    ctx.status = 200;
+  } else {
+    ctx.body = { errors: service.errors.messages() };
+    ctx.status = 422;
+  }
+
+  await next;
+};
+
+export { index, show, create, update };

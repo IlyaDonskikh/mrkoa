@@ -42,9 +42,9 @@ describe('Devices Services', () => {
 
         context('when second page', () => {
           it('return empty list of devices', (done) => {
-            const page = 2
+            const page = 2;
 
-            ListService.call({ page: page }).then((value) => {
+            ListService.call({ page }).then((value) => {
               const { body } = value;
 
               expect(body.devices).to.eql([]);

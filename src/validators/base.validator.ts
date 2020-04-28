@@ -10,6 +10,7 @@ export default class BaseValidator {
   public modelInstance: any;
 
   public attrs: object;
+  public mergedAttrs: object;
 
   // Etc.
   constructor(errors: ErrorsInstanceInterface, modelInstance: any, attrs: object) {
@@ -24,15 +25,20 @@ export default class BaseValidator {
 
   async validate() {
     this.sliceAttributes();
+    this.buildMergedAttributes();
+
     await this.runValidations();
 
     return this;
   }
 
   private sliceAttributes() {
+    this.attrs = _.pick(this.attrs, ...this.buildPermittedAttributes());
+  }
+
+  private buildMergedAttributes() {
     this.instanceAttributes = this.modelInstance.toJSON();
-    this.attrs = _.pick(this.attrs, this.buildPermittedAttributes());
-    this.attrs = Object.assign(this.instanceAttributes, this.attrs);
+    this.mergedAttrs = Object.assign(this.instanceAttributes, this.attrs);
   }
 
   private buildPermittedAttributes() {

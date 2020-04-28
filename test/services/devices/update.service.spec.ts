@@ -5,14 +5,14 @@ import UpdateService from '../../../dist/services/device/update.service';
 describe('Devices Services', () => {
   describe('Update', () => {
     function serviceCall(id: number, deviceAttrs: object) {
-      const attrs = { id: id, attrs: deviceAttrs }
+      const attrs = { id, attrs: deviceAttrs };
 
-      return UpdateService.call(attrs)
+      return UpdateService.call(attrs);
     }
 
     let device;
-    let externalData = { test: 'test'}
-    let deviceAttrs: any = { externalId: 'a', externalData: externalData }
+    const externalData = { test: 'test' };
+    const deviceAttrs: any = { externalId: 'a', externalData };
 
     beforeEach('Create device', async () => {
       device = await deviceFactory.create();
@@ -28,28 +28,24 @@ describe('Devices Services', () => {
         });
       });
 
-      it('does not change externalId', (done) => {
-        serviceCall(device.id, deviceAttrs).then((value) => {
-          device.reload().then((value) => {
-            expect(value.externalId).to.be.eq(device.externalId);
+      it('does not change externalId', async () => {
+        const currentExternalId = device.externalId;
 
-            done();
-          });
-        });
+        await serviceCall(device.id, deviceAttrs)
+        await device.reload()
+
+        expect(device.externalId).to.be.eq(currentExternalId);
       });
 
-      it('change externalData', (done) => {
-        serviceCall(device.id, deviceAttrs).then((value) => {
-          device.reload().then((value) => {
-            expect(value.externalData).to.be.eql(externalData);
+      it('change externalData', async () => {
+        await serviceCall(device.id, deviceAttrs)
+        await device.reload()
 
-            done();
-          });
-        });
+        expect(device.externalData).to.be.eql(externalData);
       });
 
       context('when externalData not an object', () => {
-        let externalData = 'a';
+        const externalData = 'a';
 
         beforeEach('change externalData', async () => {
           deviceAttrs.externalData = externalData;
@@ -66,7 +62,7 @@ describe('Devices Services', () => {
 
       context('when externalId is same', () => {
         it('success', (done) => {
-          let deviceAttrs = { 'externalId': device.externalId }
+          const deviceAttrs = { externalId: device.externalId };
 
           serviceCall(device.id, deviceAttrs).then((value) => {
             expect(value.isSuccess()).to.be.true;

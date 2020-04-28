@@ -5,12 +5,12 @@ import CreateService from '../../../dist/services/device/create.service';
 describe('Devices Services', () => {
   describe('Create', () => {
     function serviceCall(deviceAttrs: object) {
-      const attrs = { attrs: deviceAttrs }
+      const attrs = { attrs: deviceAttrs };
 
-      return CreateService.call(attrs)
+      return CreateService.call(attrs);
     }
 
-    let deviceAttrs = { 'externalId': 'a' }
+    const deviceAttrs = { externalId: 'a' };
 
     // index
     describe('#call', () => {
