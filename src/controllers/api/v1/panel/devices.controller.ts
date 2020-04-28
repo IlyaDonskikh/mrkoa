@@ -3,7 +3,7 @@ import CreateService from '../../../../services/device/create.service';
 import ShowService from '../../../../services/device/show.service';
 
 const index = async (ctx, next) => {
-  const attrs = { db: ctx.db, page: ctx.request.query.page };
+  const attrs = { page: ctx.request.query.page };
   const { body } = await ListService.call(attrs);
 
   ctx.body = body;
@@ -13,7 +13,7 @@ const index = async (ctx, next) => {
 };
 
 const show = async (ctx, next) => {
-  const attrs = { db: ctx.db, id: ctx.params.id }
+  const attrs = { id: ctx.params.id };
   const { body, notFound } = await ShowService.call(attrs);
 
   if (!notFound) {
@@ -27,7 +27,7 @@ const show = async (ctx, next) => {
 };
 
 const create = async (ctx, next) => {
-  const attrs = { db: ctx.db, attrs: ctx.request.body.device };
+  const attrs = { attrs: ctx.request.body.device };
   const service = await CreateService.call(attrs);
 
   if (service.isSuccess()) {

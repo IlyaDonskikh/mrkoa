@@ -7,7 +7,7 @@ describe('Devices Services', () => {
     // index
     describe('#call', () => {
       it('return notFound as true', (done) => {
-        ShowDevice.call({ db: db, id: 0 }).then((value) => {
+        ShowDevice.call({ id: 0 }).then((value) => {
           const { notFound } = value;
 
           expect(notFound).to.be.true;
@@ -24,7 +24,7 @@ describe('Devices Services', () => {
         });
 
         it('success', (done) => {
-          ShowDevice.call({ db: db, id: device.id }).then((value) => {
+          ShowDevice.call({ id: device.id }).then((value) => {
             expect(value.isSuccess()).to.be.true;
 
             done();
@@ -32,7 +32,7 @@ describe('Devices Services', () => {
         });
 
         it('return device into the body', (done) => {
-          ShowDevice.call({ db: db, id: device.id }).then((value) => {
+          ShowDevice.call({ id: device.id }).then((value) => {
             const { body } = value;
 
             expect(body.device.id).to.eq(device.id);

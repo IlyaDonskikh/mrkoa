@@ -5,7 +5,7 @@ import CreateService from '../../../dist/services/device/create.service';
 describe('Devices Services', () => {
   describe('Create', () => {
     function serviceCall(deviceAttrs: object) {
-      const attrs = { db: db, attrs: deviceAttrs }
+      const attrs = { attrs: deviceAttrs }
 
       return CreateService.call(attrs)
     }

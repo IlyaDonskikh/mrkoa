@@ -1,16 +1,15 @@
 import BaseService from '../base.service';
-import { DbInterface } from '../../typings/db_interface';
+import { Device } from '../../models/device.model';
 
 export default class ShowService extends BaseService {
   // Attrs
-  db: DbInterface;
   id: number;
   public body: object | undefined = {};
   public notFound: boolean = true;
 
   // Etc.
   async process() {
-    const device = await this.db.Device.findByPk(this.id);
+    const device = await Device.findByPk(this.id);
 
     if (device) {
       this.notFound = false

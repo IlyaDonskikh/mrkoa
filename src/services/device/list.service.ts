@@ -1,9 +1,8 @@
 import BaseService from '../base.service';
-import { DbInterface } from '../../typings/db_interface';
+import { Device } from '../../models/device.model';
 
 export default class ListService extends BaseService {
   // Attrs
-  db: DbInterface;
   page: number;
   readonly defaultItemsPerPage = 24;
   readonly defaultPage = 1;
@@ -12,7 +11,7 @@ export default class ListService extends BaseService {
   // Etc.
   async process() {
     const page = this.page || this.defaultPage
-    const devices = await this.db.Device.findAndCountAll({
+    const devices = await Device.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (page - 1),
       order: [['created_at', 'DESC']],

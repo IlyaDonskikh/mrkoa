@@ -1,6 +1,10 @@
-import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
+import {
+  Sequelize, Model, DataTypes, BuildOptions,
+} from 'sequelize';
 
-class Device extends Model {
+type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
+
+export class Device extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
 
   public externalId!: string;
@@ -11,9 +15,7 @@ class Device extends Model {
   public readonly updatedAt!: Date;
 }
 
-type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
-
-const initDevice = (sequelize: Sequelize): ModelStatic => {
+export const initDevice = (sequelize: Sequelize): ModelStatic => {
   Device.init({
     id: {
       type: DataTypes.INTEGER, // you can omit the `new` but this is discouraged
@@ -40,7 +42,5 @@ const initDevice = (sequelize: Sequelize): ModelStatic => {
     tableName: 'devices',
   });
 
-  return Device; // ?
+  return Device;
 };
-
-export default initDevice;

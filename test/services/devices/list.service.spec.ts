@@ -7,7 +7,7 @@ describe('Devices Services', () => {
     // index
     describe('#call', () => {
       it('success', (done) => {
-        ListService.call({ db: db }).then((value) => {
+        ListService.call().then((value) => {
           expect(value.isSuccess()).to.be.true;
 
           done();
@@ -15,7 +15,7 @@ describe('Devices Services', () => {
       });
 
       it('return empty list of devices', (done) => {
-        ListService.call({ db: db }).then((value) => {
+        ListService.call().then((value) => {
           const { body } = value;
 
           expect(body.devices).to.eql([]);
@@ -30,7 +30,7 @@ describe('Devices Services', () => {
         });
 
         it('return one device', (done) => {
-          ListService.call({ db: db }).then((value) => {
+          ListService.call().then((value) => {
             const expectedDeviceNumber = 1;
             const { body } = value;
 
@@ -44,7 +44,7 @@ describe('Devices Services', () => {
           it('return empty list of devices', (done) => {
             const page = 2
 
-            ListService.call({ db: db, page: page }).then((value) => {
+            ListService.call({ page: page }).then((value) => {
               const { body } = value;
 
               expect(body.devices).to.eql([]);

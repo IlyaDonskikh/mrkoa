@@ -1,13 +1,12 @@
 import BaseService from '../base.service';
-import { DbInterface } from '../../typings/db_interface';
+import { Device } from '../../models/device.model';
 
 interface ListServiceBodyInterface {
   device?: object;
 }
 
-export default class ListService extends BaseService {
+export default class CreateService extends BaseService {
   // Attrs
-  db: DbInterface;
   attrs: any;
   public body: ListServiceBodyInterface = {};
 
@@ -15,7 +14,7 @@ export default class ListService extends BaseService {
   async process() {
     if (!(await this.isValid())) { return }
 
-    const device: object = await this.db.Device.create(this.attrs);
+    const device: object = await Device.create(this.attrs);
 
     this.body.device = device;
   }
@@ -36,7 +35,7 @@ export default class ListService extends BaseService {
 
     if (externalId === undefined) { return true }
 
-    const device = await this.db.Device.findOne({ where: { externalId: String(externalId) } })
+    const device = await Device.findOne({ where: { externalId: String(externalId) } })
 
     return device === null
   }
