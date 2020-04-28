@@ -27,6 +27,11 @@ export const initDevice = (sequelize: Sequelize): ModelStatic => {
       allowNull: false,
       field: 'external_id',
     },
+    externalData: {
+      type: DataTypes.JSONB,
+      defaultValue: {},
+      field: 'external_data',
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,

@@ -1,4 +1,4 @@
-import { ErrorsService } from './errors.service';
+import ErrorsService from './errors.service';
 import ErrorsInstanceInterface from '../typings/services/errors/instance.interface';
 
 export default class BaseService {

@@ -1,4 +1,4 @@
-export class ErrorsService {
+export default class ErrorsService {
   public errors: object = {};
 
   messages() {

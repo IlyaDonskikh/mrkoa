@@ -18,6 +18,8 @@ export default class CreateService extends BaseService {
   }
 
   private async validate() {
-    this.errors = await DeviceValidator.validate(this.errors, Device.build(), this.attrs);
+    this.validator = await DeviceValidator.validate(this.errors, Device.build(), this.attrs);
+
+    this.errors = this.validator.errors
   }
 }

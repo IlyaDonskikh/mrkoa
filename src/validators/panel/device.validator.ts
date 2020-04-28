@@ -1,27 +1,42 @@
 import BaseValidator from '../base.validator';
 import { Device } from '../../models/device.model';
+import { Op } from 'sequelize';
 
 export default class PanelDeviceValidator extends BaseValidator {
-  private permittedAttributes: string[] = ['externalId']
+  private permittedAttributes: string[] = ['externalId', 'externalData'];
 
   async runValidations() {
-    var externalIdUniq;
+    const externalData = this.attrs.externalData
 
-    if (this.attrs === null) { this.errors.add('attrs', 'format') }
-    if (this.attrs.externalId == undefined) { this.errors.add('externalId', 'presence') }
+    if (this.attrs === null) { this.errors.add('attrs', 'format'); }
+    if (this.attrs.externalId === undefined) { this.errors.add('externalId', 'presence'); }
+    if (externalData !== undefined && typeof externalData !== 'object' ) {
+      this.errors.add('externalData', 'format');
+    }
 
-    externalIdUniq = await (this.externalIdUniq())
+    const externalIdUniq = await (this.externalIdUniq());
 
-    if (!externalIdUniq) { this.errors.add('externalId', 'uniq') }
+    if (!externalIdUniq) { this.errors.add('externalId', 'uniq'); }
   }
 
   private async externalIdUniq() {
-    const externalId: string = this.attrs.externalId
+    const { externalId } = this.attrs;
 
-    if (externalId === undefined) { return true }
+    if (externalId === undefined) { return true; }
 
-    const device = await Device.findOne({ where: { externalId: String(externalId) } })
+    const device = await Device.findOne({
+      where: {
+        externalId: String(externalId),
+        [Op.not]: { id: this.modelInstance.id },
+      },
+    });
 
-    return device === null
+    return device === null;
+  }
+
+  private permittedUpdateAttributes() {
+    delete this.permittedAttributes.externalId;
+
+    return this.permittedAttributes;
   }
 }
