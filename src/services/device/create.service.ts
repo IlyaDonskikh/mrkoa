@@ -1,6 +1,7 @@
 import BaseService from '../base.service';
 import { Device } from '../../models/device.model';
-import { BodyInterface as ListServiceBodyInterface } from '../../typings/services/device/list_service/body.interface';
+import DeviceValidator from '../../validators/panel/device.validator';
+import ListServiceBodyInterface from '../../typings/services/device/list_service/body.interface';
 
 export default class CreateService extends BaseService {
   // Attrs
@@ -17,23 +18,6 @@ export default class CreateService extends BaseService {
   }
 
   private async validate() {
-    var externalIdUniq;
-
-    if (this.attrs === null) { this.errors.add('attrs', 'format') }
-    if (this.attrs.externalId == undefined) { this.errors.add('externalId', 'presence') }
-
-    externalIdUniq = await (this.externalIdUniq())
-
-    if (!externalIdUniq) { this.errors.add('externalId', 'uniq') }
-  }
-
-  private async externalIdUniq() {
-    const externalId: string = this.attrs.externalId
-
-    if (externalId === undefined) { return true }
-
-    const device = await Device.findOne({ where: { externalId: String(externalId) } })
-
-    return device === null
+    this.errors = await DeviceValidator.validate(this.errors, Device.build(), this.attrs);
   }
 }
