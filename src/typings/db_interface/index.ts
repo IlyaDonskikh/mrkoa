@@ -1,6 +1,5 @@
 import { Sequelize, Model, BuildOptions } from 'sequelize';
-
-type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
+import { ModelStatic } from '../../models/device.model';
 
 export interface DbInterface {
   sequelize: Sequelize;

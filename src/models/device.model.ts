@@ -2,7 +2,7 @@ import {
   Sequelize, Model, DataTypes, BuildOptions,
 } from 'sequelize';
 
-type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
+export type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
 
 export class Device extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
