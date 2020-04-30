@@ -1,6 +1,8 @@
 import { Sequelize } from 'sequelize';
 import { DbInterface } from '../typings/db_interface';
-import { initDevice } from './device.model';
+import { initModel } from './device.model';
+import { glob } from 'glob';
+import * as path from 'path';
 
 require('dotenv').config();
 
@@ -10,17 +12,14 @@ const config = require('../../db/config.json')[env];
 const createModels = (): DbInterface => {
   const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+  glob.sync(__dirname + '/**/*.model.js').forEach((file) => {
+    require(path.resolve(file)).initModel(sequelize)
+  });
+
   const db: DbInterface = {
     sequelize,
     Sequelize,
-    Device: initDevice(sequelize),
   };
-
-  Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) {
-      db[modelName].associate(db);
-    }
-  });
 
   return db;
 };

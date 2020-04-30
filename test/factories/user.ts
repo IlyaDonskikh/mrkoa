@@ -1,5 +1,5 @@
 import * as faker from 'faker';
-import models from '../../dist/models/index';
+import { Device } from '../../dist/models/device.model';
 
 const data = async (props = {}) => {
   const defaultProps = {
@@ -8,7 +8,7 @@ const data = async (props = {}) => {
   return { ...defaultProps, ...props };
 };
 
-const create = async (props = {}) => models().Device.create(await data(props));
-const build = async (props = {}) => models().Device.build(await data(props));
+const create = async (props = {}) => Device.create(await data(props));
+const build = async (props = {}) => Device.build(await data(props));
 
 export { create, build };

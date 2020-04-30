@@ -4,5 +4,4 @@ import { ModelStatic } from '../../models/device.model';
 export interface DbInterface {
   sequelize: Sequelize;
   Sequelize: any;
-  Device: ModelStatic;
 }

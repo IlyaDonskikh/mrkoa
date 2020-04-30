@@ -4,10 +4,12 @@ import {
 
 export type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
 
-export class Device extends Model {
+export class DeviceEvent extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
-
-  public externalId!: string;
+  public deviceId!: number;
+  public name!: string;
+  public value!: number;
+  public initiatedAt!: Date;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -16,34 +18,44 @@ export class Device extends Model {
 }
 
 export const initModel = (sequelize: Sequelize) => {
-  const tableName: string = 'devices'
+  const tableName: string = 'device_events'
 
-  Device.init({
+  DeviceEvent.init({
     id: {
-      type: DataTypes.INTEGER, // you can omit the `new` but this is discouraged
+      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
+      type: DataTypes.INTEGER,
     },
-    externalId: {
-      type: DataTypes.STRING,
+    name: {
       allowNull: false,
-      field: 'external_id',
+      type: DataTypes.STRING,
     },
-    externalData: {
-      type: DataTypes.JSONB,
-      defaultValue: {},
-      field: 'external_data',
+    value: {
+      allowNull: false,
+      type: DataTypes.FLOAT,
+    },
+    initiatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      field: 'initiated_at',
+    },
+    deviceId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      references: { model: 'devices', key: 'id' },
+      field: 'device_id',
     },
     createdAt: {
-      type: DataTypes.DATE,
       allowNull: false,
+      type: DataTypes.DATE,
       field: 'created_at',
     },
     updatedAt: {
-      type: DataTypes.DATE,
       allowNull: false,
+      type: DataTypes.DATE,
       field: 'updated_at',
-    },
+    }
   }, {
     sequelize,
     tableName: tableName,
