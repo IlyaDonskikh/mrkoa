@@ -29,5 +29,5 @@ function request() {
 }
 
 module.exports = {
-  server, request, expect, db, buildAuthHeaderBy,
+  request, expect, buildAuthHeaderBy,
 };

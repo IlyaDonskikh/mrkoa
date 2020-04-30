@@ -1,5 +1,5 @@
 import {
-  server, request, expect, buildAuthHeaderBy,
+  request, expect, buildAuthHeaderBy,
 } from '../../../../setup';
 import * as deviceFactory from '../../../../factories/device';
 

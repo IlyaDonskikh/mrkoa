@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import { db, expect } from '../../setup';
+import { expect } from '../../setup';
 import * as deviceFactory from '../../factories/device';
 import CreateService from '../../../dist/services/device/create.service';
 
