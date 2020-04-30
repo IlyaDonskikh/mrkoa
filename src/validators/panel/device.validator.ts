@@ -1,17 +1,17 @@
 import { _ } from 'lodash';
+import { Op } from 'sequelize';
 import BaseValidator from '../base.validator';
 import { Device } from '../../models/device.model';
-import { Op } from 'sequelize';
 
 export default class PanelDeviceValidator extends BaseValidator {
   private permittedAttributes: string[] = ['externalId', 'externalData'];
 
   async runValidations() {
-    const externalData = this.mergedAttrs.externalData
+    const { externalData } = this.mergedAttrs;
 
     if (this.mergedAttrs === null) { this.errors.add('attrs', 'format'); }
     if (this.mergedAttrs.externalId === undefined) { this.errors.add('externalId', 'presence'); }
-    if (externalData !== undefined && typeof externalData !== 'object' ) {
+    if (externalData !== undefined && typeof externalData !== 'object') {
       this.errors.add('externalData', 'format');
     }
 
@@ -36,8 +36,6 @@ export default class PanelDeviceValidator extends BaseValidator {
   }
 
   permittedUpdateAttributes() {
-    return _.remove(this.permittedAttributes, function(n) {
-      return n !== 'externalId';
-    });
+    return _.remove(this.permittedAttributes, (n) => n !== 'externalId');
   }
 }

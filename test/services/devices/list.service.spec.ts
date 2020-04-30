@@ -1,10 +1,11 @@
-import { db, expect } from '../../setup';
-import * as deviceFactory from '../../factories/user';
+/* eslint-disable no-unused-expressions */
+
+import { expect } from '../../setup';
+import * as deviceFactory from '../../factories/device';
 import ListService from '../../../dist/services/device/list.service';
 
 describe('Devices Services', () => {
   describe('List', () => {
-    // index
     describe('#call', () => {
       it('success', (done) => {
         ListService.call().then((value) => {

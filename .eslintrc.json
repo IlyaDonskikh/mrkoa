@@ -28,7 +28,9 @@
         "ts": "never",
         "tsx": "never"
       }
-   ]
+   ],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error"]
   },
   "overrides": [
     {

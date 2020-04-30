@@ -4,7 +4,9 @@ import { Device } from '../../models/device.model';
 export default class ShowService extends BaseService {
   // Attrs
   id: number;
+
   public body: object | undefined = {};
+
   public notFound: boolean = true;
 
   // Etc.
@@ -12,8 +14,8 @@ export default class ShowService extends BaseService {
     const device = await Device.findByPk(this.id);
 
     if (device) {
-      this.notFound = false
-      this.body = { device: device, time: Date.now() };
+      this.notFound = false;
+      this.body = { device, time: Date.now() };
     }
   }
 }

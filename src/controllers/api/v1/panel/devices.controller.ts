@@ -4,7 +4,7 @@ import UpdateService from '../../../../services/device/update.service';
 import ShowService from '../../../../services/device/show.service';
 
 const index = async (ctx, next) => {
-  const attrs = { page: ctx.request.query.page };
+  const attrs = { page: ctx.request.query.page, filters: ctx.request.query.filters };
   const { body } = await ListService.call(attrs);
 
   ctx.body = body;
@@ -57,4 +57,6 @@ const update = async (ctx, next) => {
   await next;
 };
 
-export { index, show, create, update };
+export {
+  index, show, create, update,
+};

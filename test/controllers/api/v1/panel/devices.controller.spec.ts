@@ -1,5 +1,5 @@
 import { server, chai, expect } from '../../../../setup';
-import * as deviceFactory from '../../../../factories/user';
+import * as deviceFactory from '../../../../factories/device';
 
 describe('Devices Controller', () => {
   // index

@@ -1,24 +1,60 @@
+/* eslint import/no-cycle: off */
+
 import {
-  Sequelize, Model, DataTypes, BuildOptions,
+  Sequelize, Model, DataTypes, BuildOptions, Association,
 } from 'sequelize';
+
+import { Device } from '../device.model';
 
 export type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
 
 export class DeviceEvent extends Model {
+  public static timestampPaticleCode: string = 'LS';
+
+  public static availableNames: Array<string> = ['AT', 'BT']; // List of particle event names
+
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.
+
   public deviceId!: number;
+
   public name!: string;
+
   public value!: number;
+
   public initiatedAt!: Date;
 
   // timestamps!
   public readonly createdAt!: Date;
 
   public readonly updatedAt!: Date;
+
+  public readonly device?: Device;
+
+  // Associations
+  public static associations: {
+    device: Association<DeviceEvent, Device>;
+  };
+
+  // Scopes
+  public static scopes = {
+    filterByDeviceId(id) {
+      return {
+        include: [
+          {
+            model: Device,
+            as: 'device',
+            where: {
+              id,
+            },
+          },
+        ],
+      };
+    },
+  };
 }
 
 export const initModel = (sequelize: Sequelize) => {
-  const tableName: string = 'device_events'
+  const tableName: string = 'device_events';
 
   DeviceEvent.init({
     id: {
@@ -55,9 +91,14 @@ export const initModel = (sequelize: Sequelize) => {
       allowNull: false,
       type: DataTypes.DATE,
       field: 'updated_at',
-    }
+    },
   }, {
+    scopes: DeviceEvent.scopes,
     sequelize,
-    tableName: tableName,
+    tableName,
   });
+};
+
+export const setupAssociations = () => {
+  DeviceEvent.belongsTo(Device, { foreignKey: 'device_id', as: 'device' });
 };

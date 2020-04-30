@@ -1,6 +1,10 @@
+/* eslint import/no-cycle: off */
+
 import {
-  Sequelize, Model, DataTypes, BuildOptions,
+  Sequelize, Model, DataTypes, BuildOptions, Association,
 } from 'sequelize';
+import { DeviceEvent } from './device/event.model';
+
 
 export type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
 
@@ -13,10 +17,16 @@ export class Device extends Model {
   public readonly createdAt!: Date;
 
   public readonly updatedAt!: Date;
+
+  public readonly events?: DeviceEvent[];
+
+  public static associations: {
+    events: Association<Device, DeviceEvent>;
+  };
 }
 
 export const initModel = (sequelize: Sequelize) => {
-  const tableName: string = 'devices'
+  const tableName: string = 'devices';
 
   Device.init({
     id: {
@@ -46,6 +56,10 @@ export const initModel = (sequelize: Sequelize) => {
     },
   }, {
     sequelize,
-    tableName: tableName,
+    tableName,
   });
+};
+
+export const setupAssociations = () => {
+  Device.hasMany(DeviceEvent, { as: 'events' });
 };

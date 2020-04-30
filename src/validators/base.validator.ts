@@ -10,6 +10,7 @@ export default class BaseValidator {
   public modelInstance: any;
 
   public attrs: object;
+
   public mergedAttrs: any;
 
   // Etc.
@@ -44,9 +45,8 @@ export default class BaseValidator {
   private buildPermittedAttributes() {
     if (this.modelInstance.id) {
       return this.permittedUpdateAttributes();
-    } else {
-      return this.permittedCreateAttributes();
     }
+    return this.permittedCreateAttributes();
   }
 
   permittedCreateAttributes() {
