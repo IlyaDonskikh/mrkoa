@@ -16,16 +16,18 @@ after(async () => {
   server.close();
 });
 
-function signIn(chai, method, path) {
-  const token = process.env.NODE_APP_TOKEN;
-  const request =
-    chai.request(server)
-        [method](path)
-        .set('Authorization', 'Bearer ' + token);
+function buildAuthHeaderBy(user) {
+  // Add user flow
 
-  return request;
+  const token = process.env.NODE_APP_TOKEN;
+
+  return ['Authorization', `Bearer ${token}`];
+}
+
+function request() {
+  return chai.request(server);
 }
 
 module.exports = {
-  server, chai, expect, db, signIn,
+  server, request, expect, db, buildAuthHeaderBy,
 };

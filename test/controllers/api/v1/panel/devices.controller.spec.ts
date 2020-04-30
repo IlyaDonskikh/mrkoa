@@ -1,22 +1,18 @@
 import {
-  server, chai, expect, signIn,
+  server, request, expect, buildAuthHeaderBy,
 } from '../../../../setup';
 import * as deviceFactory from '../../../../factories/device';
 
-let request;
-
 describe('Devices Controller', () => {
+  const authHeader = buildAuthHeaderBy(null);
+
   // index
   describe('#index', () => {
-    let path;
+    const path = '/api/v1/panel/devices';
 
-    beforeEach('Setup path', () => {
-      path = '/api/v1/panel/devices';
-    });
-
-    context('when user not signed in', () => {
+    context('when auth header not passed', () => {
       it('return 422 response', (done) => {
-        chai.request(server)
+        request()
           .get(path)
           .end((err, res) => {
             expect(res).to.have.status(422);
@@ -25,13 +21,11 @@ describe('Devices Controller', () => {
       });
     });
 
-    context('when user signed in', () => {
-      beforeEach('Sign in and setup request path', async () => {
-        request = signIn(chai, 'get', path);
-      });
-
+    context('when auth header passed', () => {
       it('return 200 response', (done) => {
-        request
+        request()
+          .get(path)
+          .set(...authHeader)
           .end((err, res) => {
             expect(res).to.have.status(200);
             done();
@@ -39,7 +33,9 @@ describe('Devices Controller', () => {
       });
 
       it('return empty devices list', (done) => {
-        request
+        request()
+          .get(path)
+          .set(...authHeader)
           .end((err, res) => {
             expect(res.body.devices).to.eql([]);
             done();
@@ -62,12 +58,10 @@ describe('Devices Controller', () => {
         path = `/api/v1/panel/devices/${device.id}`;
       });
 
-      beforeEach('Sign in and setup request path', async () => {
-        request = signIn(chai, 'get', path);
-      });
-
       it('return 200 response', (done) => {
-        request
+        request()
+          .get(path)
+          .set(...authHeader)
           .end((err, res) => {
             expect(res).to.have.status(200);
             done();
@@ -82,12 +76,10 @@ describe('Devices Controller', () => {
       const path = '/api/v1/panel/devices';
       const deviceAttrs = { externalId: 'test' };
 
-      beforeEach('Sign in and setup request path', async () => {
-        request = signIn(chai, 'post', path);
-      });
-
       it('return 200 response', (done) => {
-        request
+        request()
+          .post(path)
+          .set(...authHeader)
           .send({ device: deviceAttrs })
           .end((err, res) => {
             expect(res).to.have.status(200);
@@ -101,7 +93,9 @@ describe('Devices Controller', () => {
         });
 
         it('return 422 response', (done) => {
-          request
+          request()
+            .post(path)
+            .set(...authHeader)
             .send({ device: deviceAttrs })
             .end((err, res) => {
               expect(res).to.have.status(422);
@@ -127,12 +121,11 @@ describe('Devices Controller', () => {
         path = `/api/v1/panel/devices/${device.id}`;
       });
 
-      beforeEach('Sign in and setup request path', async () => {
-        request = signIn(chai, 'put', path);
-      });
-
       it('return 200 response', (done) => {
-        request
+        request()
+          .put(path)
+          .set(...authHeader)
+          .send({ device: deviceAttrs })
           .end((err, res) => {
             expect(res).to.have.status(200);
             done();
