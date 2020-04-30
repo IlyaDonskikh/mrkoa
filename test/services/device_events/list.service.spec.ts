@@ -40,7 +40,7 @@ describe('Device Events Services', () => {
           });
 
           it('success', (done) => {
-            ListService.call({ filters }).then((value) => {
+            ListService.call({ filters: filters }).then((value) => {
               expect(value.isSuccess()).to.be.true;
 
               done();
@@ -48,7 +48,7 @@ describe('Device Events Services', () => {
           });
 
           it('return one device event', (done) => {
-            ListService.call({ filters }).then((value) => {
+            ListService.call({ filters: filters }).then((value) => {
               const expectedDeviceNumber = 1;
               const { body } = value;
 
@@ -64,7 +64,7 @@ describe('Device Events Services', () => {
             });
 
             it('success', (done) => {
-              ListService.call({ filters }).then((value) => {
+              ListService.call({ filters: filters }).then((value) => {
                 expect(value.isSuccess()).to.be.true;
 
                 done();
@@ -72,7 +72,7 @@ describe('Device Events Services', () => {
             });
 
             it('return zero device events', (done) => {
-              ListService.call({ filters }).then((value) => {
+              ListService.call({ filters: filters }).then((value) => {
                 const expectedDeviceNumber = 0;
                 const { body } = value;
 
