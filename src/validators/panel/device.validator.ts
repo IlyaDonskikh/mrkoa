@@ -35,7 +35,7 @@ export default class PanelDeviceValidator extends BaseValidator {
     return device === null;
   }
 
-  private permittedUpdateAttributes() {
+  permittedUpdateAttributes() {
     return _.remove(this.permittedAttributes, function(n) {
       return n !== 'externalId';
     });

@@ -10,7 +10,7 @@ export default class BaseValidator {
   public modelInstance: any;
 
   public attrs: object;
-  public mergedAttrs: object;
+  public mergedAttrs: any;
 
   // Etc.
   constructor(errors: ErrorsInstanceInterface, modelInstance: any, attrs: object) {
@@ -49,11 +49,11 @@ export default class BaseValidator {
     }
   }
 
-  private permittedCreateAttributes() {
+  permittedCreateAttributes() {
     return this.permittedAttributes;
   }
 
-  private permittedUpdateAttributes() {
+  permittedUpdateAttributes() {
     return this.permittedAttributes;
   }
 }

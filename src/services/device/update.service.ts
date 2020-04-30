@@ -2,12 +2,13 @@ import BaseService from '../base.service';
 import { Device } from '../../models/device.model';
 import DeviceValidator from '../../validators/panel/device.validator';
 import ListServiceBodyInterface from '../../typings/services/device/list_service/body.interface';
+import { Model } from 'sequelize';
 
 export default class UpdateService extends BaseService {
   // Attrs
   id: number;
   attrs: any;
-  device: object;
+  device: Model;
   validator: any;
   public body: ListServiceBodyInterface = {};
 
