@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 
 module.exports = {
   up: (queryInterface) => queryInterface.createTable('devices', {
