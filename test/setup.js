@@ -16,6 +16,16 @@ after(async () => {
   server.close();
 });
 
+function signIn(chai, method, path) {
+  const token = process.env.NODE_APP_TOKEN;
+  const request =
+    chai.request(server)
+        [method](path)
+        .set('Authorization', 'Bearer ' + token);
+
+  return request;
+}
+
 module.exports = {
-  server, chai, expect, db,
+  server, chai, expect, db, signIn,
 };

@@ -1,8 +1,25 @@
 import * as Router from 'koa-router';
 import v1Routes from './v1/index';
+import UserFindByAuthorizationService from '../../services/user/find.by.authorization.header.service';
 
 const router = new Router();
 
+async function hello(ctx, next) {
+  const authorizationHeader = ctx.request.headers.authorization
+  const service = await UserFindByAuthorizationService.call({
+    authorizationHeader: authorizationHeader
+  });
+
+  if (service.isSuccess()) {
+    // ctx.currentUser = 'hello'
+
+    await next();
+  } else {
+    return ctx.status = 422
+  }
+}
+
+router.use('/', hello)
 
 router.get('/', async (ctx, next) => {
   ctx.body = { version: 'v1', status: 'current version' };
