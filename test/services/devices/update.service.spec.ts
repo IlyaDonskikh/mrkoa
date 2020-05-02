@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 
 import { expect } from '../../setup';
-import * as deviceFactory from '../../factories/device';
+import * as deviceFactory from '../../factories/device.factory';
 import UpdateService from '../../../dist/services/device/update.service';
 
 describe('Devices Services', () => {

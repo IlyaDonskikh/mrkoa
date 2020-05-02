@@ -1,12 +1,10 @@
 /* eslint import/no-cycle: off */
 
 import {
-  Sequelize, Model, DataTypes, BuildOptions, Association,
+  Sequelize, Model, DataTypes, Association,
 } from 'sequelize';
 
 import { Device } from '../device.model';
-
-export type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
 
 export class DeviceEvent extends Model {
   public static timestampPaticleCode: string = 'LS';

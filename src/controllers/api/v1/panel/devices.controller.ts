@@ -32,7 +32,7 @@ const create = async (ctx, next) => {
   const service = await CreateService.call(attrs);
 
   if (service.isSuccess()) {
-    ctx.body = service.body;
+    ctx.body = { device: service.device };
     ctx.status = 200;
   } else {
     ctx.body = { errors: service.errors.messages() };
@@ -47,7 +47,7 @@ const update = async (ctx, next) => {
   const service = await UpdateService.call(attrs);
 
   if (service.isSuccess()) {
-    ctx.body = service.body;
+    ctx.body = { device: service.device };
     ctx.status = 200;
   } else {
     ctx.body = { errors: service.errors.messages() };

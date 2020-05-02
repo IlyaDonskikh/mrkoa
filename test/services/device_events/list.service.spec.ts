@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-expressions */
 
 import { expect } from '../../setup';
-import * as deviceFactory from '../../factories/device';
-import * as deviceEventFactory from '../../factories/device.event';
+import * as deviceFactory from '../../factories/device.factory';
+import * as deviceEventFactory from '../../factories/device.event.factory';
 import ListService from '../../../dist/services/device_event/list.service';
 
 describe('Device Events Services', () => {

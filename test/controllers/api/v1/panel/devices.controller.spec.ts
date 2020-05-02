@@ -1,21 +1,31 @@
 import {
   request, expect, buildAuthHeaderBy,
 } from '../../../../setup';
-import * as deviceFactory from '../../../../factories/device';
+import * as deviceFactory from '../../../../factories/device.factory';
+import * as userFactory from '../../../../factories/user.factory';
 
 describe('Devices Controller', () => {
-  const authHeader = buildAuthHeaderBy(null);
+  let user;
+  let authHeader: string[];
+
+  beforeEach('Setup device', async () => {
+    user = await userFactory.create();
+  });
+
+  beforeEach('Setup authHeader', async () => {
+    authHeader = buildAuthHeaderBy(user);
+  });
 
   // index
   describe('#index', () => {
     const path = '/api/v1/panel/devices';
 
     context('when auth header not passed', () => {
-      it('return 422 response', (done) => {
+      it('return 403 response', (done) => {
         request()
           .get(path)
           .end((err, res) => {
-            expect(res).to.have.status(422);
+            expect(res).to.have.status(403);
             done();
           });
       });
@@ -25,7 +35,7 @@ describe('Devices Controller', () => {
       it('return 200 response', (done) => {
         request()
           .get(path)
-          .set(...authHeader)
+          .set(authHeader[0], authHeader[1])
           .end((err, res) => {
             expect(res).to.have.status(200);
             done();
@@ -35,7 +45,7 @@ describe('Devices Controller', () => {
       it('return empty devices list', (done) => {
         request()
           .get(path)
-          .set(...authHeader)
+          .set(authHeader[0], authHeader[1])
           .end((err, res) => {
             expect(res.body.devices).to.eql([]);
             done();
@@ -61,7 +71,7 @@ describe('Devices Controller', () => {
       it('return 200 response', (done) => {
         request()
           .get(path)
-          .set(...authHeader)
+          .set(authHeader[0], authHeader[1])
           .end((err, res) => {
             expect(res).to.have.status(200);
             done();
@@ -72,17 +82,29 @@ describe('Devices Controller', () => {
 
   // create
   describe('#create', () => {
+    function createRequest(path: string, deviceAttrs: object) {
+      return request()
+        .post(path)
+        .set(authHeader[0], authHeader[1])
+        .send({ device: deviceAttrs });
+    }
+
     context('when one device exists', () => {
       const path = '/api/v1/panel/devices';
       const deviceAttrs = { externalId: 'test' };
 
       it('return 200 response', (done) => {
-        request()
-          .post(path)
-          .set(...authHeader)
-          .send({ device: deviceAttrs })
+        createRequest(path, deviceAttrs)
           .end((err, res) => {
             expect(res).to.have.status(200);
+            done();
+          });
+      });
+
+      it('return device', (done) => {
+        createRequest(path, deviceAttrs)
+          .end((err, res) => {
+            expect(res.body.device).to.have.any.keys('id', 'externalId');
             done();
           });
       });
@@ -93,10 +115,7 @@ describe('Devices Controller', () => {
         });
 
         it('return 422 response', (done) => {
-          request()
-            .post(path)
-            .set(...authHeader)
-            .send({ device: deviceAttrs })
+          createRequest(path, deviceAttrs)
             .end((err, res) => {
               expect(res).to.have.status(422);
               done();
@@ -109,8 +128,8 @@ describe('Devices Controller', () => {
   // Update
   describe('#update', () => {
     context('when one device exists', () => {
-      let path;
-      let device;
+      let path: string;
+      let device: any;
       const deviceAttrs = { externalDate: { test: 'test' } };
 
       beforeEach('Create device', async () => {
@@ -124,7 +143,7 @@ describe('Devices Controller', () => {
       it('return 200 response', (done) => {
         request()
           .put(path)
-          .set(...authHeader)
+          .set(authHeader[0], authHeader[1])
           .send({ device: deviceAttrs })
           .end((err, res) => {
             expect(res).to.have.status(200);

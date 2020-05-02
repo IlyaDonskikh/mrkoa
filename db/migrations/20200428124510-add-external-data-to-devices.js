@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 
 module.exports = {
-  up: (queryInterface) => queryInterface.addColumn(
+  up: (queryInterface, Sequelize) => queryInterface.addColumn(
     'devices',
     'external_data',
     { type: Sequelize.DataTypes.JSONB, defaultValue: {} }
   ),
-  down: (queryInterface) => queryInterface.removeColumn('devices', 'external_data'),
+  down: (queryInterface, Sequelize) => queryInterface.removeColumn('devices', 'external_data'),
 };

@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import apiRoutes from './api/index';
+import apiRoutes from './api/index.router';
 
 const router = new Router();
 

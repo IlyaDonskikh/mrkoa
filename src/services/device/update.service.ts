@@ -2,7 +2,6 @@ import { Model } from 'sequelize';
 import BaseService from '../base.service';
 import { Device } from '../../models/device.model';
 import DeviceValidator from '../../validators/panel/device.validator';
-import ListServiceBodyInterface from '../../typings/services/device/list_service/body.interface';
 
 export default class UpdateService extends BaseService {
   // Attrs
@@ -10,11 +9,9 @@ export default class UpdateService extends BaseService {
 
   attrs: any;
 
-  device: Model;
-
   validator: any;
 
-  public body: ListServiceBodyInterface = {};
+  public device: Device;
 
   // Etc.
   async process() {
@@ -22,9 +19,7 @@ export default class UpdateService extends BaseService {
 
     if (!(await this.isValid())) { return; }
 
-    await this.device.update(this.validator.attrs);
-
-    this.body.device = this.device;
+    this.device = await this.device.update(this.validator.attrs);
   }
 
   private async validate() {

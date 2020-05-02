@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 
 import { expect } from '../../setup';
-import * as deviceFactory from '../../factories/device';
+import * as deviceFactory from '../../factories/device.factory';
 import CreateService from '../../../dist/services/device/create.service';
 
 describe('Devices Services', () => {
@@ -14,7 +14,6 @@ describe('Devices Services', () => {
 
     const deviceAttrs = { externalId: 'a' };
 
-    // index
     describe('#call', () => {
       it('success', (done) => {
         serviceCall(deviceAttrs).then((value) => {
@@ -33,7 +32,7 @@ describe('Devices Services', () => {
       });
 
       context('when deviceAttrs not contains externalId', () => {
-        beforeEach('Clean Database', () => {
+        beforeEach('Remove externalId', () => {
           delete deviceAttrs.externalId;
         });
 

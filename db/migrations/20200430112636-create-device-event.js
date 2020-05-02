@@ -44,7 +44,8 @@ module.exports = {
         }
       }, { transaction });
 
-      await queryInterface.addIndex('device_events', ['device_id', 'value'], { transaction });
+      await queryInterface.addIndex('device_events', ['device_id'], { fields: 'device_id', transaction });
+      await queryInterface.addIndex('device_events', ['value'], { fields: 'value', transaction });
 
       await transaction.commit();
     } catch (err) {
@@ -52,5 +53,5 @@ module.exports = {
       throw err;
     }
   },
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('DeviceEvents'),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('device_events'),
 };

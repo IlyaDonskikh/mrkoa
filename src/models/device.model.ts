@@ -1,12 +1,9 @@
 /* eslint import/no-cycle: off */
 
 import {
-  Sequelize, Model, DataTypes, BuildOptions, Association,
+  Sequelize, Model, DataTypes, Association,
 } from 'sequelize';
 import { DeviceEvent } from './device/event.model';
-
-
-export type ModelStatic = typeof Model & (new(values?: object, options?: BuildOptions) => Model);
 
 export class Device extends Model {
   public id!: number; // Note that the `null assertion` `!` is required in strict mode.

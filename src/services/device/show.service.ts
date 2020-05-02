@@ -11,7 +11,7 @@ export default class ShowService extends BaseService {
 
   // Etc.
   async process() {
-    const device = await Device.findByPk(this.id);
+    const device: Device = await Device.findByPk(this.id);
 
     if (device) {
       this.notFound = false;

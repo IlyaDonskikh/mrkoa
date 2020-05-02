@@ -1,21 +1,20 @@
 import BaseService from '../base.service';
 import { Device } from '../../models/device.model';
 import DeviceValidator from '../../validators/panel/device.validator';
-import ListServiceBodyInterface from '../../typings/services/device/list_service/body.interface';
 
 export default class CreateService extends BaseService {
   // Attrs
   attrs: any;
 
-  public body: ListServiceBodyInterface = {};
+  private validator: any;
+
+  public device: Device;
 
   // Etc.
   async process() {
     if (!(await this.isValid())) { return; }
 
-    const device: object = await Device.create(this.attrs);
-
-    this.body.device = device;
+    this.device = await Device.create(this.validator.attrs);
   }
 
   private async validate() {
