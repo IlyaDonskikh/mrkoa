@@ -1,4 +1,3 @@
-import { Model } from 'sequelize';
 import BaseService from '../base.service';
 import { Device } from '../../models/device.model';
 import DeviceValidator from '../../validators/panel/device.validator';

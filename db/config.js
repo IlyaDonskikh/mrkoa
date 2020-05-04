@@ -1,10 +1,12 @@
+require('dotenv').config();
+
 module.exports = {
   development: {
-    url: 'postgres://localhost:5432/aircon_development',
+    url: process.env.DATABASE_DEVELOPMENT_URL,
     dialect: 'postgres',
   },
   test: {
-    url: 'postgres://localhost:5432/aircon_test',
+    url: process.env.DATABASE_TEST_URL,
     dialect: 'postgres',
     logging: false,
   },
