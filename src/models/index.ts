@@ -8,7 +8,7 @@ require('dotenv').config();
 const env = process.env.NODE_ENV;
 const models: Array<any> = [];
 
-const config = require('../../db/config.json')[env];
+const config = require('../../db/config.js')[env];
 
 glob.sync(`${__dirname}/**/*.model.js`).forEach((file) => {
   const model = require(path.resolve(file)); // eslint-disable-line
@@ -16,7 +16,7 @@ glob.sync(`${__dirname}/**/*.model.js`).forEach((file) => {
 });
 
 const createModels = (): DbInterface => {
-  const sequelize = new Sequelize(config.database, config.username, config.password, config);
+  const sequelize = new Sequelize(config.url, config);
 
   models.forEach((model) => {
     model.initModel(sequelize);
