@@ -50,7 +50,8 @@
     "lint": "eslint test/**/*.ts src/**/*.ts --fix",
     "test": "mocha -r ts-node/register test/**/*.spec.ts --exit  --recursive",
     "spec": "mocha -r ts-node/register --exit  --recursive",
-    "tsc": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "",
