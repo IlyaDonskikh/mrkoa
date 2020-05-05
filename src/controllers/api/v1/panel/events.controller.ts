@@ -1,13 +1,9 @@
-const index = async (ctx, next) => {
+const index = async (ctx) => {
   ctx.body = { events: [], time: Date.now() };
-
-  await next;
 };
 
-const show = async (ctx, next) => {
+const show = async (ctx) => {
   ctx.body = { events: [], time: Date.now() };
-
-  await next;
 };
 
 export { index, show };

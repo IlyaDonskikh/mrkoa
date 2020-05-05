@@ -3,10 +3,8 @@ import v1Routes from './v1/index.router';
 
 const router = new Router();
 
-router.get('/', async (ctx, next) => {
+router.get('/', async (ctx) => {
   ctx.body = { version: 'v1', status: 'current version' };
-
-  await next();
 });
 
 // Api V1
