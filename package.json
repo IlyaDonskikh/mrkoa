@@ -52,8 +52,7 @@
     "spec": "mocha -r ts-node/register --exit  --recursive",
     "start": "node index.js",
     "migrate": "sequelize db:migrate",
-    "build": "tsc && npm run migrate",
-    "postinstall": "npm run build"
+    "build": "tsc && npm run migrate"
   },
   "keywords": [],
   "author": "",
