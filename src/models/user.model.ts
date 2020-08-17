@@ -11,6 +11,8 @@ export class User extends Model {
 
   public token!: string;
 
+  public tokenJWT: string;
+
   // timestamps!
   public readonly createdAt!: Date;
 
@@ -41,6 +43,9 @@ export const initModel = (sequelize: Sequelize) => {
     },
     token: {
       type: DataTypes.STRING,
+    },
+    tokenJWT: {
+      type: DataTypes.VIRTUAL,
     },
     createdAt: {
       allowNull: false,

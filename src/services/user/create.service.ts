@@ -1,7 +1,7 @@
 import BaseService from '../base.service';
 import EncryptPasswordService from './encrypt.password.service';
 import { User } from '../../models/user.model';
-import UserValidator from '../../validators/panel/user.validator';
+import UserValidator from '../../validators/base/user.validator';
 
 export default class CreateService extends BaseService {
   // Attrs

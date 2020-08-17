@@ -1,6 +1,5 @@
 import * as Router from 'koa-router';
-import devicesRoutes from './devices.router';
-import eventsRoutes from './events.router';
+import usersRoutes from './users.router';
 import auth from '../../../helpers/auth.router.helper';
 
 const router = new Router();
@@ -9,10 +8,7 @@ const router = new Router();
 router.use('/', auth);
 
 // Devices
-router.use('/devices', devicesRoutes);
-
-// Events
-router.use('/events', eventsRoutes);
+router.use('/users', usersRoutes);
 
 // Export
 export default router.routes();

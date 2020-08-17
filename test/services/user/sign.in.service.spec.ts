@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-expressions */
 
-import { expect, buildAuthHeaderBy } from '../../setup';
+import { expect } from '../../setup';
 import * as userFactory from '../../factories/user.factory';
-import SignInservice from '../../../dist/services/user/sign.in.service';
+import SignInService from '../../../dist/services/user/sign.in.service';
 
 describe('User Services', () => {
   describe('SignIn', () => {
@@ -20,7 +20,7 @@ describe('User Services', () => {
       });
 
       it('success', async () => {
-        const service = await SignInservice.call({
+        const service = await SignInService.call({
           email: user.email,
           password,
         });
@@ -30,7 +30,7 @@ describe('User Services', () => {
 
       it('change token', async () => {
         const oldToken = user.token;
-        await SignInservice.call({
+        await SignInService.call({
           email: user.email,
           password,
         });
@@ -42,14 +42,16 @@ describe('User Services', () => {
       });
 
       it('return user', async () => {
-        const service = await SignInservice.call({
+        const service = await SignInService.call({
           email: user.email,
           password,
         });
+        const serviceUser = service.user.toJSON();
 
         await user.reload();
+        delete serviceUser.tokenJWT;
 
-        expect(service.user.toJSON()).to.eql(user.toJSON());
+        expect(serviceUser).to.eql(user.toJSON());
       });
 
       context('when password are wrong', () => {
@@ -61,13 +63,22 @@ describe('User Services', () => {
         });
 
         it('fail', async () => {
-          const service = await SignInservice.call(attrs);
+          const service = await SignInService.call(attrs);
 
           expect(service.isFailed()).to.be.true;
         });
 
+        it('return localized password error', async () => {
+          // ToDo: localization
+
+          // const service = await SignInService.call(attrs);
+          // const passwordErrors = service.errors.messages().password;
+
+          // expect(passwordErrors).to.include('doesn\'t valid or match email');
+        });
+
         it('return password error', async () => {
-          const service = await SignInservice.call(attrs);
+          const service = await SignInService.call(attrs);
           const passwordErrors = service.errors.errors.password;
 
           expect(passwordErrors).to.include('valid');
@@ -83,13 +94,13 @@ describe('User Services', () => {
         });
 
         it('fail', async () => {
-          const service = await SignInservice.call(attrs);
+          const service = await SignInService.call(attrs);
 
           expect(service.isFailed()).to.be.true;
         });
 
         it('return password error', async () => {
-          const service = await SignInservice.call(attrs);
+          const service = await SignInService.call(attrs);
           const passwordErrors = service.errors.errors.password;
 
           expect(passwordErrors).to.include('valid');
@@ -105,13 +116,13 @@ describe('User Services', () => {
         });
 
         it('fail', async () => {
-          const service = await SignInservice.call(attrs);
+          const service = await SignInService.call(attrs);
 
           expect(service.isFailed()).to.be.true;
         });
 
         it('return email error', async () => {
-          const service = await SignInservice.call(attrs);
+          const service = await SignInService.call(attrs);
           const emailErrors = service.errors.errors.email;
 
           expect(emailErrors).to.include('find');

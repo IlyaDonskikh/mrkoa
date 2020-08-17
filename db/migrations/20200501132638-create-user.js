@@ -8,12 +8,12 @@ module.exports = {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER
+          type: Sequelize.INTEGER,
         },
         email: {
           allowNull: false,
           type: Sequelize.STRING,
-          unique : true
+          unique: true,
         },
         password: {
           allowNull: false,
@@ -25,16 +25,18 @@ module.exports = {
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          field: 'created_at'
+          field: 'created_at',
         },
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          field: 'updated_at'
-        }
+          field: 'updated_at',
+        },
       });
 
-      await queryInterface.sequelize.query('CREATE UNIQUE INDEX ON users (token) WHERE token IS NOT NULL;', { transaction });
+      await queryInterface.addIndex('users', ['token'], {
+        fields: 'token', unique: true, where: { token: { [Sequelize.Op.ne]: null } }, transaction,
+      });
 
       await transaction.commit();
     } catch (err) {

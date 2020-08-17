@@ -1,4 +1,4 @@
-import { _ } from 'lodash';
+import * as _ from 'lodash';
 import ErrorsInstanceInterface from '../typings/services/errors/instance.interface';
 
 export default class BaseValidator {
@@ -9,7 +9,7 @@ export default class BaseValidator {
 
   public modelInstance: any;
 
-  public attrs: object;
+  public attrs: object | any;
 
   public mergedAttrs: any;
 

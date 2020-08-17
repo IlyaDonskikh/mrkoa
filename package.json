@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@types/bluebird": "^3.5.30",
-    "@types/validator": "^13.0.0",
+    "@types/validator": "^13.1.0",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
@@ -19,11 +19,12 @@
     "koa-router": "^8.0.8",
     "lodash": "^4.17.15",
     "nyc": "^15.0.1",
-    "pg": "^8.0.2",
+    "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.3.4",
-    "umzug": "^2.3.0"
+    "umzug": "^2.3.0",
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

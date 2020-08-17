@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
 import BaseService from '../base.service';
 import { User } from '../../models/user.model';
 
@@ -8,6 +9,8 @@ export default class SignInService extends BaseService {
   email: string | undefined;
 
   password: string | undefined;
+
+  protected localePath = 'services.user.signInService';
 
   private token: string | null = null;
 
@@ -22,6 +25,8 @@ export default class SignInService extends BaseService {
     await this.assignNewUniqToken();
 
     this.user = await this.user.update({ token: this.token });
+
+    this.assignJwtTokenToUser();
   }
 
   private async assignNewUniqToken() {
@@ -35,6 +40,13 @@ export default class SignInService extends BaseService {
       if (!user) { this.token = token; }
     }
     /* eslint-disable no-await-in-loop */
+  }
+
+  private assignJwtTokenToUser() {
+    const secret = process.env.NODE_APP_TOKEN;
+    const tokenJWT = jwt.sign({ userToken: this.user.token }, secret);
+
+    this.user.tokenJWT = tokenJWT;
   }
 
   private async validate() {

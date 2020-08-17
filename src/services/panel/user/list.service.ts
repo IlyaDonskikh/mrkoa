@@ -1,7 +1,7 @@
-import BaseService from '../base.service';
-import { Device } from '../../models/device.model';
+import BaseService from '../../base.service';
+import { User } from '../../../models/user.model';
 
-export default class ListService extends BaseService {
+export default class PanelUserListService extends BaseService {
   // Attrs
   page: number;
 
@@ -14,22 +14,22 @@ export default class ListService extends BaseService {
   // Etc.
   async process() {
     const page = this.page || this.defaultPage;
-    const devices = await Device.findAndCountAll({
+    const users = await User.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (page - 1),
       order: [['created_at', 'DESC']],
     });
 
-    this.body = this.buildBodyBy(devices, page);
+    this.body = this.buildBodyBy(users, page);
   }
 
-  private buildBodyBy(devices, page) {
+  private buildBodyBy(users, page) {
     return {
-      devices: devices.rows,
+      users: users.rows,
       page,
       itemsPerPage: this.defaultItemsPerPage,
-      totalPages: Math.ceil(devices.count / (this.defaultItemsPerPage * page)),
-      totalItems: devices.count,
+      totalPages: Math.ceil(users.count / (this.defaultItemsPerPage * page)),
+      totalItems: users.count,
       time: Date.now(),
     };
   }

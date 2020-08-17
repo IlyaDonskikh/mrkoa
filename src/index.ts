@@ -7,13 +7,15 @@ import router from './routers/index';
 
 require('dotenv').config();
 
+// ToDo handle queries by QS.
+
 const app = new Koa();
 const db = createModels();
 
 // Context
 app.context.db = db;
 
-// Middlewares
+// Middleware
 if (process.env.NODE_ENV !== 'test') { app.use(logger()); }
 app.use(json());
 app.use(bodyParser());

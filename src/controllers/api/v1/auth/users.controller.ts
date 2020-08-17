@@ -1,12 +1,12 @@
 import SignInService from '../../../../services/user/sign.in.service';
 import SignOutService from '../../../../services/user/sign.out.service';
+import UserAuthSerializer from '../../../../serializers/user/auth.serializer';
 
 const create = async (ctx, next) => {
   const service = await SignInService.call(ctx.request.body);
 
   if (service.isSuccess()) {
-    ctx.body = { user: service.user };
-    ctx.status = 200;
+    ctx.body = { user: await UserAuthSerializer.serialize(service.user) };
   } else {
     ctx.body = { errors: service.errors.messages() };
     ctx.status = 422;

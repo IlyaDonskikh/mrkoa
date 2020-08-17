@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 
-import { expect, buildAuthHeaderBy } from '../../setup';
-import * as userFactory from '../../factories/user.factory';
 import SignOutService from '../../../dist/services/user/sign.out.service';
+import * as userFactory from '../../factories/user.factory';
+import { expect } from '../../setup';
 
 describe('User Services', () => {
-  describe('SignIn', () => {
+  describe('SignOut', () => {
     let user: any;
     let password: string;
     let attrs: object;

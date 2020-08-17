@@ -4,6 +4,7 @@ import {
   request, expect, buildAuthHeaderBy,
 } from '../../../../setup';
 import * as userFactory from '../../../../factories/user.factory';
+import { User } from '../../../../../dist/models/user.model';
 
 describe('Users Controller', () => {
   let user: any;
@@ -29,24 +30,20 @@ describe('Users Controller', () => {
         });
     }
 
-    it('return 200 response', (done) => {
-      createRequest()
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          done();
-        });
+    it('return 200 response', async () => {
+      const currentRequest = await createRequest();
+
+      expect(currentRequest).to.have.status(200);
     });
 
-    it('return token', (done) => {
-      createRequest()
-        .end((err, res) => {
-          expect(res.body.user.token).not.to.be.undefined;
-          done();
-        });
+    it('return tokenJWT', async () => {
+      const currentRequest = await createRequest();
+
+      expect(currentRequest.body.user.tokenJWT).not.to.be.undefined;
     });
   });
 
-  // destory
+  // destroy
   describe('#destroy', () => {
     beforeEach('Setup path', async () => {
       path = '/api/v1/auth/sign_out';
@@ -58,12 +55,10 @@ describe('Users Controller', () => {
     }
 
     context('when auth header not passed', () => {
-      it('return 403 response', (done) => {
-        destroyRequest()
-          .end((err, res) => {
-            expect(res).to.have.status(403);
-            done();
-          });
+      it('return 403 response', async () => {
+        const currentRequest = await destroyRequest();
+
+        expect(currentRequest).to.have.status(403);
       });
     });
 
@@ -72,13 +67,11 @@ describe('Users Controller', () => {
         authHeader = buildAuthHeaderBy(user);
       });
 
-      it('return 200 response', (done) => {
-        destroyRequest()
-          .set(authHeader[0], authHeader[1])
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            done();
-          });
+      it('return 200 response', async () => {
+        const currentRequest = await destroyRequest()
+          .set(authHeader[0], authHeader[1]);
+
+        expect(currentRequest).to.have.status(200);
       });
     });
   });
