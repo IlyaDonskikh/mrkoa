@@ -71,8 +71,7 @@ export const initModel = (sequelize: Sequelize) => {
 
         if (!token) return '';
 
-
-        return jwt.sign({ userToken: this.user.token }, secret);
+        return jwt.sign({ sessionToken: token }, secret);
       },
     },
     userId: {

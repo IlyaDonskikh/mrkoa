@@ -1,25 +1,27 @@
 /* eslint-disable no-unused-expressions */
 
-import { expect, buildAuthHeaderBy } from '../../setup';
-import * as userFactory from '../../factories/user.factory';
 import FindByAuthorizationService from '../../../dist/services/user/find.by.authorization.header.service';
+import * as userFactory from '../../factories/user.factory';
+import { buildAuthHeaderBy, expect } from '../../setup';
 
 describe('User Services', () => {
   describe('FindByAuthorization', () => {
-    function buildServiceAttrsBy(user) {
-      return buildAuthHeaderBy(user)[1];
+    async function buildAuthorizationHeader(user: any) {
+      const header = (await buildAuthHeaderBy(user))[1];
+
+      return header;
     }
 
     let user: any;
 
-    beforeEach('Setup user', async () => {
+    beforeEach('Setup session', async () => {
       user = await userFactory.create();
     });
 
     describe('#call', () => {
       it('success', async () => {
         const service = await FindByAuthorizationService.call({
-          authorizationHeader: buildServiceAttrsBy(user),
+          authorizationHeader: await buildAuthorizationHeader(user),
         });
 
         expect(service.isSuccess()).to.be.true;
@@ -41,29 +43,6 @@ describe('User Services', () => {
           const tokenErrors = service.errors.errors.token;
 
           expect(tokenErrors).to.include('blank');
-        });
-      });
-
-      context('when passed token of not existed user', () => {
-        beforeEach('Change header', async () => {
-          user = await userFactory.build();
-        });
-
-        it('fail', async () => {
-          const service = await FindByAuthorizationService.call({
-            authorizationHeader: buildServiceAttrsBy(user),
-          });
-
-          expect(service.isFailed()).to.be.true;
-        });
-
-        it('return token user error', async () => {
-          const service = await FindByAuthorizationService.call({
-            authorizationHeader: buildServiceAttrsBy(user),
-          });
-          const tokenErrors = service.errors.errors.token;
-
-          expect(tokenErrors).to.include('user');
         });
       });
     });

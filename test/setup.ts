@@ -3,6 +3,7 @@
 import * as chai from 'chai';
 import * as jwt from 'jsonwebtoken';
 import * as app from '../dist/index';
+import * as sessionFactory from './factories/user/session.factory';
 
 import chaiHttp = require('chai-http');
 
@@ -18,11 +19,10 @@ after(async () => {
   server.close();
 });
 
-function buildAuthHeaderBy(user) {
-  const secret = process.env.NODE_APP_TOKEN;
-  const token = jwt.sign({ userToken: user.token }, secret);
+async function buildAuthHeaderBy(user: any): Promise<Array<String>> {
+  const session: any = await sessionFactory.create({ userId: user.id });
 
-  return ['Authorization', `Bearer ${token}`];
+  return ['Authorization', `Bearer ${session.tokenJWT}`];
 }
 
 function buildGatewayParticleAuthHeader() {

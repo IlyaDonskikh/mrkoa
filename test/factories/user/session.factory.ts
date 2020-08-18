@@ -4,7 +4,7 @@ import * as userFactory from '../user.factory';
 
 const data = async (props: any = {}) => {
   const defaultProps: object | any = {
-    token: faker.name.findName(),
+    token: faker.lorem.word(),
   };
 
   if (!props.userId) {
