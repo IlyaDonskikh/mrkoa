@@ -11,6 +11,7 @@
     "dotenv": "^8.2.0",
     "faker": "^4.1.0",
     "glob": "^7.1.6",
+    "i18n": "^0.12.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
@@ -48,10 +49,10 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "lint": "eslint test/**/*.ts src/**/*.ts --fix",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts --exit  --recursive",
-    "spec": "mocha -r ts-node/register --exit  --recursive",
+    "lint": "eslint src/**/*.ts --fix",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts --exit --recursive",
     "start": "node index.js",
+    "create_db": "sequelize db:create",
     "migrate": "sequelize db:migrate",
     "build": "tsc && npm run migrate"
   },

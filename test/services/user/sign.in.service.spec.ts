@@ -69,12 +69,10 @@ describe('User Services', () => {
         });
 
         it('return localized password error', async () => {
-          // ToDo: localization
+          const service = await SignInService.call(attrs);
+          const passwordErrors = service.errors.messages().password;
 
-          // const service = await SignInService.call(attrs);
-          // const passwordErrors = service.errors.messages().password;
-
-          // expect(passwordErrors).to.include('doesn\'t valid or match email');
+          expect(passwordErrors).to.include('doesn\'t valid or match email');
         });
 
         it('return password error', async () => {

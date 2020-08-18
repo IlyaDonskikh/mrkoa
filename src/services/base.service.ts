@@ -4,7 +4,9 @@ import ErrorsInstanceInterface from '../typings/services/errors/instance.interfa
 export default class BaseService {
   [key: string]: any;
 
-  public errors: ErrorsInstanceInterface = new ErrorsService();
+  protected localePath = 'services.base';
+
+  public errors: ErrorsInstanceInterface;
 
   constructor(params: object = {}) {
     Object.entries(params).forEach(([key, value]) => {
@@ -31,6 +33,8 @@ export default class BaseService {
   }
 
   private async call() {
+    this.errors = new ErrorsService(this.localePath);
+
     await this.process();
 
     return this;
