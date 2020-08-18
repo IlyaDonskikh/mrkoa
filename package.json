@@ -49,10 +49,10 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "lint": "eslint test/**/*.ts src/**/*.ts --fix",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts --exit  --recursive",
-    "spec": "mocha -r ts-node/register --exit  --recursive",
+    "lint": "eslint src/**/*.ts --fix",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts --exit --recursive",
     "start": "node index.js",
+    "create_db": "sequelize db:create",
     "migrate": "sequelize db:migrate",
     "build": "tsc && npm run migrate"
   },
