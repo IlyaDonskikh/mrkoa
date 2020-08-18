@@ -1,4 +1,9 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+/* eslint import/no-cycle: off */
+
+import {
+  Association, DataTypes, HasManyGetAssociationsMixin, Model, Sequelize,
+} from 'sequelize';
+import { UserSession } from './user/session.model';
 
 export class User extends Model {
   public id!: number;
@@ -17,6 +22,15 @@ export class User extends Model {
   public readonly createdAt!: Date;
 
   public readonly updatedAt!: Date;
+
+  // relations
+  public getSessions!: HasManyGetAssociationsMixin<UserSession>;
+
+  public readonly sessions?: UserSession[];
+
+  public static associations: {
+    sessions: Association<User, UserSession>;
+  };
 }
 
 export const initModel = (sequelize: Sequelize) => {
@@ -41,12 +55,6 @@ export const initModel = (sequelize: Sequelize) => {
     passwordConfirmation: {
       type: DataTypes.VIRTUAL,
     },
-    token: {
-      type: DataTypes.STRING,
-    },
-    tokenJWT: {
-      type: DataTypes.VIRTUAL,
-    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
@@ -63,4 +71,6 @@ export const initModel = (sequelize: Sequelize) => {
   });
 };
 
-export const setupAssociations = () => {};
+export const setupAssociations = () => {
+  User.hasMany(UserSession, { as: 'sessions', foreignKey: 'user_id' });
+};

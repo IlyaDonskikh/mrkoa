@@ -1,19 +1,20 @@
+
+import { UserSession } from '../../models/user/session.model';
 import BaseService from '../base.service';
-import { User } from '../../models/user.model';
 
 export default class SignOutService extends BaseService {
   // Attrs
-  currentUser: User | null;
+  currentSession: UserSession | null;
 
   // Etc.
   async process() {
     if (!(await this.isValid())) { return; }
 
-    await this.currentUser.update({ token: null });
+    await this.currentSession.destroy();
   }
 
   // Private
   private async validate() {
-    if (!this.currentUser) { this.errors.add('currentUser', 'presence'); }
+    if (!this.currentSession) { this.errors.add('currentSession', 'presence'); }
   }
 }

@@ -1,9 +1,10 @@
 import BaseSerializer from '../base.serializer';
 
-export default class UserAuthSerializer extends BaseSerializer {
+export default class SessionDefaultSerializer extends BaseSerializer {
   protected attributes = [
     'id',
-    'email',
     'tokenJWT',
+    'createdAt',
+    'updatedAt',
   ];
 }

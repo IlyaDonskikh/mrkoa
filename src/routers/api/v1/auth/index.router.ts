@@ -1,10 +1,10 @@
 import * as Router from 'koa-router';
-import usersRoutes from './users.router';
+import sessionsRoutes from './sessions.router';
 
 const router = new Router();
 
 // Users
-router.use('', usersRoutes);
+router.use('', sessionsRoutes);
 
 // Export
 export default router.routes();

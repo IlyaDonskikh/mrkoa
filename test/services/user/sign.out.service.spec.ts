@@ -1,60 +1,58 @@
 /* eslint-disable no-unused-expressions */
 
 import SignOutService from '../../../dist/services/user/sign.out.service';
-import * as userFactory from '../../factories/user.factory';
+import * as userSessionFactory from '../../factories/user/session.factory';
 import { expect } from '../../setup';
+import user from '../../../locales/services/user';
+import { UserSession } from '../../../dist/models/user/session.model';
 
 describe('User Services', () => {
   describe('SignOut', () => {
-    let user: any;
-    let password: string;
-    let attrs: object;
+    let session: any;
 
     beforeEach('Setup user', async () => {
-      user = await userFactory.create();
+      session = await userSessionFactory.create();
     });
 
     describe('#call', () => {
       it('success', async () => {
         const service = await SignOutService.call({
-          currentUser: user,
+          currentSession: session,
         });
 
         expect(service.isSuccess()).to.be.true;
       });
 
-      it('remove token', async () => {
-        const oldToken = user.token;
+      it('delete session', async () => {
         await SignOutService.call({
-          currentUser: user,
+          currentSession: session,
         });
 
-        user.reload();
+        const deletedSession: any = await UserSession.findByPk(session.id, { paranoid: false });
 
-        expect(oldToken).not.to.be.null;
-        expect(user.token).to.be.null;
+        expect(deletedSession.deletedAt).not.to.be.null;
       });
 
-      context('when currentUser is null', () => {
+      context('when currentSession is null', () => {
         it('failed', async () => {
           const service = await SignOutService.call({
-            currentUser: null,
+            currentSession: null,
           });
 
           expect(service.isFailed()).to.be.true;
         });
 
-        it('return currentUser uniq error', async () => {
+        it('return currentSession presence error', async () => {
           const service = await SignOutService.call({
-            currentUser: null,
+            currentSession: null,
           });
-          const currentUserErrors = service.errors.errors.currentUser;
+          const currentSessionErrors = service.errors.errors.currentSession;
 
-          expect(currentUserErrors).to.include('presence');
+          expect(currentSessionErrors).to.include('presence');
         });
       });
 
-      context('when currentUser not passed', () => {
+      context('when currentSession not passed', () => {
         it('failed', async () => {
           const service = await SignOutService.call();
 

@@ -10,7 +10,7 @@ describe('Panel | Users Controller', () => {
   });
 
   beforeEach('Setup authHeader', async () => {
-    authHeader = buildAuthHeaderBy(user);
+    authHeader = await buildAuthHeaderBy(user);
   });
 
   // index

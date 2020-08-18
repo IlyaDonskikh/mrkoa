@@ -28,30 +28,14 @@ describe('User Services', () => {
         expect(service.isSuccess()).to.be.true;
       });
 
-      it('change token', async () => {
-        const oldToken = user.token;
-        await SignInService.call({
-          email: user.email,
-          password,
-        });
-
-        await user.reload();
-
-        expect(user.token).not.to.be.null;
-        expect(user.token).not.to.be.eql(oldToken);
-      });
-
-      it('return user', async () => {
+      it('return user session', async () => {
         const service = await SignInService.call({
           email: user.email,
           password,
         });
-        const serviceUser = service.user.toJSON();
+        const serviceUser = service.session;
 
-        await user.reload();
-        delete serviceUser.tokenJWT;
-
-        expect(serviceUser).to.eql(user.toJSON());
+        expect(service.session.userId).to.eq(user.id);
       });
 
       context('when password are wrong', () => {

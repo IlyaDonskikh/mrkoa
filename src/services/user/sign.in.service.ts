@@ -1,8 +1,8 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import * as jwt from 'jsonwebtoken';
 import BaseService from '../base.service';
 import { User } from '../../models/user.model';
+import { UserSession } from '../../models/user/session.model';
 
 export default class SignInService extends BaseService {
   // Attrs
@@ -14,7 +14,9 @@ export default class SignInService extends BaseService {
 
   private token: string | null = null;
 
-  public user: User | null = null;
+  private user: User | null = null;
+
+  public session: UserSession;
 
   // Etc.
   async process() {
@@ -22,31 +24,10 @@ export default class SignInService extends BaseService {
 
     if (!(await this.isValid())) { return; }
 
-    await this.assignNewUniqToken();
-
-    this.user = await this.user.update({ token: this.token });
-
-    this.assignJwtTokenToUser();
-  }
-
-  private async assignNewUniqToken() {
-    let user: any = null;
-
-    /* eslint-disable no-await-in-loop */
-    while (this.token === null) {
-      const token: string = crypto.randomBytes(64).toString('hex');
-      user = await User.findOne({ where: { token } });
-
-      if (!user) { this.token = token; }
-    }
-    /* eslint-disable no-await-in-loop */
-  }
-
-  private assignJwtTokenToUser() {
-    const secret = process.env.NODE_APP_TOKEN;
-    const tokenJWT = jwt.sign({ userToken: this.user.token }, secret);
-
-    this.user.tokenJWT = tokenJWT;
+    this.session = await UserSession.create({
+      userId: this.user.id,
+      token: await this.buildNewUniqToken(),
+    });
   }
 
   private async validate() {
@@ -54,6 +35,24 @@ export default class SignInService extends BaseService {
     if (this.email === undefined) { this.errors.add('email', 'presence'); }
     if (!this.user) { this.errors.add('email', 'find'); }
     if (!(await this.isPasswordValid())) { this.errors.add('password', 'valid'); }
+  }
+
+  private async buildNewUniqToken(): Promise<String> {
+    let session: any = null;
+    let newToken: string;
+
+    /* eslint-disable no-await-in-loop */
+    while (!newToken) {
+      const token: string = crypto.randomBytes(64).toString('hex');
+      session = await UserSession.findOne({
+        where: { userId: this.user.id, token },
+      });
+
+      if (!session) { newToken = token; }
+    }
+    /* eslint-disable no-await-in-loop */
+
+    return newToken;
   }
 
   private async isPasswordValid() {
