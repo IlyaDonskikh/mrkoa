@@ -103,5 +103,5 @@ export const initModel = (sequelize: Sequelize) => {
 };
 
 export const setupAssociations = () => {
-  UserSession.belongsTo(User, { as: 'company', foreignKey: 'user_id' });
+  UserSession.belongsTo(User, { as: 'user', foreignKey: 'user_id' });
 };

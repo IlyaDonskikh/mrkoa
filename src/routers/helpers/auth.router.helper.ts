@@ -7,7 +7,8 @@ const auth = async (ctx, next) => {
   });
 
   if (service.isSuccess()) {
-    ctx.currentUser = service.user;
+    ctx.currentSession = service.session;
+    ctx.currentUser = await ctx.currentSession.getUser();
 
     await next();
   } else {

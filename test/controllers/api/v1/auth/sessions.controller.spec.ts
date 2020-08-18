@@ -4,9 +4,8 @@ import {
   request, expect, buildAuthHeaderBy,
 } from '../../../../setup';
 import * as userFactory from '../../../../factories/user.factory';
-import { User } from '../../../../../dist/models/user.model';
 
-describe('Users Controller', () => {
+describe('Sessions Controller', () => {
   let user: any;
   let path: string;
   let authHeader: string[];
@@ -39,7 +38,7 @@ describe('Users Controller', () => {
     it('return tokenJWT', async () => {
       const currentRequest = await createRequest();
 
-      expect(currentRequest.body.user.tokenJWT).not.to.be.undefined;
+      expect(currentRequest.body.session.tokenJWT).not.to.be.undefined;
     });
   });
 
@@ -64,7 +63,7 @@ describe('Users Controller', () => {
 
     context('when auth header passed', () => {
       beforeEach('Setup authHeader', async () => {
-        authHeader = buildAuthHeaderBy(user);
+        authHeader = await buildAuthHeaderBy(user);
       });
 
       it('return 200 response', async () => {

@@ -19,7 +19,7 @@ after(async () => {
   server.close();
 });
 
-async function buildAuthHeaderBy(user: any): Promise<Array<String>> {
+async function buildAuthHeaderBy(user: any): Promise<string[]> {
   const session: any = await sessionFactory.create({ userId: user.id });
 
   return ['Authorization', `Bearer ${session.tokenJWT}`];
