@@ -19,14 +19,16 @@ after(async () => {
   server.close();
 });
 
-async function buildAuthHeaderBy(user: any): Promise<string[]> {
+async function buildAuthTokenBy(user: any): Promise<string> {
   const session: any = await sessionFactory.create({ userId: user.id });
 
-  return ['Authorization', `Bearer ${session.tokenJWT}`];
+  return session.tokenJWT;
 }
 
-function buildGatewayParticleAuthHeader() {
-  return ['Authorization', `Bearer ${process.env.NODE_APP_GATEWAY_PARTICLE_TOKEN}`];
+async function buildAuthHeaderBy(user: any): Promise<string[]> {
+  const token: string = await buildAuthTokenBy(user);
+
+  return ['Authorization', `Bearer ${token}`];
 }
 
 function request() {
@@ -34,5 +36,5 @@ function request() {
 }
 
 export {
-  request, expect, buildAuthHeaderBy, buildGatewayParticleAuthHeader,
+  request, expect, buildAuthHeaderBy,
 };
