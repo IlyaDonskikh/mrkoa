@@ -1,5 +1,6 @@
 /* eslint import/no-cycle: off */
 
+import * as jwt from 'jsonwebtoken';
 import {
   Association, BelongsToGetAssociationMixin, DataTypes, Model, Sequelize,
 } from 'sequelize';
@@ -64,6 +65,15 @@ export const initModel = (sequelize: Sequelize) => {
     },
     tokenJWT: {
       type: DataTypes.VIRTUAL,
+      get() {
+        const token = this.getDataValue('token');
+        const secret = process.env.NODE_APP_TOKEN;
+
+        if (!token) return '';
+
+
+        return jwt.sign({ userToken: this.user.token }, secret);
+      },
     },
     userId: {
       allowNull: false,

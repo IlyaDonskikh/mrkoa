@@ -55,12 +55,6 @@ export const initModel = (sequelize: Sequelize) => {
     passwordConfirmation: {
       type: DataTypes.VIRTUAL,
     },
-    token: {
-      type: DataTypes.STRING,
-    },
-    tokenJWT: {
-      type: DataTypes.VIRTUAL,
-    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
