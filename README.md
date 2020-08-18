@@ -24,6 +24,6 @@ Boilerplate uses sequelize adapter to working with db. So you may use all sequel
 
 
 ## API interaction
-All request to the panel should contai header `Authorization: Bearer $token`.
+All request to the panel should contain header `Authorization: Bearer $token`.
 
-How to generate the token you may see by following examples into the spec: `test/controllers/api/v1/panel/devices.controller.spec.ts`
+How to generate the token you may see by following examples into the spec: `test/controllers/api/v1/panel/users.controller.spec.ts`
