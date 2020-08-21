@@ -26,4 +26,4 @@ app.use(router.routes()).use(router.allowedMethods());
 // Listen
 if (process.env.NODE_ENV !== 'test') { app.listen(process.env.PORT); }
 
-module.exports = app;
+export = app;

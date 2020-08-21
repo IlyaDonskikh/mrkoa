@@ -19,8 +19,7 @@ Once everything is ready, the last step is `npm install`.
 Boilerplate uses sequelize adapter to working with db. So you may use all sequelize client helpers like `sequelize db:migrate`.
 
 ## Development mode
-1. Run `tsc -w`
-2. Run `nodemon .`
+2. Run `npm run dev`
 
 
 ## API interaction

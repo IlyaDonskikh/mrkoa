@@ -1,6 +1,6 @@
 
 export default interface InstanceInterface {
-  messages: () => void;
+  messages: () => void | any;
   add: (name, code) => void;
-  errors: object;
+  errors: object | any;
 }

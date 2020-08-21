@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import CreateService from '../../../../dist/services/panel/user/create.service';
+import CreateService from '../../../../src/services/panel/user/create.service';
 import * as userFactory from '../../../factories/user.factory';
 import { expect } from '../../../setup';
 
