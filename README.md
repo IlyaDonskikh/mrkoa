@@ -3,25 +3,20 @@
 
 ## Development setup
 1. Clone repo.
-3. Create development and test databases (PostgreSQL).
-4. Create `.env` file in the root folder with following content:
+2. Copy `.env.sample` file and rename it to `.env`.
+3. Run `npm install`
+4. Create database by `sequelize db:create`.
+4. Run migrations `sequelize db:migrate`
 
-```
-PORT=3000
-NODE_ENV=development
-NODE_APP_TOKEN=token
-DATABASE_DEVELOPMENT_URL=postgres://localhost:5432/db_koa_boilerplate_development
-DATABASE_TEST_URL=postgres://localhost:5432/db_koa_boilerplate_test
-```
+Once everything is ready, the last step is start the server `npm run dev`.
 
-Once everything is ready, the last step is `npm install`.
+## Tests
+You have to follow only few extra steps to run the test:
 
-### Database
-Boilerplate uses sequelize adapter to working with db. So you may use all sequelize client helpers like `sequelize db:migrate`.
+1. Create test db `sequelize db:create --env test`
+2. Run tests `npm test`
 
-## Development mode
-1. Run `npm run dev`
-
+That's it!
 
 ## API interaction
 All request to the panel should contain header `Authorization: Bearer $token`.
