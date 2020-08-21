@@ -25,20 +25,9 @@ const umzug = new Umzug({
 
 chai.use(chaiHttp);
 
-before('Migrate db', async () => {
-  await umzug.up();
-});
-
 beforeEach('Clean Database', async () => {
-  const { models } = db.sequelize;
-
-  const promises = Object.keys(models).map(async (modelKey: any) => {
-    await models[modelKey].destroy({
-      truncate: true, cascade: true,
-    });
-  });
-
-  await Promise.all(promises);
+  await db.sequelize.drop();
+  await umzug.up();
 });
 
 after(async () => {
