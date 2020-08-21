@@ -1,7 +1,8 @@
 // The default test env is defined in the .mocharc.js
 
 import * as chai from 'chai';
-import * as jwt from 'jsonwebtoken';
+import { Sequelize } from 'sequelize';
+import { SequelizeStorage, Umzug } from 'umzug';
 import * as app from '../dist/index';
 import * as sessionFactory from './factories/user/session.factory';
 
@@ -10,10 +11,40 @@ import chaiHttp = require('chai-http');
 const server = app.listen(3001);
 const { db } = app.context;
 const { expect } = chai;
+const umzug = new Umzug({
+  migrations: {
+    path: './db/migrations',
+    params: [
+      db.sequelize.getQueryInterface(),
+      Sequelize,
+    ],
+  },
+  storage: new SequelizeStorage({ sequelize: db.sequelize }),
+});
+
 
 chai.use(chaiHttp);
 
-beforeEach('Clean Database', async () => db.sequelize.sync({ force: true })); // Upd to migrations
+before('Migrate db', async () => {
+  await db.sequelize.drop();
+  await umzug.up();
+});
+
+beforeEach('Clean Database', async () => {
+  // As alternative we can use sequelize.sync({ force: true })
+  // It removes umzug and sequelize.drop() logic above, but
+  // data structure will be based on models, not real db structure.
+
+  const { models } = db.sequelize;
+
+  const promises = Object.keys(models).map(async (modelKey: any) => {
+    await models[modelKey].destroy({
+      truncate: true, cascade: true,
+    });
+  });
+
+  await Promise.all(promises);
+});
 
 after(async () => {
   server.close();

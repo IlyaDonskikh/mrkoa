@@ -26,7 +26,7 @@ describe('User Services', () => {
       expect(service.isSuccess()).to.be.true;
     });
 
-    context('when email contins capital chars', () => {
+    context('when email contains capital chars', () => {
       const emailWithCapitalChars = 'Aa@bb.com';
 
       beforeEach('Change Email', async () => {
