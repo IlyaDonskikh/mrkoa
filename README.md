@@ -1,4 +1,5 @@
-# Koa Boilerplate
+# Mr.Koa Boilerplate
+![Node.js CI Tests](https://github.com/IlyaDonskikh/koa-devices-boilerplate/workflows/Node.js%20CI/badge.svg?branch=dev)
 
 ## Development setup
 1. Clone repo.
@@ -19,7 +20,7 @@ Once everything is ready, the last step is `npm install`.
 Boilerplate uses sequelize adapter to working with db. So you may use all sequelize client helpers like `sequelize db:migrate`.
 
 ## Development mode
-2. Run `npm run dev`
+1. Run `npm run dev`
 
 
 ## API interaction

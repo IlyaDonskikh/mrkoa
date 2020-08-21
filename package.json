@@ -51,13 +51,13 @@
   "scripts": {
     "lint": "eslint src/**/*.ts --fix",
     "test": "mocha -r ts-node/register test/**/*.spec.ts --exit --recursive",
-    "dev": "nodemon  --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "start": "node index.js",
     "create_db": "sequelize db:create",
     "migrate": "sequelize db:migrate",
     "build": "tsc && npm run migrate"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ilia Donskikh",
   "license": "ISC"
 }
