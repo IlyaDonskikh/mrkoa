@@ -25,9 +25,25 @@ const umzug = new Umzug({
 
 chai.use(chaiHttp);
 
-beforeEach('Clean Database', async () => {
+before('Migrate db', async () => {
   await db.sequelize.drop();
   await umzug.up();
+});
+
+beforeEach('Clean Database', async () => {
+  // As alternative we can use sequelize.sync({ force: true })
+  // It removes umzug and sequelize.drop() logic above, but
+  // data structure will be based on models, not real db structure.
+
+  const { models } = db.sequelize;
+
+  const promises = Object.keys(models).map(async (modelKey: any) => {
+    await models[modelKey].destroy({
+      truncate: true, cascade: true,
+    });
+  });
+
+  await Promise.all(promises);
 });
 
 after(async () => {
