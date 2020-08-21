@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 
-import SignOutService from '../../../dist/services/user/sign.out.service';
+import SignOutService from '../../../src/services/user/sign.out.service';
 import * as userSessionFactory from '../../factories/user/session.factory';
 import { expect } from '../../setup';
 import user from '../../../locales/services/user';
-import { UserSession } from '../../../dist/models/user/session.model';
+import { UserSession } from '../../../src/models/user/session.model';
 
 describe('User Services', () => {
   describe('SignOut', () => {

@@ -3,7 +3,7 @@
 import * as chai from 'chai';
 import { Sequelize } from 'sequelize';
 import { SequelizeStorage, Umzug } from 'umzug';
-import * as app from '../dist/index';
+import * as app from '../src/index';
 import * as sessionFactory from './factories/user/session.factory';
 
 import chaiHttp = require('chai-http');

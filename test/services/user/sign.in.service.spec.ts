@@ -2,7 +2,7 @@
 
 import { expect } from '../../setup';
 import * as userFactory from '../../factories/user.factory';
-import SignInService from '../../../dist/services/user/sign.in.service';
+import SignInService from '../../../src/services/user/sign.in.service';
 
 describe('User Services', () => {
   describe('SignIn', () => {

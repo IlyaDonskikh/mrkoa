@@ -10,7 +10,7 @@ const models: Array<any> = [];
 
 const config = require('../../db/config.js')[env];
 
-glob.sync(`${__dirname}/**/*.model.js`).forEach((file) => {
+glob.sync(`${__dirname}/**/*.model.{js,ts}`).forEach((file) => {
   const model = require(path.resolve(file)); // eslint-disable-line
   models.push(model);
 });

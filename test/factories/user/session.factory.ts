@@ -1,5 +1,5 @@
 import * as faker from 'faker';
-import { UserSession } from '../../../dist/models/user/session.model';
+import { UserSession } from '../../../src/models/user/session.model';
 import * as userFactory from '../user.factory';
 
 const data = async (props: any = {}) => {

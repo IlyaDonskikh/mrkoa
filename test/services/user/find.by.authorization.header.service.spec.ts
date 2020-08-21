@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import FindByAuthorizationService from '../../../dist/services/user/find.by.authorization.header.service';
+import FindByAuthorizationService from '../../../src/services/user/find.by.authorization.header.service';
 import * as userFactory from '../../factories/user.factory';
 import { buildAuthHeaderBy, expect } from '../../setup';
 
