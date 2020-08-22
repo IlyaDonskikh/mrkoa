@@ -37,6 +37,8 @@ beforeEach('Clean Database', async () => {
 
   const { models } = db.sequelize;
 
+  // TODO: Truncate all tables in one request based on table_names
+
   const promises = Object.keys(models).map(async (modelKey: any) => {
     await models[modelKey].destroy({
       truncate: true, cascade: true,
