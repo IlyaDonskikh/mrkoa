@@ -7,7 +7,7 @@ Fantastic boilerplate based on the fantastic koa framework that (not a surprise)
 
 ## Development setup
 1. Clone repo.
-2. Copy `.env.sample` file and rename it to `.env`.
+2. Setup environment variables `cp .env.sample .env`.
 3. Run `npm install`.
 4. Create database by `sequelize db:create`.
 4. Run migrations `sequelize db:migrate`.
