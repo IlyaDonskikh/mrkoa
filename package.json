@@ -57,7 +57,10 @@
     "migrate": "sequelize db:migrate",
     "build": "tsc && npm run migrate"
   },
-  "keywords": ["koa", "boilerplate"],
+  "keywords": [
+    "koa",
+    "boilerplate"
+  ],
   "author": "Ilia Donskikh",
   "license": "ISC"
 }

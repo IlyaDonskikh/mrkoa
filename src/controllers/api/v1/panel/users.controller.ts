@@ -1,9 +1,12 @@
-import UserDefaultSerializer from '../../../../serializers/user/default.serializer';
-import PanelPrimeUserCreateService from '../../../../services/panel/user/create.service';
-import PanelUserListService from '../../../../services/panel/user/list.service';
+import UserDefaultSerializer from "../../../../serializers/user/default.serializer";
+import PanelPrimeUserCreateService from "../../../../services/panel/user/create.service";
+import PanelUserListService from "../../../../services/panel/user/list.service";
 
 const index = async (ctx) => {
-  const attrs = { page: ctx.request.query.page, filters: ctx.request.query.filters };
+  const attrs = {
+    page: ctx.request.query.page,
+    filters: ctx.request.query.filters,
+  };
   const { body } = await PanelUserListService.call(attrs);
 
   ctx.body = body;

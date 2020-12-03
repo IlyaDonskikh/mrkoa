@@ -1,9 +1,13 @@
-import BaseService from '../base.service';
-import EncryptPasswordService from './encrypt.password.service';
-import { User } from '../../models/user.model';
-import UserValidator from '../../validators/base/user.validator';
+import BaseService from "../base.service";
+import EncryptPasswordService from "./encrypt.password.service";
+import { User } from "../../models/user.model";
+import UserValidator from "../../validators/base/user.validator";
 
-export default class CreateService extends BaseService {
+interface UserCreate {
+  attrs: { [key: string]: string };
+}
+
+export default class CreateService extends BaseService<UserCreate>() {
   // Attrs
   attrs: any;
 
@@ -13,7 +17,9 @@ export default class CreateService extends BaseService {
 
   // Etc.
   async process() {
-    if (!(await this.isValid())) { return; }
+    if (!(await this.isValid())) {
+      return;
+    }
 
     await this.transformAttributes();
 
@@ -22,7 +28,11 @@ export default class CreateService extends BaseService {
 
   // Private
   private async validate() {
-    this.validator = await UserValidator.validate(this.errors, User.build(), this.attrs);
+    this.validator = await UserValidator.validate(
+      this.errors,
+      User.build(),
+      this.attrs
+    );
 
     this.errors = this.validator.errors;
   }
