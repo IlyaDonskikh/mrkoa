@@ -73,7 +73,7 @@ describe('Panel | Users Controller', () => {
       expect(currentRequest.body.user).to.have.any.keys('id', 'email');
     });
 
-    context.only('when email not passed', async () => {
+    context('when email not passed', async () => {
       beforeEach('Delete email', async () => {
         delete itemAttrs.password;
         delete itemAttrs.email;
