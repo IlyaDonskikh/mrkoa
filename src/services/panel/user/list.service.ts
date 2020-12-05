@@ -1,7 +1,7 @@
-import BaseService from '../../base.service';
-import { User } from '../../../models/user.model';
+import BaseService from "../../base.service";
+import { User } from "../../../models/user.model";
 
-export default class PanelUserListService extends BaseService {
+export default class PanelUserListService extends BaseService() {
   // Attrs
   page: number;
 
@@ -17,7 +17,7 @@ export default class PanelUserListService extends BaseService {
     const users = await User.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (page - 1),
-      order: [['created_at', 'DESC']],
+      order: [["created_at", "DESC"]],
     });
 
     this.body = this.buildBodyBy(users, page);

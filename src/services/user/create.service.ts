@@ -3,14 +3,15 @@ import EncryptPasswordService from "./encrypt.password.service";
 import { User } from "../../models/user.model";
 import UserValidator from "../../validators/base/user.validator";
 
-interface UserCreate {
-  attrs: { [key: string]: string };
+interface RequestParams {
+  user: {
+    email: string;
+    password: string;
+  };
 }
 
-export default class CreateService extends BaseService<UserCreate>() {
+export default class CreateService extends BaseService<RequestParams>() {
   // Attrs
-  attrs: any;
-
   private validator: any;
 
   public user: User;
@@ -23,7 +24,7 @@ export default class CreateService extends BaseService<UserCreate>() {
 
     await this.transformAttributes();
 
-    this.user = await User.create(this.attrs);
+    this.user = await User.create(this.requestParams.user);
   }
 
   // Private
@@ -31,7 +32,7 @@ export default class CreateService extends BaseService<UserCreate>() {
     this.validator = await UserValidator.validate(
       this.errors,
       User.build(),
-      this.attrs
+      this.requestParams.user
     );
 
     this.errors = this.validator.errors;
@@ -44,20 +45,20 @@ export default class CreateService extends BaseService<UserCreate>() {
   }
 
   private updateAttrsByValidator() {
-    this.attrs = this.validator.attrs;
+    this.requestParams.user = this.validator.user;
   }
 
   private async encryptAttrsPassword() {
-    const { password } = this.attrs;
+    const { password } = this.requestParams.user;
 
     const service = await EncryptPasswordService.call({ password });
 
-    this.attrs.password = service.encryptedPassword;
+    this.requestParams.user.password = service.encryptedPassword;
   }
 
   private async downcaseAttrsEmail() {
-    const { email } = this.attrs;
+    const { email } = this.requestParams.user;
 
-    this.attrs.email = email.toLowerCase();
+    this.requestParams.user.email = email.toLowerCase();
   }
 }

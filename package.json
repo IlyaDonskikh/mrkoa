@@ -44,18 +44,20 @@
     "eslint-plugin-import": "^2.20.2",
     "mocha": "^7.1.2",
     "sequelize-cli": "^6.2.0",
+    "tinyspec": "^2.4.6",
     "ts-node": "^8.9.1",
     "typescript": "^3.8.3",
     "umzug": "github:sequelize/umzug"
   },
   "scripts": {
     "lint": "eslint src/**/*.ts --fix",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts --exit --recursive",
+    "test": "npm run specs  && mocha -r ts-node/register test/**/*.spec.ts --exit --recursive",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "start": "node index.js",
     "create_db": "sequelize db:create",
     "migrate": "sequelize db:migrate",
-    "build": "tsc && npm run migrate"
+    "build": "tsc && npm run migrate",
+    "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api"
   },
   "keywords": [
     "koa",

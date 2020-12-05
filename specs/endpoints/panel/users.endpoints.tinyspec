@@ -1,0 +1,2 @@
+POST /api/v1/panel/users MrPanelUserRequest
+  => MrPanelUserResponse

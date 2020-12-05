@@ -1,10 +1,10 @@
-import * as _ from 'lodash';
-import * as jwt from 'jsonwebtoken';
-import BaseService from '../base.service';
-import { User } from '../../models/user.model';
-import { UserSession } from '../../models/user/session.model';
+import * as _ from "lodash";
+import * as jwt from "jsonwebtoken";
+import BaseService from "../base.service";
+import { User } from "../../models/user.model";
+import { UserSession } from "../../models/user/session.model";
 
-export default class FindByAuthorizationService extends BaseService {
+export default class FindByAuthorizationService extends BaseService() {
   authorizationHeader: string;
 
   private token: string | null = null;
@@ -25,21 +25,23 @@ export default class FindByAuthorizationService extends BaseService {
   }
 
   private async validate() {
-    if (!this.token) this.errors.add('token', 'blank');
-    if (!this.decodedToken) this.errors.add('token', 'invalid');
-    if (!this.session) this.errors.add('token', 'session');
+    if (!this.token) this.errors.add("token", "blank");
+    if (!this.decodedToken) this.errors.add("token", "invalid");
+    if (!this.session) this.errors.add("token", "session");
   }
 
   private extractTokenFrom(authorizationHeader: string | null) {
-    if (typeof authorizationHeader !== 'string') return;
+    if (typeof authorizationHeader !== "string") return;
 
-    if (authorizationHeader.startsWith('Bearer ')) {
-      this.token = _.replace(authorizationHeader, 'Bearer ', '');
+    if (authorizationHeader.startsWith("Bearer ")) {
+      this.token = _.replace(authorizationHeader, "Bearer ", "");
     }
   }
 
   private assignDecodedToken() {
-    if (!this.token) { return; }
+    if (!this.token) {
+      return;
+    }
 
     try {
       this.decodedToken = jwt.verify(this.token, process.env.NODE_APP_TOKEN);
@@ -49,9 +51,12 @@ export default class FindByAuthorizationService extends BaseService {
   }
 
   private async assignSession() {
-    if (!this.decodedToken || !this.decodedToken?.sessionToken) { return; }
+    if (!this.decodedToken || !this.decodedToken?.sessionToken) {
+      return;
+    }
 
-    this.session = await UserSession
-      .findOne({ where: { token: this.decodedToken.sessionToken } });
+    this.session = await UserSession.findOne({
+      where: { token: this.decodedToken.sessionToken },
+    });
   }
 }
