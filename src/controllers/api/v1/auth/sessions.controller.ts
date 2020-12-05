@@ -19,7 +19,7 @@ const create = async (ctx: Koa.Context) => {
 
 const destroy = async (ctx: Koa.Context) => {
   const service = await SignOutService.call({
-    currentSession: ctx.currentSession,
+    id: ctx.currentSession.id,
   });
 
   if (service.isSuccess()) {
