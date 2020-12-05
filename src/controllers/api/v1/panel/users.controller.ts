@@ -1,8 +1,10 @@
-import UserDefaultSerializer from "../../../../serializers/user/default.serializer";
-import PanelPrimeUserCreateService from "../../../../services/panel/user/create.service";
-import PanelUserListService from "../../../../services/panel/user/list.service";
+import UserDefaultSerializer from '../../../../serializers/user/default.serializer';
+import PanelPrimeUserCreateService from '../../../../services/panel/user/create.service';
+import PanelUserListService from '../../../../services/panel/user/list.service';
+import { validate } from '../../../../utils/requestValidator';
+import { schemas } from '../../../../utils/schemas';
 
-const index = async (ctx) => {
+const index = async (ctx: any) => {
   const attrs = {
     page: ctx.request.query.page,
     filters: ctx.request.query.filters,
@@ -12,8 +14,10 @@ const index = async (ctx) => {
   ctx.body = body;
 };
 
-const create = async (ctx) => {
-  const attrs = { attrs: ctx.request.body.user };
+const create = async (ctx: any) => {
+  const attrs: Api.MrPanelUserCreateRequest = ctx.request.body;
+  validate(schemas.MrPanelUserRequest, attrs);
+
   const service = await PanelPrimeUserCreateService.call(attrs);
 
   if (service.isSuccess()) {

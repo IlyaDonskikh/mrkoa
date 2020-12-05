@@ -1,6 +1,8 @@
+import * as Koa from 'koa';
+
 import UserFindByAuthorizationService from '../../services/user/find.by.authorization.header.service';
 
-const auth = async (ctx, next) => {
+const auth = async (ctx: Koa.Context, next: Function) => {
   const authorizationHeader = ctx.request.headers.authorization;
   const service = await UserFindByAuthorizationService.call({
     authorizationHeader,

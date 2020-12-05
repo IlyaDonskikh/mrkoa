@@ -1,20 +1,26 @@
 MrUser !{
   id: i,
   email: s,
+  password: s,
   createdAt: d,
   updatedAt: d,
 }
 
-MrPanelUserRequestUser < MrUser { -id, -createdAt, -updatedAt }
+MrPanelUserCreateRequestUser < MrUser {
+  -id,
+  -createdAt,
+  -updatedAt,
+  passwordConfirmation: string,
+}
 
-MrPanelUserResponseUser < MrUser {
+MrPanelUserCreateResponseUser < MrUser {
   -password
 }
 
-MrPanelUserRequest !{
-  user: MrPanelUserRequestUser,
+MrPanelUserCreateRequest !{
+  user: MrPanelUserCreateRequestUser,
 }
 
-MrPanelUserResponse !{
-  user: MrUser,
+MrPanelUserCreateResponse !{
+  user: MrPanelUserCreateResponseUser,
 }

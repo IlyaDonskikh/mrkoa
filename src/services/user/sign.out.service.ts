@@ -1,9 +1,9 @@
-import { UserSession } from "../../models/user/session.model";
-import BaseService from "../base.service";
+import { UserSession } from '../../models/user/session.model';
+import BaseService from '../base.service';
 
 export default class SignOutService extends BaseService() {
   // Attrs
-  currentSession: UserSession | null;
+  currentSession: UserSession;
 
   // Etc.
   async process() {
@@ -17,7 +17,7 @@ export default class SignOutService extends BaseService() {
   // Private
   private async validate() {
     if (!this.currentSession) {
-      this.errors.add("currentSession", "presence");
+      this.errors.add('currentSession', 'presence');
     }
   }
 }

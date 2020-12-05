@@ -10,7 +10,7 @@ Fantastic boilerplate based on the fantastic koa framework that (not a surprise)
 2. Setup environment variables `cp .env.sample .env`.
 3. Run `npm install`.
 4. Create database by `sequelize db:create`.
-4. Run migrations `sequelize db:migrate`.
+4. Run migrations `sequelize db:migrate`. 
 
 Once everything is ready, the last step is start the server `npm run dev`.
 
@@ -48,9 +48,9 @@ export default class UserSampleSerializer extends BaseSerializer {
     'email',
     this.randomSession,
   ];
-  
+
   private async randomSession() {
-    const session = await UserSessions.findOne({ userId: this.object.id }) 
+    const session = await UserSessions.findOne({ userId: this.object.id })
 
     if (!session) { return {}; }
 

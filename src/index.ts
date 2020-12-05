@@ -16,7 +16,9 @@ const db = createModels();
 app.context.db = db;
 
 // Middleware
-if (process.env.NODE_ENV !== 'test') { app.use(logger()); }
+if (process.env.NODE_ENV !== 'test') {
+  app.use(logger());
+}
 app.use(json());
 app.use(bodyParser());
 
@@ -24,6 +26,8 @@ app.use(bodyParser());
 app.use(router.routes()).use(router.allowedMethods());
 
 // Listen
-if (process.env.NODE_ENV !== 'test') { app.listen(process.env.PORT); }
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(process.env.PORT);
+}
 
 export = app;

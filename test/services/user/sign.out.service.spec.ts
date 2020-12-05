@@ -3,7 +3,6 @@
 import SignOutService from '../../../src/services/user/sign.out.service';
 import * as userSessionFactory from '../../factories/user/session.factory';
 import { expect } from '../../setup';
-import user from '../../../locales/services/user';
 import { UserSession } from '../../../src/models/user/session.model';
 
 describe('User Services', () => {
@@ -28,7 +27,9 @@ describe('User Services', () => {
           currentSession: session,
         });
 
-        const deletedSession: any = await UserSession.findByPk(session.id, { paranoid: false });
+        const deletedSession: any = await UserSession.findByPk(session.id, {
+          paranoid: false,
+        });
 
         expect(deletedSession.deletedAt).not.to.be.null;
       });
@@ -54,7 +55,7 @@ describe('User Services', () => {
 
       context('when currentSession not passed', () => {
         it('failed', async () => {
-          const service = await SignOutService.call();
+          const service = await SignOutService.call({});
 
           expect(service.isFailed()).to.be.true;
         });

@@ -2,7 +2,11 @@
 
 import * as jwt from 'jsonwebtoken';
 import {
-  Association, BelongsToGetAssociationMixin, DataTypes, Model, Sequelize,
+  Association,
+  BelongsToGetAssociationMixin,
+  DataTypes,
+  Model,
+  Sequelize,
 } from 'sequelize';
 import { User } from '../user.model';
 
@@ -52,54 +56,57 @@ export class UserSession extends Model {
 export const initModel = (sequelize: Sequelize) => {
   const tableName: string = 'user_sessions';
 
-  UserSession.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
-    token: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    tokenJWT: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        const token = this.getDataValue('token');
-        const secret = process.env.NODE_APP_TOKEN;
+  UserSession.init(
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      token: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      tokenJWT: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          const token = this.getDataValue('token');
+          const secret = process.env.NODE_APP_TOKEN as string;
 
-        if (!token) return '';
+          if (!token) return '';
 
-        return jwt.sign({ sessionToken: token }, secret);
+          return jwt.sign({ sessionToken: token }, secret);
+        },
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: { model: 'users', key: 'id' },
+        field: 'user_id',
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'created_at',
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'updated_at',
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        field: 'deleted_at',
       },
     },
-    userId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      references: { model: 'users', key: 'id' },
-      field: 'user_id',
+    {
+      scopes: UserSession.scopes,
+      sequelize,
+      paranoid: true,
+      tableName,
     },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      field: 'created_at',
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      field: 'updated_at',
-    },
-    deletedAt: {
-      type: DataTypes.DATE,
-      field: 'deleted_at',
-    },
-  }, {
-    scopes: UserSession.scopes,
-    sequelize,
-    paranoid: true,
-    tableName,
-  });
+  );
 };
 
 export const setupAssociations = () => {

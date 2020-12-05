@@ -1,7 +1,7 @@
 export default class BaseSerializer {
   object: any;
 
-  protected attributes: Array<String | Function> = [];
+  protected attributes: Array<string | Function> = [];
 
   constructor(object: object = {}) {
     this.object = object;

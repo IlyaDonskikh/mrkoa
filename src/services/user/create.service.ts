@@ -1,12 +1,13 @@
-import BaseService from "../base.service";
-import EncryptPasswordService from "./encrypt.password.service";
-import { User } from "../../models/user.model";
-import UserValidator from "../../validators/base/user.validator";
+import BaseService from '../base.service';
+import EncryptPasswordService from './encrypt.password.service';
+import { User } from '../../models/user.model';
+import UserValidator from '../../validators/base/user.validator';
 
-interface RequestParams {
+export interface RequestParams {
   user: {
     email: string;
     password: string;
+    passwordConfirmation: string;
   };
 }
 
@@ -32,7 +33,7 @@ export default class CreateService extends BaseService<RequestParams>() {
     this.validator = await UserValidator.validate(
       this.errors,
       User.build(),
-      this.requestParams.user
+      this.requestParams.user,
     );
 
     this.errors = this.validator.errors;
@@ -45,7 +46,7 @@ export default class CreateService extends BaseService<RequestParams>() {
   }
 
   private updateAttrsByValidator() {
-    this.requestParams.user = this.validator.user;
+    this.requestParams.user = this.validator.attrs;
   }
 
   private async encryptAttrsPassword() {

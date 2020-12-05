@@ -1,8 +1,8 @@
-import * as _ from "lodash";
-import * as jwt from "jsonwebtoken";
-import BaseService from "../base.service";
-import { User } from "../../models/user.model";
-import { UserSession } from "../../models/user/session.model";
+import * as _ from 'lodash';
+import * as jwt from 'jsonwebtoken';
+import BaseService from '../base.service';
+import { User } from '../../models/user.model';
+import { UserSession } from '../../models/user/session.model';
 
 export default class FindByAuthorizationService extends BaseService() {
   authorizationHeader: string;
@@ -25,16 +25,16 @@ export default class FindByAuthorizationService extends BaseService() {
   }
 
   private async validate() {
-    if (!this.token) this.errors.add("token", "blank");
-    if (!this.decodedToken) this.errors.add("token", "invalid");
-    if (!this.session) this.errors.add("token", "session");
+    if (!this.token) this.errors.add('token', 'blank');
+    if (!this.decodedToken) this.errors.add('token', 'invalid');
+    if (!this.session) this.errors.add('token', 'session');
   }
 
   private extractTokenFrom(authorizationHeader: string | null) {
-    if (typeof authorizationHeader !== "string") return;
+    if (typeof authorizationHeader !== 'string') return;
 
-    if (authorizationHeader.startsWith("Bearer ")) {
-      this.token = _.replace(authorizationHeader, "Bearer ", "");
+    if (authorizationHeader.startsWith('Bearer ')) {
+      this.token = _.replace(authorizationHeader, 'Bearer ', '');
     }
   }
 
@@ -44,7 +44,10 @@ export default class FindByAuthorizationService extends BaseService() {
     }
 
     try {
-      this.decodedToken = jwt.verify(this.token, process.env.NODE_APP_TOKEN);
+      this.decodedToken = jwt.verify(
+        this.token,
+        process.env.NODE_APP_TOKEN as string,
+      );
     } catch (err) {
       this.decodedToken = null;
     }
@@ -57,6 +60,7 @@ export default class FindByAuthorizationService extends BaseService() {
 
     this.session = await UserSession.findOne({
       where: { token: this.decodedToken.sessionToken },
+      rejectOnEmpty: true,
     });
   }
 }

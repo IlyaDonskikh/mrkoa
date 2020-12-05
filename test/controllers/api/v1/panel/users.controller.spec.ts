@@ -1,8 +1,9 @@
+import { User } from '../../../../../src/models/user.model';
 import * as userFactory from '../../../../factories/user.factory';
 import { buildAuthHeaderBy, expect, request } from '../../../../setup';
 
 describe('Panel | Users Controller', () => {
-  let user;
+  let user: User;
   let authHeader: string[];
 
   beforeEach('Setup user', async () => {
@@ -52,7 +53,7 @@ describe('Panel | Users Controller', () => {
     }
 
     const path = '/api/v1/panel/users';
-    let itemAttrs;
+    let itemAttrs: any;
 
     beforeEach('Setup attrs', async () => {
       const userInstance = await userFactory.build();

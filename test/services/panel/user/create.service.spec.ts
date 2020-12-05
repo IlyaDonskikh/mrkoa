@@ -7,7 +7,13 @@ import { expect } from '../../../setup';
 describe('Panel | User Services', () => {
   describe('Create', () => {
     function serviceCall(userAttrs: object) {
-      const attrs = { attrs: userAttrs };
+      const attrs = {
+        user: userAttrs as {
+          email: string;
+          password: string;
+          passwordConfirmation: string;
+        },
+      };
 
       return CreateService.call(attrs);
     }
