@@ -1,3 +1,5 @@
+import * as Koa from 'koa';
+
 import UserDefaultSerializer from '../../../../serializers/user/default.serializer';
 import PanelPrimeUserCreateService from '../../../../services/panel/user/create.service';
 import PanelUserListService from '../../../../services/panel/user/list.service';
@@ -14,9 +16,12 @@ const index = async (ctx: any) => {
   ctx.body = body;
 };
 
-const create = async (ctx: any) => {
-  const attrs: Api.MrPanelUserCreateRequest = ctx.request.body;
-  validate(schemas.MrPanelUserRequest, attrs);
+const create = async (ctx: Koa.Context) => {
+  const attrs = validate<Api.MrPanelUserCreateRequest>({
+    schema: schemas.MrPanelUserCreateRequest,
+    data: ctx.request.body,
+    localePath: __filename,
+  });
 
   const service = await PanelPrimeUserCreateService.call(attrs);
 

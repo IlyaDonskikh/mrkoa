@@ -4,9 +4,11 @@ import BaseService from '../base.service';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
-export default class FindByAuthorizationService extends BaseService() {
-  authorizationHeader: string;
+interface RequestParams {
+  authorizationHeader?: string;
+}
 
+export default class FindByAuthorizationService extends BaseService<RequestParams>() {
   private token: string | null = null;
 
   private decodedToken: any;
@@ -15,7 +17,7 @@ export default class FindByAuthorizationService extends BaseService() {
 
   // Etc.
   async process() {
-    this.extractTokenFrom(this.authorizationHeader);
+    this.extractTokenFrom(this.requestParams.authorizationHeader);
     this.assignDecodedToken();
     await this.assignSession();
 
@@ -30,7 +32,7 @@ export default class FindByAuthorizationService extends BaseService() {
     if (!this.session) this.errors.add('token', 'session');
   }
 
-  private extractTokenFrom(authorizationHeader: string | null) {
+  private extractTokenFrom(authorizationHeader?: string) {
     if (typeof authorizationHeader !== 'string') return;
 
     if (authorizationHeader.startsWith('Bearer ')) {

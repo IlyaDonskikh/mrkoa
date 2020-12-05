@@ -27,10 +27,10 @@ describe('User Services', () => {
         expect(service.isSuccess()).to.be.true;
       });
 
-      context('when authorizationHeader is null', () => {
+      context('when authorizationHeader is undefined', () => {
         it('fail', async () => {
           const service = await FindByAuthorizationService.call({
-            authorizationHeader: null,
+            authorizationHeader: undefined,
           });
 
           expect(service.isFailed()).to.be.true;
@@ -38,7 +38,7 @@ describe('User Services', () => {
 
         it('return token user error', async () => {
           const service = await FindByAuthorizationService.call({
-            authorizationHeader: null,
+            authorizationHeader: undefined,
           });
           const tokenErrors = service.errors.errors.token;
 

@@ -4,6 +4,7 @@ import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 import createModels from './models';
 import router from './routers/index';
+import ErrorsService from './services/errors.service';
 
 require('dotenv').config();
 
@@ -19,6 +20,20 @@ app.context.db = db;
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger());
 }
+// Errors handling
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    if (err instanceof ErrorsService) {
+      ctx.status = 422;
+      ctx.body = err.messages();
+    } else {
+      throw err;
+    }
+  }
+});
+
 app.use(json());
 app.use(bodyParser());
 

@@ -72,5 +72,24 @@ describe('Panel | Users Controller', () => {
 
       expect(currentRequest.body.user).to.have.any.keys('id', 'email');
     });
+
+    context.only('when email not passed', async () => {
+      beforeEach('Delete email', async () => {
+        delete itemAttrs.password;
+        delete itemAttrs.email;
+      });
+
+      it('return status 403', async () => {
+        const currentRequest = await createRequest(path, itemAttrs);
+
+        expect(currentRequest).to.have.status(422);
+      });
+
+      it('return email error', async () => {
+        const currentRequest = await createRequest(path, itemAttrs);
+
+        expect(currentRequest.body.email).to.include('fill in the filed');
+      });
+    });
   });
 });

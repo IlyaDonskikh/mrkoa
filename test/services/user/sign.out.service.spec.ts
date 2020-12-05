@@ -5,7 +5,7 @@ import * as userSessionFactory from '../../factories/user/session.factory';
 import { expect } from '../../setup';
 import { UserSession } from '../../../src/models/user/session.model';
 
-describe.only('User Services', () => {
+describe('User Services', () => {
   describe('SignOut', () => {
     let session: any;
 

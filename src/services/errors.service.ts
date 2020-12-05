@@ -7,7 +7,9 @@ export default class ErrorsService {
   public errors: { [key: string]: string[] } = {};
 
   constructor(localePath: string) {
-    this.localePath = localePath;
+    this.localePath = localePath
+      .replace(/.*\/src\/(.*)/gm, '$1')
+      .replace(/\//g, '.');
   }
 
   messages() {
