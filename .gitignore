@@ -2,6 +2,7 @@ node_modules
 dist
 .env
 .vscode
+.DS_Store
 
 # openapi / documentation
 specs/openapi.json
