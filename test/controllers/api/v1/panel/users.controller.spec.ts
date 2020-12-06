@@ -88,7 +88,9 @@ describe('Panel | Users Controller', () => {
       it('return email error', async () => {
         const currentRequest = await createRequest(path, itemAttrs);
 
-        expect(currentRequest.body.email).to.include('fill in the filed');
+        expect(currentRequest.body.errors.email).to.include(
+          'fill in the filed',
+        );
       });
     });
   });

@@ -7,7 +7,7 @@ const errorsRouterHelper = async (ctx: Koa.Context, next: Function) => {
   } catch (err) {
     if (err instanceof ErrorsService) {
       ctx.status = 422;
-      ctx.body = err.messages();
+      ctx.body = { errors: err.messages() };
     } else {
       throw err;
     }

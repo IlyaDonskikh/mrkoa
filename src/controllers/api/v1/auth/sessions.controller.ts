@@ -10,7 +10,7 @@ const create = async (ctx: Koa.Context) => {
   const attrs = validate<Api.MrAuthSessionCreateRequest>({
     schema: schemas.MrAuthSessionCreateRequest,
     data: ctx.request.body,
-    localePath: __filename + '.index',
+    localePath: __filename + '.create',
   });
 
   const service = await SignInService.call(attrs);
