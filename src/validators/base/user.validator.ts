@@ -23,25 +23,17 @@ export default class UserBaseValidator extends BaseValidator {
     const { email, password, passwordConfirmation } = this.mergedAttrs;
 
     if (!this.modelInstance.id || this.attrs.password) {
-      if (typeof password !== 'string') {
-        this.errors.add('password', 'presence');
-      }
-      if (
-        typeof password === 'string' &&
-        password.length < this.minPasswordLength
-      ) {
+      if (password.length < this.minPasswordLength) {
         this.errors.add('password', 'length');
       }
       if (password !== passwordConfirmation) {
         this.errors.add('password', 'confirmation');
       }
     }
-    if (email === undefined) {
-      this.errors.add('email', 'presence');
-    }
-    if (typeof email === 'string' && !isEmail(email)) {
+    if (!isEmail(email)) {
       this.errors.add('email', 'format');
     }
+
     const isEmailUniq = await this.isEmailUniq(email);
 
     if (!isEmailUniq) {
