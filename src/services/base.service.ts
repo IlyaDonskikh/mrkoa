@@ -2,7 +2,7 @@ import { setFlagsFromString } from 'v8';
 import ErrorsInstanceInterface from '../typings/services/errors/instance.interface';
 import ErrorsService from './errors.service';
 
-export default function BaseService<T = {}>() {
+export default function BaseService<T>() {
   class BaseService {
     [key: string]: any;
 
@@ -13,6 +13,10 @@ export default function BaseService<T = {}>() {
     public errors: ErrorsInstanceInterface;
 
     constructor(params: T) {
+      if (typeof params != 'object') {
+        throw new Error();
+      }
+
       this.requestParams = params;
     }
 

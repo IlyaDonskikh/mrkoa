@@ -6,6 +6,27 @@ MrUser !{
   updatedAt: d,
 }
 
+MrPanelUserIndexRequest {
+  page?: i,
+}
+
+MrPanelUserIndexResponse {
+  users: MrPanelUserIndexResponseUser[],
+  page: i,
+}
+
+MrPanelUserCreateRequest !{
+  user: MrPanelUserCreateRequestUser,
+}
+
+MrPanelUserCreateResponse !{
+  user: MrPanelUserCreateResponseUser,
+}
+
+MrPanelUserIndexResponseUser < MrUser {
+  -password
+}
+
 MrPanelUserCreateRequestUser < MrUser {
   -id,
   -createdAt,
@@ -17,10 +38,3 @@ MrPanelUserCreateResponseUser < MrUser {
   -password
 }
 
-MrPanelUserCreateRequest !{
-  user: MrPanelUserCreateRequestUser,
-}
-
-MrPanelUserCreateResponse !{
-  user: MrPanelUserCreateResponseUser,
-}

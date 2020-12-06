@@ -1,0 +1,5 @@
+POST /auth/sign_in MrAuthSessionCreateRequest
+  => MrPanelUserCreateResponseUser
+
+DELETE /auth/sign_out
+  => {}

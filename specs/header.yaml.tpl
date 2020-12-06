@@ -3,7 +3,7 @@ info:
   title: MrKoa
   version: "{{version}}"
 host: "{{host}}"
-basePath: /api/v2
+basePath: /api/v1
 schemes:
   - https
 consumes:

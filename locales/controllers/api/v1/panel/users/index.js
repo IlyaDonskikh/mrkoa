@@ -1,8 +1,10 @@
 module.exports = {
   controller: {
     ts: {
-      email: {
-        required: 'fill in the filed',
+      create: {
+        email: {
+          required: 'fill in the filed',
+        },
       },
     },
   },
