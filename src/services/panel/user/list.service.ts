@@ -1,10 +1,12 @@
 import BaseService from '../../base.service';
 import { User } from '../../../models/user.model';
 
-export default class PanelUserListService extends BaseService {
-  // Attrs
-  page: number;
+interface RequestParams {
+  page?: number | null;
+}
 
+export default class PanelUserListService extends BaseService<RequestParams>() {
+  // Attrs
   readonly defaultItemsPerPage = 24;
 
   readonly defaultPage = 1;
@@ -13,7 +15,7 @@ export default class PanelUserListService extends BaseService {
 
   // Etc.
   async process() {
-    const page = this.page || this.defaultPage;
+    const page = this.requestParams.page || this.defaultPage;
     const users = await User.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (page - 1),
@@ -23,7 +25,7 @@ export default class PanelUserListService extends BaseService {
     this.body = this.buildBodyBy(users, page);
   }
 
-  private buildBodyBy(users, page) {
+  private buildBodyBy(users: { rows: User[]; count: number }, page: number) {
     return {
       users: users.rows,
       page,

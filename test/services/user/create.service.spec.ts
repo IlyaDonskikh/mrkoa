@@ -6,8 +6,14 @@ import CreateService from '../../../src/services/user/create.service';
 
 describe('User Services', () => {
   describe('Create', () => {
-    function serviceCall(userAttrs: object) {
-      const attrs = { attrs: userAttrs };
+    function serviceCall(userAttrs: {
+      email: string;
+      password: string;
+      passwordConfirmation: string;
+    }) {
+      const attrs = {
+        user: userAttrs,
+      };
 
       return CreateService.call(attrs);
     }

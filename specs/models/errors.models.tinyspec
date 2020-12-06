@@ -1,0 +1,5 @@
+Error {error: b, message}
+
+InvalidField {name, message}
+
+FieldsValidationError < Error {fields: InvalidField[]}

@@ -5,7 +5,7 @@ import { DbInterface } from '../typings/db_interface';
 
 require('dotenv').config();
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV as string;
 const models: Array<any> = [];
 
 const config = require('../../db/config.js')[env];

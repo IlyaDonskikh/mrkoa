@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-expressions */
 
-import {
-  request, expect, buildAuthHeaderBy,
-} from '../../../../setup';
+import { request, expect, buildAuthHeaderBy } from '../../../../setup';
 import * as userFactory from '../../../../factories/user.factory';
+
+interface CreateSessionAttributes {
+  email?: string;
+  password?: string;
+}
 
 describe('Sessions Controller', () => {
   let user: any;
@@ -16,29 +19,49 @@ describe('Sessions Controller', () => {
 
   // create
   describe('#create', () => {
+    let sessionAttributes: CreateSessionAttributes;
+
     beforeEach('Setup path', async () => {
       path = '/api/v1/auth/sign_in';
     });
 
-    function createRequest() {
-      return request()
-        .post(path)
-        .send({
-          email: user.email,
-          password: user.passwordConfirmation,
-        });
+    beforeEach('Setup create session attributes', async () => {
+      sessionAttributes = {
+        email: user.email,
+        password: user.passwordConfirmation,
+      };
+    });
+
+    function createRequest(attrs: CreateSessionAttributes) {
+      return request().post(path).send(attrs);
     }
 
     it('return 200 response', async () => {
-      const currentRequest = await createRequest();
+      const currentRequest = await createRequest(sessionAttributes);
 
       expect(currentRequest).to.have.status(200);
     });
 
     it('return tokenJWT', async () => {
-      const currentRequest = await createRequest();
+      const currentRequest = await createRequest(sessionAttributes);
 
       expect(currentRequest.body.session.tokenJWT).not.to.be.undefined;
+    });
+
+    context('when email not passed', () => {
+      beforeEach('Setup create session attributes', async () => {
+        sessionAttributes = {
+          password: user.passwordConfirmation,
+        };
+      });
+
+      it('return email error', async () => {
+        const currentRequest = await createRequest(sessionAttributes);
+
+        expect(currentRequest.body.errors.email).to.include(
+          'fill in the filed',
+        );
+      });
     });
   });
 
@@ -49,8 +72,7 @@ describe('Sessions Controller', () => {
     });
 
     function destroyRequest() {
-      return request()
-        .delete(path);
+      return request().delete(path);
     }
 
     context('when auth header not passed', () => {
@@ -67,8 +89,10 @@ describe('Sessions Controller', () => {
       });
 
       it('return 200 response', async () => {
-        const currentRequest = await destroyRequest()
-          .set(authHeader[0], authHeader[1]);
+        const currentRequest = await destroyRequest().set(
+          authHeader[0],
+          authHeader[1],
+        );
 
         expect(currentRequest).to.have.status(200);
       });

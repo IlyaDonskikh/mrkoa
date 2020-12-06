@@ -4,20 +4,32 @@ import CreateService from '../../../../src/services/panel/user/create.service';
 import * as userFactory from '../../../factories/user.factory';
 import { expect } from '../../../setup';
 
+interface UserAttrs {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 describe('Panel | User Services', () => {
   describe('Create', () => {
-    function serviceCall(userAttrs: object) {
-      const attrs = { attrs: userAttrs };
+    function serviceCall(userAttrs: UserAttrs) {
+      const attrs = {
+        user: userAttrs,
+      };
 
       return CreateService.call(attrs);
     }
 
-    let userAttrs: any;
+    let userAttrs: UserAttrs;
 
     beforeEach('Set user attrs', async () => {
       const user = await userFactory.build();
 
-      userAttrs = user.toJSON();
+      userAttrs = {
+        email: user.email,
+        password: user.password,
+        passwordConfirmation: user.passwordConfirmation,
+      };
     });
 
     it('success', async () => {
@@ -41,9 +53,9 @@ describe('Panel | User Services', () => {
       });
     });
 
-    context('when user password not passed', () => {
-      beforeEach('Delete password', async () => {
-        delete userAttrs.password;
+    context('when user password too short ', () => {
+      beforeEach('change password', async () => {
+        userAttrs.password = 'a';
       });
 
       it('return password presence error', async () => {
@@ -51,7 +63,7 @@ describe('Panel | User Services', () => {
 
         const passwordErrors = service.errors.errors.password;
 
-        expect(passwordErrors).to.include('presence');
+        expect(passwordErrors).to.include('length');
       });
     });
 
@@ -66,20 +78,6 @@ describe('Panel | User Services', () => {
         const passwordErrors = service.errors.errors.password;
 
         expect(passwordErrors).to.include('confirmation');
-      });
-    });
-
-    context('when user email not passed', () => {
-      beforeEach('Delete email', async () => {
-        delete userAttrs.email;
-      });
-
-      it('return email presence error', async () => {
-        const service = await serviceCall(userAttrs);
-
-        const emailErrors = service.errors.errors.email;
-
-        expect(emailErrors).to.include('presence');
       });
     });
 

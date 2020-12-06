@@ -4,9 +4,11 @@ import BaseService from '../base.service';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
-export default class FindByAuthorizationService extends BaseService {
-  authorizationHeader: string;
+interface RequestParams {
+  authorizationHeader?: string;
+}
 
+export default class FindByAuthorizationService extends BaseService<RequestParams>() {
   private token: string | null = null;
 
   private decodedToken: any;
@@ -15,7 +17,7 @@ export default class FindByAuthorizationService extends BaseService {
 
   // Etc.
   async process() {
-    this.extractTokenFrom(this.authorizationHeader);
+    this.extractTokenFrom(this.requestParams.authorizationHeader);
     this.assignDecodedToken();
     await this.assignSession();
 
@@ -30,7 +32,7 @@ export default class FindByAuthorizationService extends BaseService {
     if (!this.session) this.errors.add('token', 'session');
   }
 
-  private extractTokenFrom(authorizationHeader: string | null) {
+  private extractTokenFrom(authorizationHeader?: string) {
     if (typeof authorizationHeader !== 'string') return;
 
     if (authorizationHeader.startsWith('Bearer ')) {
@@ -39,19 +41,28 @@ export default class FindByAuthorizationService extends BaseService {
   }
 
   private assignDecodedToken() {
-    if (!this.token) { return; }
+    if (!this.token) {
+      return;
+    }
 
     try {
-      this.decodedToken = jwt.verify(this.token, process.env.NODE_APP_TOKEN);
+      this.decodedToken = jwt.verify(
+        this.token,
+        process.env.NODE_APP_TOKEN as string,
+      );
     } catch (err) {
       this.decodedToken = null;
     }
   }
 
   private async assignSession() {
-    if (!this.decodedToken || !this.decodedToken?.sessionToken) { return; }
+    if (!this.decodedToken || !this.decodedToken?.sessionToken) {
+      return;
+    }
 
-    this.session = await UserSession
-      .findOne({ where: { token: this.decodedToken.sessionToken } });
+    this.session = await UserSession.findOne({
+      where: { token: this.decodedToken.sessionToken },
+      rejectOnEmpty: true,
+    });
   }
 }

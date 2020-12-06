@@ -3,7 +3,6 @@
 import SignOutService from '../../../src/services/user/sign.out.service';
 import * as userSessionFactory from '../../factories/user/session.factory';
 import { expect } from '../../setup';
-import user from '../../../locales/services/user';
 import { UserSession } from '../../../src/models/user/session.model';
 
 describe('User Services', () => {
@@ -17,7 +16,7 @@ describe('User Services', () => {
     describe('#call', () => {
       it('success', async () => {
         const service = await SignOutService.call({
-          currentSession: session,
+          id: session.id,
         });
 
         expect(service.isSuccess()).to.be.true;
@@ -25,18 +24,20 @@ describe('User Services', () => {
 
       it('delete session', async () => {
         await SignOutService.call({
-          currentSession: session,
+          id: session.id,
         });
 
-        const deletedSession: any = await UserSession.findByPk(session.id, { paranoid: false });
+        const deletedSession: any = await UserSession.findByPk(session.id, {
+          paranoid: false,
+        });
 
         expect(deletedSession.deletedAt).not.to.be.null;
       });
 
-      context('when currentSession is null', () => {
+      context('when currentSession id is wrong', () => {
         it('failed', async () => {
           const service = await SignOutService.call({
-            currentSession: null,
+            id: -1,
           });
 
           expect(service.isFailed()).to.be.true;
@@ -44,19 +45,11 @@ describe('User Services', () => {
 
         it('return currentSession presence error', async () => {
           const service = await SignOutService.call({
-            currentSession: null,
+            id: -1,
           });
           const currentSessionErrors = service.errors.errors.currentSession;
 
           expect(currentSessionErrors).to.include('presence');
-        });
-      });
-
-      context('when currentSession not passed', () => {
-        it('failed', async () => {
-          const service = await SignOutService.call();
-
-          expect(service.isFailed()).to.be.true;
         });
       });
     });

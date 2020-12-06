@@ -1,0 +1,6 @@
+
+GET /panel/users MrPanelUserIndexRequest
+  => MrPanelUserIndexResponse
+
+POST /panel/users MrPanelUserIndexRequestUser
+  => MrPanelUserCreateResponseUser

@@ -3,12 +3,13 @@
 import { expect } from '../../setup';
 import * as userFactory from '../../factories/user.factory';
 import SignInService from '../../../src/services/user/sign.in.service';
+import { User } from '../../../src/models/user.model';
 
 describe('User Services', () => {
   describe('SignIn', () => {
-    let user: any;
+    let user: User;
     let password: string;
-    let attrs: object;
+    let attrs: any;
 
     beforeEach('Setup user', async () => {
       user = await userFactory.create();
@@ -56,7 +57,7 @@ describe('User Services', () => {
           const service = await SignInService.call(attrs);
           const passwordErrors = service.errors.messages().password;
 
-          expect(passwordErrors).to.include('doesn\'t valid or match email');
+          expect(passwordErrors).to.include("doesn't valid or match email");
         });
 
         it('return password error', async () => {

@@ -1,0 +1,40 @@
+MrUser !{
+  id: i,
+  email: s,
+  password: s,
+  createdAt: d,
+  updatedAt: d,
+}
+
+MrPanelUserIndexRequest {
+  page?: i,
+}
+
+MrPanelUserIndexResponse {
+  users: MrPanelUserIndexResponseUser[],
+  page: i,
+}
+
+MrPanelUserCreateRequest !{
+  user: MrPanelUserCreateRequestUser,
+}
+
+MrPanelUserCreateResponse !{
+  user: MrPanelUserCreateResponseUser,
+}
+
+MrPanelUserIndexResponseUser < MrUser {
+  -password
+}
+
+MrPanelUserCreateRequestUser < MrUser {
+  -id,
+  -createdAt,
+  -updatedAt,
+  passwordConfirmation: string,
+}
+
+MrPanelUserCreateResponseUser < MrUser {
+  -password
+}
+

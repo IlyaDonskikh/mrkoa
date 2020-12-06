@@ -1,0 +1,18 @@
+MrSession {
+  id: i,
+  token: s,
+  tokenJWT: s,
+  createdAt: d,
+  updatedAt: d
+}
+
+MrAuthSessionCreateRequest !{
+  email: s,
+  password: s,
+}
+
+MrAuthSessionCreateResponse !{
+  session: MrAuthSessionCreateResponseSession
+}
+
+MrAuthSessionCreateResponseSession < MrSession { -token }

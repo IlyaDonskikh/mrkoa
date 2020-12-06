@@ -1,8 +1,9 @@
+import { User } from '../../../../../src/models/user.model';
 import * as userFactory from '../../../../factories/user.factory';
 import { buildAuthHeaderBy, expect, request } from '../../../../setup';
 
 describe('Panel | Users Controller', () => {
-  let user;
+  let user: User;
   let authHeader: string[];
 
   beforeEach('Setup user', async () => {
@@ -52,7 +53,7 @@ describe('Panel | Users Controller', () => {
     }
 
     const path = '/api/v1/panel/users';
-    let itemAttrs;
+    let itemAttrs: any;
 
     beforeEach('Setup attrs', async () => {
       const userInstance = await userFactory.build();
@@ -70,6 +71,27 @@ describe('Panel | Users Controller', () => {
       const currentRequest = await createRequest(path, itemAttrs);
 
       expect(currentRequest.body.user).to.have.any.keys('id', 'email');
+    });
+
+    context('when email not passed', async () => {
+      beforeEach('Delete email', async () => {
+        delete itemAttrs.password;
+        delete itemAttrs.email;
+      });
+
+      it('return status 403', async () => {
+        const currentRequest = await createRequest(path, itemAttrs);
+
+        expect(currentRequest).to.have.status(422);
+      });
+
+      it('return email error', async () => {
+        const currentRequest = await createRequest(path, itemAttrs);
+
+        expect(currentRequest.body.errors.email).to.include(
+          'fill in the filed',
+        );
+      });
     });
   });
 });
