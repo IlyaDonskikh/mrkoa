@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import ErrorsInstanceInterface from '../typings/services/errors/instance.interface';
+import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
 
 export default class BaseValidator {
   [key: string]: any;
@@ -14,13 +14,21 @@ export default class BaseValidator {
   public mergedAttrs: any;
 
   // Etc.
-  constructor(errors: ErrorsInstanceInterface, modelInstance: any, attrs: object) {
+  constructor(
+    errors: ErrorsInstanceInterface,
+    modelInstance: any,
+    attrs: object,
+  ) {
     this.errors = errors;
     this.modelInstance = modelInstance;
     this.attrs = attrs;
   }
 
-  static validate(errors: ErrorsInstanceInterface, modelInstance: any, attrs: object) {
+  static validate(
+    errors: ErrorsInstanceInterface,
+    modelInstance: any,
+    attrs: object,
+  ) {
     return new this(errors, modelInstance, attrs).validate();
   }
 
