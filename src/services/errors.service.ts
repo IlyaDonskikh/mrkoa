@@ -1,5 +1,5 @@
 import i18n from '../lib/i18n';
-import ErrorsInstanceInterface from '../typings/services/errors/instance.interface';
+import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
 
 export default class ErrorsService {
   public localePath: string;

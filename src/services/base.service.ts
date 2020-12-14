@@ -1,5 +1,5 @@
 import { setFlagsFromString } from 'v8';
-import ErrorsInstanceInterface from '../typings/services/errors/instance.interface';
+import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
 import ErrorsService from './errors.service';
 
 export default function BaseService<T>() {

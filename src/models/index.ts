@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize';
 import { glob } from 'glob';
 import * as path from 'path';
-import { DbInterface } from '../typings/db_interface';
 
 require('dotenv').config();
 
@@ -15,7 +14,7 @@ glob.sync(`${__dirname}/**/*.model.{js,ts}`).forEach((file) => {
   models.push(model);
 });
 
-const createModels = (): DbInterface => {
+const createModels = () => {
   const sequelize = new Sequelize(config.url, config);
 
   models.forEach((model) => {
@@ -26,7 +25,7 @@ const createModels = (): DbInterface => {
     model.setupAssociations();
   });
 
-  const db: DbInterface = {
+  const db = {
     sequelize,
     Sequelize,
   };
