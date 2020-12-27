@@ -54,10 +54,10 @@ export default {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  // globalSetup: undefined,
+  globalSetup: '<rootDir>/test/setup/beforeAll.ts',
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  // globalTeardown: undefined,
+  globalTeardown: '<rootDir>/test/setup/afterAll.ts',
 
   // A set of global variables that need to be available in all test environments
   // globals: {},
@@ -125,10 +125,10 @@ export default {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  //setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['<rootDir>/test/setup/main.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -148,7 +148,7 @@ export default {
   // The glob patterns Jest uses to detect test files
   testMatch: [
     //   "**/__tests__/**/*.[jt]s?(x)",
-    '**/test/?(*.)+(test).+(ts|tsx|js)',
+    '**/test/**/?(*.)+(test).+(ts|tsx|js)',
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

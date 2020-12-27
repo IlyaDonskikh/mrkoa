@@ -1,19 +1,12 @@
 // The default test env is defined in the .mocharc.js
 
-import * as chai from 'chai';
-import { Sequelize } from 'sequelize';
 import * as app from '../src/index';
 import * as sessionFactory from './factories/user/session.factory';
 
-import chaiHttp = require('chai-http');
-
 const server = app.listen(3001);
 const { db } = app.context;
-const { expect } = chai;
 
-chai.use(chaiHttp);
-
-beforeEach('Clean Database', async () => {
+beforeEach(async () => {
   const { models } = db.sequelize;
   const transaction = await db.sequelize.transaction();
 
@@ -52,8 +45,4 @@ async function buildAuthHeaderBy(user: any): Promise<string[]> {
   return ['Authorization', `Bearer ${token}`];
 }
 
-function request() {
-  return chai.request(server);
-}
-
-export { request, expect, buildAuthHeaderBy };
+export { buildAuthHeaderBy };
