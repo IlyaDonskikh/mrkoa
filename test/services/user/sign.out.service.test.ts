@@ -2,27 +2,26 @@
 
 import SignOutService from '../../../src/services/user/sign.out.service';
 import * as userSessionFactory from '../../factories/user/session.factory';
-import { expect } from '../../setup';
 import { UserSession } from '../../../src/models/user/session.model';
 
 describe('User Services', () => {
   describe('SignOut', () => {
     let session: any;
 
-    beforeEach('Setup user', async () => {
+    beforeEach(async () => {
       session = await userSessionFactory.create();
     });
 
     describe('#call', () => {
-      it('success', async () => {
+      test('success', async () => {
         const service = await SignOutService.call({
           id: session.id,
         });
 
-        expect(service.isSuccess()).to.be.true;
+        expect(service.isSuccess()).toBeTruthy();
       });
 
-      it('delete session', async () => {
+      test('delete session', async () => {
         await SignOutService.call({
           id: session.id,
         });
@@ -31,25 +30,25 @@ describe('User Services', () => {
           paranoid: false,
         });
 
-        expect(deletedSession.deletedAt).not.to.be.null;
+        expect(deletedSession.deletedAt).not.toBeNull();
       });
 
-      context('when currentSession id is wrong', () => {
-        it('failed', async () => {
+      describe('when currentSession id is wrong', () => {
+        test('failed', async () => {
           const service = await SignOutService.call({
             id: -1,
           });
 
-          expect(service.isFailed()).to.be.true;
+          expect(service.isFailed()).toBeTruthy();
         });
 
-        it('return currentSession presence error', async () => {
+        test('return currentSession presence error', async () => {
           const service = await SignOutService.call({
             id: -1,
           });
           const currentSessionErrors = service.errors.errors.currentSession;
 
-          expect(currentSessionErrors).to.include('presence');
+          expect(currentSessionErrors).toContain('presence');
         });
       });
     });

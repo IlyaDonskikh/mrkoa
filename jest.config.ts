@@ -26,9 +26,7 @@ export default {
   coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  coveragePathIgnorePatterns: ['/node_modules/', '/locales/'],
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
@@ -54,10 +52,10 @@ export default {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  globalSetup: '<rootDir>/test/setup/beforeAll.ts',
+  // globalSetup: '<rootDir>/test/setup/beforeAll.ts',
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  globalTeardown: '<rootDir>/test/setup/afterAll.ts',
+  // globalTeardown: '<rootDir>/test/setup/afterAll.ts',
 
   // A set of global variables that need to be available in all test environments
   // globals: {},
@@ -128,7 +126,7 @@ export default {
   //setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['<rootDir>/test/setup/main.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup/index.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

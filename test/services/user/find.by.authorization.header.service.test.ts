@@ -2,7 +2,7 @@
 
 import FindByAuthorizationService from '../../../src/services/user/find.by.authorization.header.service';
 import * as userFactory from '../../factories/user.factory';
-import { buildAuthHeaderBy, expect } from '../../setup';
+import { buildAuthHeaderBy } from '../../setup';
 
 describe('User Services', () => {
   describe('FindByAuthorization', () => {
@@ -14,35 +14,35 @@ describe('User Services', () => {
 
     let user: any;
 
-    beforeEach('Setup session', async () => {
+    beforeEach(async () => {
       user = await userFactory.create();
     });
 
     describe('#call', () => {
-      it('success', async () => {
+      test('success', async () => {
         const service = await FindByAuthorizationService.call({
           authorizationHeader: await buildAuthorizationHeader(user),
         });
 
-        expect(service.isSuccess()).to.be.true;
+        expect(service.isSuccess()).toBeTruthy();
       });
 
-      context('when authorizationHeader is undefined', () => {
-        it('fail', async () => {
+      describe('when authorizationHeader is undefined', () => {
+        test('fail', async () => {
           const service = await FindByAuthorizationService.call({
             authorizationHeader: undefined,
           });
 
-          expect(service.isFailed()).to.be.true;
+          expect(service.isFailed()).toBeTruthy();
         });
 
-        it('return token user error', async () => {
+        test('return token user error', async () => {
           const service = await FindByAuthorizationService.call({
             authorizationHeader: undefined,
           });
           const tokenErrors = service.errors.errors.token;
 
-          expect(tokenErrors).to.include('blank');
+          expect(tokenErrors).toContain('blank');
         });
       });
     });

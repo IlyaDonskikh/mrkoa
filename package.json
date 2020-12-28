@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint src/**/*.ts --fix",
     "test": "jest",
-    "test:watch": "npm run specs  && mocha --watch --watch-files locales/, src/, test/ -r ts-node/register test/**/*.spec.ts --recursive",
+    "test:watch": "jest --watch",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "start": "node index.js",
     "create_db": "sequelize db:create",

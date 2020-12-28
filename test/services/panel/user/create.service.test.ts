@@ -22,7 +22,7 @@ describe('Panel | User Services', () => {
 
     let userAttrs: UserAttrs;
 
-    beforeEach('Set user attrs', async () => {
+    beforeEach(async () => {
       const user = await userFactory.build();
 
       userAttrs = {
@@ -38,10 +38,10 @@ describe('Panel | User Services', () => {
       expect(service.isSuccess()).to.be.true;
     });
 
-    context('when email contains capital chars', () => {
+    describe('when email contains capital chars', () => {
       const emailWithCapitalChars = 'Aa@bb.com';
 
-      beforeEach('Change Email', async () => {
+      beforeEach(async () => {
         userAttrs.email = emailWithCapitalChars;
       });
 
@@ -53,8 +53,8 @@ describe('Panel | User Services', () => {
       });
     });
 
-    context('when user password too short ', () => {
-      beforeEach('change password', async () => {
+    describe('when user password too short ', () => {
+      beforeEach(async () => {
         userAttrs.password = 'a';
       });
 
@@ -67,8 +67,8 @@ describe('Panel | User Services', () => {
       });
     });
 
-    context('when password and confirmation password is not same', () => {
-      beforeEach('Delete password', async () => {
+    describe('when password and confirmation password is not same', () => {
+      beforeEach(async () => {
         userAttrs.password = `is_not_the_same${userAttrs.passwordConfirmation}`;
       });
 
@@ -81,10 +81,10 @@ describe('Panel | User Services', () => {
       });
     });
 
-    context('when user email has a wrong format', () => {
+    describe('when user email has a wrong format', () => {
       const emailWrongFormat = 'wrong_format';
 
-      beforeEach('Change email', async () => {
+      beforeEach(async () => {
         userAttrs.email = emailWrongFormat;
       });
 
@@ -97,14 +97,12 @@ describe('Panel | User Services', () => {
       });
     });
 
-    context('when user with same email exists', () => {
+    describe('when user with same email exists', () => {
       let user: any;
 
-      beforeEach('Create user', async () => {
+      beforeEach(async () => {
         user = await userFactory.create();
-      });
 
-      beforeEach('Update email attribute', () => {
         userAttrs.email = user.email;
       });
 

@@ -8,7 +8,7 @@ import {
   Model,
   Sequelize,
 } from 'sequelize';
-import { User } from '../user.model';
+import { User } from './../user.model';
 
 export class UserSession extends Model {
   public id!: number;

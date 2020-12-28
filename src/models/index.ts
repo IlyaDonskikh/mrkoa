@@ -14,23 +14,19 @@ glob.sync(`${__dirname}/**/*.model.{js,ts}`).forEach((file) => {
   models.push(model);
 });
 
-const createModels = () => {
-  const sequelize = new Sequelize(config.url, config);
+const sequelize = new Sequelize(config.url, config);
 
-  models.forEach((model) => {
-    model.initModel(sequelize);
-  });
+models.forEach((model) => {
+  model.initModel(sequelize);
+});
 
-  models.forEach((model) => {
-    model.setupAssociations();
-  });
+models.forEach((model) => {
+  model.setupAssociations();
+});
 
-  const db = {
-    sequelize,
-    Sequelize,
-  };
-
-  return db;
+const db = {
+  sequelize,
+  Sequelize,
 };
 
-export default createModels;
+export { db };
