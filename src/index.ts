@@ -5,7 +5,7 @@ import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 
-import createModels from './models';
+import { db } from './models';
 import router from './routers/index';
 
 require('dotenv').config();
@@ -13,7 +13,6 @@ require('dotenv').config();
 // ToDo handle queries by QS.
 
 const app = new Koa();
-const db = createModels();
 
 // Context
 app.context.db = db;

@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-expressions */
-
-import { expect } from '../../setup';
 import * as userFactory from '../../factories/user.factory';
 import SignInService from '../../../src/services/user/sign.in.service';
 import { User } from '../../../src/models/user.model';
@@ -11,104 +8,104 @@ describe('User Services', () => {
     let password: string;
     let attrs: any;
 
-    beforeEach('Setup user', async () => {
-      user = await userFactory.create();
+    beforeEach(async () => {
+      user = await userFactory.create({});
     });
 
     describe('#call', () => {
-      beforeEach('Setup password', () => {
+      beforeEach(() => {
         password = user.passwordConfirmation;
       });
 
-      it('success', async () => {
+      test('success', async () => {
         const service = await SignInService.call({
           email: user.email,
           password,
         });
 
-        expect(service.isSuccess()).to.be.true;
+        expect(service.isSuccess()).toBeTruthy();
       });
 
-      it('return user session', async () => {
+      test('return user session', async () => {
         const service = await SignInService.call({
           email: user.email,
           password,
         });
         const serviceUser = service.session;
 
-        expect(service.session.userId).to.eq(user.id);
+        expect(service.session.userId).toEqual(user.id);
       });
 
-      context('when password are wrong', () => {
-        beforeEach('Setup attrs', () => {
+      describe('when password are wrong', () => {
+        beforeEach(() => {
           attrs = {
             email: user.email,
             password: 'sorry, but i am wrong. And always was :(',
           };
         });
 
-        it('fail', async () => {
+        test('fail', async () => {
           const service = await SignInService.call(attrs);
 
-          expect(service.isFailed()).to.be.true;
+          expect(service.isFailed()).toBeTruthy();
         });
 
-        it('return localized password error', async () => {
+        test('return localized password error', async () => {
           const service = await SignInService.call(attrs);
           const passwordErrors = service.errors.messages().password;
 
-          expect(passwordErrors).to.include("doesn't valid or match email");
+          expect(passwordErrors).toContain("doesn't valid or match email");
         });
 
-        it('return password error', async () => {
+        test('return password error', async () => {
           const service = await SignInService.call(attrs);
           const passwordErrors = service.errors.errors.password;
 
-          expect(passwordErrors).to.include('valid');
+          expect(passwordErrors).toContain('valid');
         });
       });
 
-      context('when password are encrypted', () => {
-        beforeEach('Setup attrs', () => {
+      describe('when password are encrypted', () => {
+        beforeEach(() => {
           attrs = {
             email: user.email,
             password: user.password,
           };
         });
 
-        it('fail', async () => {
+        test('fail', async () => {
           const service = await SignInService.call(attrs);
 
-          expect(service.isFailed()).to.be.true;
+          expect(service.isFailed()).toBeTruthy();
         });
 
-        it('return password error', async () => {
+        test('return password error', async () => {
           const service = await SignInService.call(attrs);
           const passwordErrors = service.errors.errors.password;
 
-          expect(passwordErrors).to.include('valid');
+          expect(passwordErrors).toContain('valid');
         });
       });
 
-      context('when email are wrong', () => {
-        beforeEach('Setup attrs', () => {
+      describe('when email are wrong', () => {
+        beforeEach(() => {
           attrs = {
             email: 'i@am.wrong',
             password: user.password,
           };
         });
 
-        it('fail', async () => {
+        test('fail', async () => {
           const service = await SignInService.call(attrs);
 
-          expect(service.isFailed()).to.be.true;
+          expect(service.isFailed()).toBeTruthy();
         });
 
-        it('return email error', async () => {
+        test('return email error', async () => {
           const service = await SignInService.call(attrs);
           const emailErrors = service.errors.errors.email;
 
-          expect(emailErrors).to.include('find');
+          expect(emailErrors).toContain('find');
         });
       });
     });

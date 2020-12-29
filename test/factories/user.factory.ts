@@ -5,9 +5,9 @@ import EcryptPasswordService from '../../src/services/user/encrypt.password.serv
 
 const data = async (props = {}) => {
   const password = faker.internet.password();
-
+  const email = `${faker.random.uuid()}${faker.internet.email().toLowerCase()}`;
   const defaultProps = {
-    email: faker.internet.email().toLowerCase(),
+    email: email,
     password,
     passwordConfirmation: password,
     token: crypto.randomBytes(64).toString('hex'),

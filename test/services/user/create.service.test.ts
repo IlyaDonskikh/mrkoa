@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-expressions */
+import * as faker from 'faker';
 
-import { expect } from '../../setup';
 import * as userFactory from '../../factories/user.factory';
 import CreateService from '../../../src/services/user/create.service';
 
@@ -20,54 +19,51 @@ describe('User Services', () => {
 
     let userAttrs: any;
 
-    beforeEach('Set user attrs', async () => {
+    beforeEach(async () => {
       const user = await userFactory.build();
 
       userAttrs = user.toJSON();
     });
 
-    it('success', async () => {
+    test.only('success', async () => {
       const service = await serviceCall(userAttrs);
 
-      expect(service.isSuccess()).to.be.true;
+      expect(service.isSuccess()).toBeTruthy();
     });
 
-    context('when email contains capital chars', () => {
-      const emailWithCapitalChars = 'Aa@bb.com';
+    describe('when email contains capital chars', () => {
+      const emailWithCapitalChars = faker.internet.email().toUpperCase();
 
-      beforeEach('Change Email', async () => {
+      beforeEach(async () => {
         userAttrs.email = emailWithCapitalChars;
       });
 
-      it('downcase email', async () => {
+      test('downcase email', async () => {
         const downcasedEmail = emailWithCapitalChars.toLowerCase();
         const service = await serviceCall(userAttrs);
 
-        expect(service.user.email).to.be.eq(downcasedEmail);
+        expect(service.user.email).toEqual(downcasedEmail);
       });
     });
 
-    context('when user with same email exists', () => {
+    describe('when user with same email exists', () => {
       let user: any;
 
-      beforeEach('Create user', async () => {
+      beforeEach(async () => {
         user = await userFactory.create();
-      });
-
-      beforeEach('Update email attribute', () => {
         userAttrs.email = user.email;
       });
 
-      it('failed', async () => {
+      test('failed', async () => {
         const service = await serviceCall(userAttrs);
-        expect(service.isFailed()).to.be.true;
+        expect(service.isFailed()).toBeTruthy();
       });
 
-      it('return email uniq error', async () => {
+      test('return email uniq error', async () => {
         const service = await serviceCall(userAttrs);
         const emailErrors = service.errors.errors.email;
 
-        expect(emailErrors).to.include('uniq');
+        expect(emailErrors).toContain('uniq');
       });
     });
   });

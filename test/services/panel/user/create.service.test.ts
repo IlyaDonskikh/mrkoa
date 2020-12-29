@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-expressions */
+import * as faker from 'faker';
 
 import CreateService from '../../../../src/services/panel/user/create.service';
 import * as userFactory from '../../../factories/user.factory';
-import { expect } from '../../../setup';
 
 interface UserAttrs {
   email: string;
@@ -22,7 +21,7 @@ describe('Panel | User Services', () => {
 
     let userAttrs: UserAttrs;
 
-    beforeEach('Set user attrs', async () => {
+    beforeEach(async () => {
       const user = await userFactory.build();
 
       userAttrs = {
@@ -35,26 +34,26 @@ describe('Panel | User Services', () => {
     it('success', async () => {
       const service = await serviceCall(userAttrs);
 
-      expect(service.isSuccess()).to.be.true;
+      expect(service.isSuccess()).toBeTruthy();
     });
 
-    context('when email contains capital chars', () => {
-      const emailWithCapitalChars = 'Aa@bb.com';
+    describe('when email contains capital chars', () => {
+      const emailWithCapitalChars = faker.internet.email().toUpperCase();
 
-      beforeEach('Change Email', async () => {
+      beforeEach(async () => {
         userAttrs.email = emailWithCapitalChars;
       });
 
       it('downcase email', async () => {
-        const downcasedEmail = emailWithCapitalChars.toLowerCase();
+        const lowercaseEmail = emailWithCapitalChars.toLowerCase();
         const service = await serviceCall(userAttrs);
 
-        expect(service.user.email).to.be.eq(downcasedEmail);
+        expect(service.user.email).toEqual(lowercaseEmail);
       });
     });
 
-    context('when user password too short ', () => {
-      beforeEach('change password', async () => {
+    describe('when user password too short ', () => {
+      beforeEach(async () => {
         userAttrs.password = 'a';
       });
 
@@ -63,12 +62,12 @@ describe('Panel | User Services', () => {
 
         const passwordErrors = service.errors.errors.password;
 
-        expect(passwordErrors).to.include('length');
+        expect(passwordErrors).toContain('length');
       });
     });
 
-    context('when password and confirmation password is not same', () => {
-      beforeEach('Delete password', async () => {
+    describe('when password and confirmation password is not same', () => {
+      beforeEach(async () => {
         userAttrs.password = `is_not_the_same${userAttrs.passwordConfirmation}`;
       });
 
@@ -77,14 +76,14 @@ describe('Panel | User Services', () => {
 
         const passwordErrors = service.errors.errors.password;
 
-        expect(passwordErrors).to.include('confirmation');
+        expect(passwordErrors).toContain('confirmation');
       });
     });
 
-    context('when user email has a wrong format', () => {
+    describe('when user email has a wrong format', () => {
       const emailWrongFormat = 'wrong_format';
 
-      beforeEach('Change email', async () => {
+      beforeEach(async () => {
         userAttrs.email = emailWrongFormat;
       });
 
@@ -93,31 +92,29 @@ describe('Panel | User Services', () => {
 
         const emailErrors = service.errors.errors.email;
 
-        expect(emailErrors).to.include('format');
+        expect(emailErrors).toContain('format');
       });
     });
 
-    context('when user with same email exists', () => {
+    describe('when user with same email exists', () => {
       let user: any;
 
-      beforeEach('Create user', async () => {
+      beforeEach(async () => {
         user = await userFactory.create();
-      });
 
-      beforeEach('Update email attribute', () => {
         userAttrs.email = user.email;
       });
 
       it('failed', async () => {
         const service = await serviceCall(userAttrs);
-        expect(service.isFailed()).to.be.true;
+        expect(service.isFailed()).toBeTruthy();
       });
 
       it('return email uniq error', async () => {
         const service = await serviceCall(userAttrs);
         const emailErrors = service.errors.errors.email;
 
-        expect(emailErrors).to.include('uniq');
+        expect(emailErrors).toContain('uniq');
       });
     });
   });
