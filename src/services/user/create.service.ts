@@ -19,9 +19,7 @@ export default class CreateService extends BaseService<RequestParams>() {
 
   // Etc.
   async process() {
-    if (!(await this.isValid())) {
-      return;
-    }
+    await this.isValid();
 
     await this.transformAttributes();
 
@@ -29,7 +27,7 @@ export default class CreateService extends BaseService<RequestParams>() {
   }
 
   // Private
-  private async validate() {
+  protected async validate() {
     this.validator = await UserValidator.validate(
       this.errors,
       User.build(),

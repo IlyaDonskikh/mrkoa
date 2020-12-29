@@ -27,14 +27,9 @@ const create = async (ctx: Koa.Context) => {
 
   const service = await PanelPrimeUserCreateService.call(attrs);
 
-  if (service.isSuccess()) {
-    ctx.body = {
-      user: await UserDefaultSerializer.serialize(service.user),
-    };
-  } else {
-    ctx.body = { errors: service.errors.messages() };
-    ctx.status = 422;
-  }
+  ctx.body = {
+    user: await UserDefaultSerializer.serialize(service.user),
+  };
 };
 
 export { index, create };

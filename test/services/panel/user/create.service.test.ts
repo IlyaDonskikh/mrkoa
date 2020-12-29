@@ -57,12 +57,10 @@ describe('Panel | User Services', () => {
         userAttrs.password = 'a';
       });
 
-      it('return password presence error', async () => {
-        const service = await serviceCall(userAttrs);
-
-        const passwordErrors = service.errors.errors.password;
-
-        expect(passwordErrors).toContain('length');
+      it('reject with password presence error', async () => {
+        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+          errors: { password: ['length', 'confirmation'] },
+        });
       });
     });
 
@@ -71,12 +69,10 @@ describe('Panel | User Services', () => {
         userAttrs.password = `is_not_the_same${userAttrs.passwordConfirmation}`;
       });
 
-      it('return password confirmation error', async () => {
-        const service = await serviceCall(userAttrs);
-
-        const passwordErrors = service.errors.errors.password;
-
-        expect(passwordErrors).toContain('confirmation');
+      it('reject with password confirmation error', async () => {
+        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+          errors: { password: ['confirmation'] },
+        });
       });
     });
 
@@ -87,12 +83,10 @@ describe('Panel | User Services', () => {
         userAttrs.email = emailWrongFormat;
       });
 
-      it('return email format error', async () => {
-        const service = await serviceCall(userAttrs);
-
-        const emailErrors = service.errors.errors.email;
-
-        expect(emailErrors).toContain('format');
+      test('reject with email format error', async () => {
+        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+          errors: { email: ['format'] },
+        });
       });
     });
 
@@ -105,16 +99,10 @@ describe('Panel | User Services', () => {
         userAttrs.email = user.email;
       });
 
-      it('failed', async () => {
-        const service = await serviceCall(userAttrs);
-        expect(service.isFailed()).toBeTruthy();
-      });
-
-      it('return email uniq error', async () => {
-        const service = await serviceCall(userAttrs);
-        const emailErrors = service.errors.errors.email;
-
-        expect(emailErrors).toContain('uniq');
+      test('reject with email uniq error', async () => {
+        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+          errors: { email: ['uniq'] },
+        });
       });
     });
   });

@@ -26,7 +26,9 @@ export function BaseService<T>() {
     async isValid() {
       await this.validate();
 
-      return this.isSuccess();
+      if (this.isFailed()) {
+        throw this.errors;
+      }
     }
 
     isSuccess() {

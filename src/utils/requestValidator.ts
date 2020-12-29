@@ -1,11 +1,8 @@
-import * as Koa from 'koa';
-import * as Ajv from 'ajv';
 import { error } from 'console';
 import { JSONSchema6 } from 'json-schema';
 
 import ErrorsService from '../services/errors.service';
 import { validateSchema } from './schemaValidator';
-import { nextTick } from 'process';
 
 export function validate<T>({
   schema,

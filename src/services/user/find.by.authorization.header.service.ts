@@ -25,7 +25,9 @@ export default class FindByAuthorizationService extends BaseService<RequestParam
     // We already have all data set
   }
 
-  private async validate() {
+  // private
+
+  protected async validate() {
     if (!this.token) this.errors.add('token', 'blank');
     if (!this.decodedToken) this.errors.add('token', 'invalid');
     if (!this.session) this.errors.add('token', 'session');

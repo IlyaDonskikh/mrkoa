@@ -15,27 +15,17 @@ const create = async (ctx: Koa.Context) => {
 
   const service = await SignInService.call(attrs);
 
-  if (service.isSuccess()) {
-    ctx.body = {
-      session: await SessionDefaultSerializer.serialize(service.session),
-    };
-  } else {
-    ctx.body = { errors: service.errors.messages() };
-    ctx.status = 422;
-  }
+  ctx.body = {
+    session: await SessionDefaultSerializer.serialize(service.session),
+  };
 };
 
 const destroy = async (ctx: Koa.Context) => {
-  const service = await SignOutService.call({
+  await SignOutService.call({
     id: ctx.currentSession.id,
   });
 
-  if (service.isSuccess()) {
-    ctx.status = 200;
-  } else {
-    ctx.body = { errors: service.errors.messages() };
-    ctx.status = 422;
-  }
+  ctx.status = 200;
 };
 
 export { create, destroy };
