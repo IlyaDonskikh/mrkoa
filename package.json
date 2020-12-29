@@ -12,7 +12,8 @@
     "create_db": "sequelize db:create",
     "migrate": "sequelize db:migrate",
     "build": "npm run specs && tsc && npm run migrate",
-    "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api"
+    "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api",
+    "onlyhunter": "dot-only-hunter test"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -62,9 +63,11 @@
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "ajv": "^6.12.6",
+    "dot-only-hunter": "^1.0.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
+    "husky": "^5.0.6",
     "jest": "^26.6.3",
     "sequelize-cli": "^6.2.0",
     "supertest": "^6.0.1",
