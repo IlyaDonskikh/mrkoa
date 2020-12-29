@@ -13,7 +13,8 @@
     "migrate": "sequelize db:migrate",
     "build": "npm run specs && tsc && npm run migrate",
     "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api",
-    "onlyhunter": "dot-only-hunter test"
+    "onlyhunter": "dot-only-hunter test",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
