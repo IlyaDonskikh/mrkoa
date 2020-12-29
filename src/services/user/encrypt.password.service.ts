@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 
 interface RequestParams {
   password: string;

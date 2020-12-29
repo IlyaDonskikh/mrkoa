@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 

@@ -1,4 +1,4 @@
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 import EncryptPasswordService from './encrypt.password.service';
 import { User } from '../../models/user.model';
 import UserValidator from '../../validators/base/user.validator';

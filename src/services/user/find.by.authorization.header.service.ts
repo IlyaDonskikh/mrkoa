@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as jwt from 'jsonwebtoken';
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 

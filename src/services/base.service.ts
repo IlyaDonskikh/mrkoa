@@ -2,7 +2,7 @@ import { setFlagsFromString } from 'v8';
 import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
 import ErrorsService from './errors.service';
 
-export default function BaseService<T>() {
+export function BaseService<T>() {
   class BaseService {
     [key: string]: any;
 
