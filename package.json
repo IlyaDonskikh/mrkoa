@@ -13,8 +13,9 @@
     "migrate": "sequelize db:migrate",
     "build": "npm run specs && tsc && npm run migrate",
     "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api",
-    "onlyhunter": "dot-only-hunter test",
-    "postinstall": "husky install"
+    "dot-only-hunter": "dot-only-hunter test",
+    "postinstall": "husky install",
+    "unused-exports": "ts-unused-exports tsconfig.json --ignoreFiles=.*model$"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -75,6 +76,7 @@
     "tinyspec": "^2.4.6",
     "ts-jest": "^26.4.4",
     "ts-node": "^8.9.1",
+    "ts-unused-exports": "^7.0.0",
     "typescript": "^3.8.3"
   },
   "keywords": [

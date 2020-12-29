@@ -3,7 +3,7 @@ import EncryptPasswordService from './encrypt.password.service';
 import { User } from '../../models/user.model';
 import UserValidator from '../../validators/base/user.validator';
 
-export interface RequestParams {
+interface RequestParams {
   user: {
     email: string;
     password: string;

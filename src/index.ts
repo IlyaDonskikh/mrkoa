@@ -35,4 +35,4 @@ if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.PORT);
 }
 
-export = app;
+export { app };

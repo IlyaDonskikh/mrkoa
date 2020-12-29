@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "outDir": "./dist",
+    "baseUrl": "./src",
     "target": "es2018",
     "lib": ["es2018"],
     "strict": true,
@@ -12,5 +13,5 @@
     "experimentalDecorators": true,
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./test/**/*" ]
 }

@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 
-import * as app from '../../../../../src';
+import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
 import * as userFactory from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';

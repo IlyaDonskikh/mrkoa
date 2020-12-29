@@ -1,6 +1,4 @@
-import * as app from '../src/index';
-
-const { db } = app.context;
+import { db } from '../src/models';
 
 afterAll(async () => {
   db.sequelize.close();
