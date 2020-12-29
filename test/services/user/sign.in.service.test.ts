@@ -31,7 +31,6 @@ describe('User Services', () => {
           email: user.email,
           password,
         });
-        const serviceUser = service.session;
 
         expect(service.session.userId).toEqual(user.id);
       });
