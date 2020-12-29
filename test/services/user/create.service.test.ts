@@ -25,7 +25,7 @@ describe('User Services', () => {
       userAttrs = user.toJSON();
     });
 
-    test('success', async () => {
+    test.only('success', async () => {
       const service = await serviceCall(userAttrs);
 
       expect(service.isSuccess()).toBeTruthy();
