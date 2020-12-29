@@ -12,13 +12,13 @@ export default class SignOutService extends BaseService<RequestParams>() {
   async process() {
     await this.setupVariables();
 
-    await this.isValid();
+    await this.validate();
 
     await this.session!.destroy();
   }
 
   // Private
-  protected async validate() {
+  protected async checks() {
     if (!this.session) {
       this.errors.add('currentSession', 'presence');
     }

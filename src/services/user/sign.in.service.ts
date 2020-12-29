@@ -21,7 +21,7 @@ export default class SignInService extends BaseService<RequestParams>() {
   async process() {
     await this.setupVariables();
 
-    await this.isValid();
+    await this.validate();
 
     this.session = await UserSession.create({
       userId: this.user!.id,
@@ -29,7 +29,7 @@ export default class SignInService extends BaseService<RequestParams>() {
     });
   }
 
-  protected async validate() {
+  protected async checks() {
     if (this.requestParams.email === undefined) {
       this.errors.add('password', 'presence');
     }

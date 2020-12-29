@@ -20,14 +20,14 @@ export default class FindByAuthorizationService extends BaseService<RequestParam
     this.assignDecodedToken();
     await this.assignSession();
 
-    await this.isValid();
+    await this.validate();
 
     // We already have all data set
   }
 
   // private
 
-  protected async validate() {
+  protected async checks() {
     if (!this.token) this.errors.add('token', 'blank');
     if (!this.decodedToken) this.errors.add('token', 'invalid');
     if (!this.session) this.errors.add('token', 'session');

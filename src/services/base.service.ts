@@ -23,8 +23,8 @@ export function BaseService<T>() {
       return new this(params).call();
     }
 
-    async isValid() {
-      await this.validate();
+    async validate() {
+      await this.checks();
 
       if (this.isFailed()) {
         throw this.errors;
