@@ -18,7 +18,7 @@ describe('Panel | Users Controller', () => {
   describe('#index', () => {
     const path = '/api/v1/panel/users';
 
-    it('return 200 response', async () => {
+    test('return 200 response', async () => {
       const currentRequest = await request(app.callback())
         .get(path)
         .set(authHeader[0], authHeader[1]);
@@ -26,7 +26,7 @@ describe('Panel | Users Controller', () => {
       expect(currentRequest.status).toBe(200);
     });
 
-    it('return users array', async () => {
+    test('return users array', async () => {
       const currentRequest = await request(app.callback())
         .get(path)
         .set(authHeader[0], authHeader[1]);
@@ -34,7 +34,7 @@ describe('Panel | Users Controller', () => {
       expect(currentRequest.body.users).toBeInstanceOf(Array);
     });
 
-    it('return user in the array', async () => {
+    test('return user in the array', async () => {
       const currentRequest = await request(app.callback())
         .get(path)
         .set(authHeader[0], authHeader[1]);
@@ -63,13 +63,13 @@ describe('Panel | Users Controller', () => {
       itemAttrs = userInstance.toJSON();
     });
 
-    it('return 200 response', async () => {
+    test('return 200 response', async () => {
       const currentRequest = await createRequest(path, itemAttrs);
 
       expect(currentRequest.status).toBe(200);
     });
 
-    it('return user', async () => {
+    test('return user', async () => {
       const currentRequest = await createRequest(path, itemAttrs);
 
       expect(currentRequest.body.user).toMatchObject({
@@ -84,13 +84,13 @@ describe('Panel | Users Controller', () => {
         delete itemAttrs.email;
       });
 
-      it('return status 403', async () => {
+      test('return status 403', async () => {
         const currentRequest = await createRequest(path, itemAttrs);
 
         expect(currentRequest.status).toBe(422);
       });
 
-      it('return email error', async () => {
+      test('return email error', async () => {
         const currentRequest = await createRequest(path, itemAttrs);
 
         expect(currentRequest.body.errors.email).toContain('fill in the filed');

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-expressions */
+import * as faker from 'faker';
 
 import CreateService from '../../../../src/services/panel/user/create.service';
 import * as userFactory from '../../../factories/user.factory';
@@ -39,17 +39,17 @@ describe('Panel | User Services', () => {
     });
 
     describe('when email contains capital chars', () => {
-      const emailWithCapitalChars = 'Aa@bb.com';
+      const emailWithCapitalChars = faker.internet.email().toUpperCase();
 
       beforeEach(async () => {
         userAttrs.email = emailWithCapitalChars;
       });
 
       it('downcase email', async () => {
-        const downcasedEmail = emailWithCapitalChars.toLowerCase();
+        const lowercaseEmail = emailWithCapitalChars.toLowerCase();
         const service = await serviceCall(userAttrs);
 
-        expect(service.user.email).to.be.eq(downcasedEmail);
+        expect(service.user.email).to.be.eq(lowercaseEmail);
       });
     });
 

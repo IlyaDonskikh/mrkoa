@@ -1,6 +1,7 @@
-/* eslint-disable no-unused-expressions */
+import * as request from 'supertest';
 
-import { request, expect, buildAuthHeaderBy } from '../../../../setup';
+import { buildAuthHeaderBy } from '../../../../setup';
+import * as app from '../../../../../src';
 import * as userFactory from '../../../../factories/user.factory';
 
 interface CreateSessionAttributes {
@@ -13,7 +14,7 @@ describe('Sessions Controller', () => {
   let path: string;
   let authHeader: string[];
 
-  beforeEach('Setup device', async () => {
+  beforeEach(async () => {
     user = await userFactory.create();
   });
 
@@ -21,11 +22,8 @@ describe('Sessions Controller', () => {
   describe('#create', () => {
     let sessionAttributes: CreateSessionAttributes;
 
-    beforeEach('Setup path', async () => {
+    beforeEach(async () => {
       path = '/api/v1/auth/sign_in';
-    });
-
-    beforeEach('Setup create session attributes', async () => {
       sessionAttributes = {
         email: user.email,
         password: user.passwordConfirmation,
@@ -33,68 +31,66 @@ describe('Sessions Controller', () => {
     });
 
     function createRequest(attrs: CreateSessionAttributes) {
-      return request().post(path).send(attrs);
+      return request(app.callback()).post(path).send(attrs);
     }
 
-    it('return 200 response', async () => {
+    test('return 200 response', async () => {
       const currentRequest = await createRequest(sessionAttributes);
 
-      expect(currentRequest).to.have.status(200);
+      expect(currentRequest.status).toBe(200);
     });
 
-    it('return tokenJWT', async () => {
+    test('return tokenJWT', async () => {
       const currentRequest = await createRequest(sessionAttributes);
 
-      expect(currentRequest.body.session.tokenJWT).not.to.be.undefined;
+      expect(currentRequest.body.session.tokenJWT).not.toBeUndefined();
     });
 
-    context('when email not passed', () => {
-      beforeEach('Setup create session attributes', async () => {
+    describe('when email not passed', () => {
+      beforeEach(async () => {
         sessionAttributes = {
           password: user.passwordConfirmation,
         };
       });
 
-      it('return email error', async () => {
+      test('return email error', async () => {
         const currentRequest = await createRequest(sessionAttributes);
 
-        expect(currentRequest.body.errors.email).to.include(
-          'fill in the filed',
-        );
+        expect(currentRequest.body.errors.email).toContain('fill in the filed');
       });
     });
   });
 
   // destroy
   describe('#destroy', () => {
-    beforeEach('Setup path', async () => {
+    beforeEach(async () => {
       path = '/api/v1/auth/sign_out';
     });
 
     function destroyRequest() {
-      return request().delete(path);
+      return request(app.callback()).delete(path);
     }
 
-    context('when auth header not passed', () => {
-      it('return 403 response', async () => {
+    describe('when auth header not passed', () => {
+      test('return 403 response', async () => {
         const currentRequest = await destroyRequest();
 
-        expect(currentRequest).to.have.status(403);
+        expect(currentRequest.status).toBe(403);
       });
     });
 
-    context('when auth header passed', () => {
-      beforeEach('Setup authHeader', async () => {
+    describe('when auth header passed', () => {
+      beforeEach(async () => {
         authHeader = await buildAuthHeaderBy(user);
       });
 
-      it('return 200 response', async () => {
+      test('return 200 response', async () => {
         const currentRequest = await destroyRequest().set(
           authHeader[0],
           authHeader[1],
         );
 
-        expect(currentRequest).to.have.status(200);
+        expect(currentRequest.status).toBe(200);
       });
     });
   });
