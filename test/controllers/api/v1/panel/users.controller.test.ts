@@ -3,7 +3,7 @@ import * as request from 'supertest';
 import * as app from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
 import * as userFactory from '../../../../factories/user.factory';
-import { buildAuthHeaderBy } from '../../../../setup';
+import { buildAuthHeaderTestHelper } from '../../../../helpers';
 
 describe('Panel | Users Controller', () => {
   let user: User;
@@ -11,7 +11,7 @@ describe('Panel | Users Controller', () => {
 
   beforeEach(async () => {
     user = await userFactory.create();
-    authHeader = await buildAuthHeaderBy(user);
+    authHeader = await buildAuthHeaderTestHelper(user);
   });
 
   // index

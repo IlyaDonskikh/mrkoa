@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 
-import { buildAuthHeaderBy } from '../../../../setup';
+import { buildAuthHeaderTestHelper } from '../../../../helpers';
 import * as app from '../../../../../src';
 import * as userFactory from '../../../../factories/user.factory';
 
@@ -81,7 +81,7 @@ describe('Sessions Controller', () => {
 
     describe('when auth header passed', () => {
       beforeEach(async () => {
-        authHeader = await buildAuthHeaderBy(user);
+        authHeader = await buildAuthHeaderTestHelper(user);
       });
 
       test('return 200 response', async () => {

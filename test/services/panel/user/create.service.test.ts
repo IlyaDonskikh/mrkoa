@@ -2,7 +2,6 @@ import * as faker from 'faker';
 
 import CreateService from '../../../../src/services/panel/user/create.service';
 import * as userFactory from '../../../factories/user.factory';
-import { expect } from '../../../setup';
 
 interface UserAttrs {
   email: string;
@@ -35,7 +34,7 @@ describe('Panel | User Services', () => {
     it('success', async () => {
       const service = await serviceCall(userAttrs);
 
-      expect(service.isSuccess()).to.be.true;
+      expect(service.isSuccess()).toBeTruthy();
     });
 
     describe('when email contains capital chars', () => {
@@ -49,7 +48,7 @@ describe('Panel | User Services', () => {
         const lowercaseEmail = emailWithCapitalChars.toLowerCase();
         const service = await serviceCall(userAttrs);
 
-        expect(service.user.email).to.be.eq(lowercaseEmail);
+        expect(service.user.email).toEqual(lowercaseEmail);
       });
     });
 
@@ -63,7 +62,7 @@ describe('Panel | User Services', () => {
 
         const passwordErrors = service.errors.errors.password;
 
-        expect(passwordErrors).to.include('length');
+        expect(passwordErrors).toContain('length');
       });
     });
 
@@ -77,7 +76,7 @@ describe('Panel | User Services', () => {
 
         const passwordErrors = service.errors.errors.password;
 
-        expect(passwordErrors).to.include('confirmation');
+        expect(passwordErrors).toContain('confirmation');
       });
     });
 
@@ -93,7 +92,7 @@ describe('Panel | User Services', () => {
 
         const emailErrors = service.errors.errors.email;
 
-        expect(emailErrors).to.include('format');
+        expect(emailErrors).toContain('format');
       });
     });
 
@@ -108,14 +107,14 @@ describe('Panel | User Services', () => {
 
       it('failed', async () => {
         const service = await serviceCall(userAttrs);
-        expect(service.isFailed()).to.be.true;
+        expect(service.isFailed()).toBeTruthy();
       });
 
       it('return email uniq error', async () => {
         const service = await serviceCall(userAttrs);
         const emailErrors = service.errors.errors.email;
 
-        expect(emailErrors).to.include('uniq');
+        expect(emailErrors).toContain('uniq');
       });
     });
   });

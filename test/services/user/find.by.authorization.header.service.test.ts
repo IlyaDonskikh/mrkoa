@@ -2,12 +2,12 @@
 
 import FindByAuthorizationService from '../../../src/services/user/find.by.authorization.header.service';
 import * as userFactory from '../../factories/user.factory';
-import { buildAuthHeaderBy } from '../../setup';
+import { buildAuthHeaderTestHelper } from '../../helpers';
 
 describe('User Services', () => {
   describe('FindByAuthorization', () => {
     async function buildAuthorizationHeader(user: any) {
-      const header = (await buildAuthHeaderBy(user))[1];
+      const header = (await buildAuthHeaderTestHelper(user))[1];
 
       return header;
     }
