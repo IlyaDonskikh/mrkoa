@@ -42,7 +42,7 @@ jobs:
       env:
         NODE_ENV: test
         DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/mr_kao_test
-    - run: npm test
+    - run: npm run test:coverage
       env:
         PORT: 3000
         NODE_ENV: test
