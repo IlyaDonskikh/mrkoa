@@ -3,9 +3,8 @@
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "outDir": "./dist",
-    "baseUrl": "./src",
     "target": "es2019",
-    "lib": ["es2020"],
+    "lib": ["es2020", "dom"],
     "strict": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -14,5 +13,6 @@
     "noUnusedLocals": true,
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["./src/**/*", "./test/**/*" ]
+  "include": ["./src/**/*"],
+  "exclude": ["./node_modules"]
 }
