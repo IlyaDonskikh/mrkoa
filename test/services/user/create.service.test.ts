@@ -39,10 +39,10 @@ describe('User Services', () => {
       });
 
       test('downcase email', async () => {
-        const downcasedEmail = emailWithCapitalChars.toLowerCase();
+        const lowercaseEmail = emailWithCapitalChars.toLowerCase();
         const service = await serviceCall(userAttrs);
 
-        expect(service.user.email).toEqual(downcasedEmail);
+        expect(service.user.email).toEqual(lowercaseEmail);
       });
     });
 
