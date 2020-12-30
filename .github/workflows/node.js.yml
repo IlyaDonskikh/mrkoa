@@ -38,7 +38,7 @@ jobs:
       env:
         NODE_ENV: test
         DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/mr_kao_test
-    - run: npm run migrate
+    - run: npm run db:migrate
       env:
         NODE_ENV: test
         DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/mr_kao_test
