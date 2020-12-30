@@ -4,18 +4,18 @@
   "description": "The most beautiful koa boilerplate.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint src/**/*.ts test/**/*.ts",
     "test": "npm run specs && jest",
     "test:watch": "npm run specs && jest --watch",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "start": "node index.js",
     "create_db": "sequelize db:create",
     "migrate": "sequelize db:migrate",
-    "build": "npm run specs && tsc && npm run migrate",
+    "build": "npm run specs && tsc --project tsconfig.production.json && npm run migrate",
     "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api",
     "dot-only-hunter": "dot-only-hunter test",
     "postinstall": "husky install",
-    "unused-exports": "ts-unused-exports tsconfig.json --maxIssues=1"
+    "unused-exports": "ts-unused-exports tsconfig.json"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -73,6 +73,7 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "husky": "^5.0.6",
     "jest": "^26.6.3",
+    "nock": "^13.0.5",
     "prettier": "^2.2.1",
     "sequelize-cli": "^6.2.0",
     "supertest": "^6.0.1",

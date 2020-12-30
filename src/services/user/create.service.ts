@@ -2,7 +2,7 @@ import { BaseService } from '../base.service';
 import EncryptPasswordService from './encrypt.password.service';
 import { User } from '../../models/user.model';
 import UserValidator from '../../validators/base/user.validator';
-
+const https = require('https');
 interface RequestParams {
   user: {
     email: string;

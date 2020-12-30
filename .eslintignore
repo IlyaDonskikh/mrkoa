@@ -1,1 +1,3 @@
-locales/en.js
+node_modules
+dist
+coverage
