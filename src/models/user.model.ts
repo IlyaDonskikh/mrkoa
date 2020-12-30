@@ -1,5 +1,3 @@
-/* eslint import/no-cycle: off */
-
 import {
   Association,
   DataTypes,

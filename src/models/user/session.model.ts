@@ -1,5 +1,3 @@
-/* eslint import/no-cycle: off */
-
 import * as jwt from 'jsonwebtoken';
 import {
   Association,

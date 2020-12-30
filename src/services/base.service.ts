@@ -26,10 +26,6 @@ export function BaseService<T>() {
     async validate() {
       await this.checks();
 
-      if (this.failedStatusCode) {
-        this.errors.changeStatusCode(this.failedStatusCode);
-      }
-
       if (this.isFailed()) {
         throw this.errors;
       }
