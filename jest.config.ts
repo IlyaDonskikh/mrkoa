@@ -32,15 +32,22 @@ export default {
   coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
-  // coverageReporters: [
-  //   "json",
-  //   "text",
-  //   "lcov",
-  //   "clover"
-  // ],
+  //coverageReporters: [
+  //  'json',
+  //  'text',
+  //  'lcov',
+  //  'clover'
+  //],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  coverageThreshold: {
+    global: {
+      branches: 86.49,
+      functions: 92,
+      lines: 94,
+      statements: -68,
+    },
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
