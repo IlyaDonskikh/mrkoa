@@ -34,21 +34,14 @@ describe('User Services', () => {
       });
 
       describe('when currentSession id is wrong', () => {
-        test('failed', async () => {
-          const service = await SignOutService.call({
+        test('reject with currentSession presence error', async () => {
+          const servicePromise = SignOutService.call({
             id: -1,
           });
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return currentSession presence error', async () => {
-          const service = await SignOutService.call({
-            id: -1,
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { currentSession: ['presence'] },
           });
-          const currentSessionErrors = service.errors.errors.currentSession;
-
-          expect(currentSessionErrors).toContain('presence');
         });
       });
     });

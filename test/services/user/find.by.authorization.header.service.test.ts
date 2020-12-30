@@ -28,21 +28,14 @@ describe('User Services', () => {
       });
 
       describe('when authorizationHeader is undefined', () => {
-        test('fail', async () => {
-          const service = await FindByAuthorizationService.call({
+        test('reject with token blank error', async () => {
+          const servicePromise = FindByAuthorizationService.call({
             authorizationHeader: undefined,
           });
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return token user error', async () => {
-          const service = await FindByAuthorizationService.call({
-            authorizationHeader: undefined,
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { token: ['blank', 'invalid', 'session'] },
           });
-          const tokenErrors = service.errors.errors.token;
-
-          expect(tokenErrors).toContain('blank');
         });
       });
     });

@@ -54,16 +54,10 @@ describe('User Services', () => {
         userAttrs.email = user.email;
       });
 
-      test('failed', async () => {
-        const service = await serviceCall(userAttrs);
-        expect(service.isFailed()).toBeTruthy();
-      });
-
-      test('return email uniq error', async () => {
-        const service = await serviceCall(userAttrs);
-        const emailErrors = service.errors.errors.email;
-
-        expect(emailErrors).toContain('uniq');
+      test('reject with email uniq error', async () => {
+        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+          errors: { email: ['uniq'] },
+        });
       });
     });
   });

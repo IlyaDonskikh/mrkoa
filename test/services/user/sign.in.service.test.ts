@@ -43,24 +43,12 @@ describe('User Services', () => {
           };
         });
 
-        test('fail', async () => {
-          const service = await SignInService.call(attrs);
+        test('rejected with password error', async () => {
+          const servicePromise = SignInService.call(attrs);
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return localized password error', async () => {
-          const service = await SignInService.call(attrs);
-          const passwordErrors = service.errors.messages().password;
-
-          expect(passwordErrors).toContain("doesn't valid or match email");
-        });
-
-        test('return password error', async () => {
-          const service = await SignInService.call(attrs);
-          const passwordErrors = service.errors.errors.password;
-
-          expect(passwordErrors).toContain('valid');
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { password: ['valid'] },
+          });
         });
       });
 
@@ -72,17 +60,12 @@ describe('User Services', () => {
           };
         });
 
-        test('fail', async () => {
-          const service = await SignInService.call(attrs);
+        test('reject with password error', async () => {
+          const servicePromise = SignInService.call(attrs);
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return password error', async () => {
-          const service = await SignInService.call(attrs);
-          const passwordErrors = service.errors.errors.password;
-
-          expect(passwordErrors).toContain('valid');
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { password: ['valid'] },
+          });
         });
       });
 
@@ -94,17 +77,12 @@ describe('User Services', () => {
           };
         });
 
-        test('fail', async () => {
-          const service = await SignInService.call(attrs);
+        test('reject with email error', async () => {
+          const servicePromise = SignInService.call(attrs);
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return email error', async () => {
-          const service = await SignInService.call(attrs);
-          const emailErrors = service.errors.errors.email;
-
-          expect(emailErrors).toContain('find');
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { email: ['find'] },
+          });
         });
       });
     });
