@@ -6,7 +6,7 @@ module.exports = {
     sourceType: 'module', // Allows for the use of imports
     project: `./tsconfig.json`,
   },
-  plugins: ['@typescript-eslint', 'sonarjs'],
+  plugins: ['@typescript-eslint', 'sonarjs', 'jest'],
   extends: [
     'eslint:recommended', // Uses the recommended rules from @eslint-plugin-react
     'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier

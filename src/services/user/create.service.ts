@@ -10,7 +10,6 @@ interface RequestParams {
     passwordConfirmation: string;
   };
 }
-
 export default class CreateService extends BaseService<RequestParams>() {
   // Attrs
   private validator: any;

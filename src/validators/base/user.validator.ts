@@ -20,16 +20,10 @@ export default class UserBaseValidator extends BaseValidator {
   ];
 
   async runValidations() {
-    const { email, password, passwordConfirmation } = this.mergedAttrs;
+    const { email } = this.mergedAttrs;
 
-    if (!this.modelInstance.id || this.attrs.password) {
-      if (password.length < this.minPasswordLength) {
-        this.errors.add('password', 'length');
-      }
-      if (password !== passwordConfirmation) {
-        this.errors.add('password', 'confirmation');
-      }
-    }
+    this.validatePassword();
+
     if (!isEmail(email)) {
       this.errors.add('email', 'format');
     }
@@ -38,6 +32,23 @@ export default class UserBaseValidator extends BaseValidator {
 
     if (!isEmailUniq) {
       this.errors.add('email', 'uniq');
+    }
+  }
+
+  // private
+
+  private validatePassword() {
+    if (this.modelInstance.id && !this.attrs.password) {
+      return;
+    }
+
+    const { password, passwordConfirmation } = this.mergedAttrs;
+
+    if (password.length < this.minPasswordLength) {
+      this.errors.add('password', 'length');
+    }
+    if (password !== passwordConfirmation) {
+      this.errors.add('password', 'confirmation');
     }
   }
 
