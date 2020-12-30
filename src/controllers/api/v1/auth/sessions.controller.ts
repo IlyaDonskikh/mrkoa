@@ -26,6 +26,8 @@ const destroy = async (ctx: Koa.Context) => {
   });
 
   ctx.status = 200;
+
+  ctx.body = {};
 };
 
 export { create, destroy };

@@ -8,14 +8,10 @@ const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
     authorizationHeader,
   });
 
-  if (service.isSuccess()) {
-    ctx.currentSession = service.session;
-    ctx.currentUser = await ctx.currentSession.getUser();
+  ctx.currentSession = service.session;
+  ctx.currentUser = await ctx.currentSession.getUser();
 
-    await next();
-  } else {
-    ctx.status = 403;
-  }
+  await next();
 };
 
 export default authRouterHelper;

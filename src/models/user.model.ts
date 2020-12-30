@@ -31,49 +31,49 @@ export class User extends Model {
   public static associations: {
     sessions: Association<User, UserSession>;
   };
+
+  static initModel(sequelize: Sequelize) {
+    const tableName: string = 'users';
+
+    User.init(
+      {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: DataTypes.INTEGER,
+        },
+        email: {
+          allowNull: false,
+          type: DataTypes.STRING,
+          unique: true,
+        },
+        password: {
+          allowNull: false,
+          type: DataTypes.STRING,
+        },
+        passwordConfirmation: {
+          type: DataTypes.VIRTUAL,
+        },
+        createdAt: {
+          allowNull: false,
+          type: DataTypes.DATE,
+          field: 'created_at',
+        },
+        updatedAt: {
+          allowNull: false,
+          type: DataTypes.DATE,
+          field: 'updated_at',
+        },
+      },
+      {
+        sequelize,
+        tableName,
+      },
+    );
+  }
+
+  static setupAssociations() {
+    User.hasMany(UserSession, { as: 'sessions', foreignKey: 'user_id' });
+  }
 }
-
-export const initModel = (sequelize: Sequelize) => {
-  const tableName: string = 'users';
-
-  User.init(
-    {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        unique: true,
-      },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      passwordConfirmation: {
-        type: DataTypes.VIRTUAL,
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        field: 'created_at',
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        field: 'updated_at',
-      },
-    },
-    {
-      sequelize,
-      tableName,
-    },
-  );
-};
-
-export const setupAssociations = () => {
-  User.hasMany(UserSession, { as: 'sessions', foreignKey: 'user_id' });
-};

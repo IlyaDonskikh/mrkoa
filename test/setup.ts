@@ -1,5 +1,5 @@
-import { db } from '../src/models';
+import { sequelize } from '../src/models';
 
 afterAll(async () => {
-  db.sequelize.close();
+  sequelize.close();
 });

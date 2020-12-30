@@ -34,7 +34,7 @@ function throwErrors(err: any, localePath: string) {
     throw new Error('Unexpected Validation Error');
   }
 
-  const errorsService = new ErrorsService(localePath);
+  const errorsService = new ErrorsService({ localePath });
 
   err.errors.forEach((element: any) => {
     errorsService.add(element.params.missingProperty, element.keyword);

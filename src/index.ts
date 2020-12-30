@@ -5,7 +5,7 @@ import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 
-import { db } from './models';
+import { sequelize } from './models';
 import router from './routers/index';
 
 require('dotenv').config();
@@ -15,7 +15,7 @@ require('dotenv').config();
 const app = new Koa();
 
 // Context
-app.context.db = db;
+app.context.sequelize = sequelize;
 
 // Middleware
 if (process.env.NODE_ENV !== 'test') {
