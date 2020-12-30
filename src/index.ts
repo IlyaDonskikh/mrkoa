@@ -10,8 +10,6 @@ import router from './routers/index';
 
 require('dotenv').config();
 
-// ToDo handle queries by QS.
-
 const app = new Koa();
 
 // Context
