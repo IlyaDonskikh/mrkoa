@@ -8,7 +8,6 @@ export function BaseService<T>() {
     requestParams: T;
 
     protected localePath = 'services.base';
-    protected errorServiceStatusCode = 422;
 
     public errors: ErrorsInstanceInterface;
 
@@ -45,10 +44,7 @@ export function BaseService<T>() {
     }
 
     private async call() {
-      this.errors = new ErrorsService({
-        localePath: this.localePath,
-        statusCode: this.errorServiceStatusCode,
-      });
+      this.errors = new ErrorsService({ localePath: this.localePath });
 
       await this.process();
 

@@ -2,16 +2,31 @@ import * as Koa from 'koa';
 
 import UserFindByAuthorizationService from '../../services/user/find.by.authorization.header.service';
 
-const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
+export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
   const authorizationHeader = ctx.request.headers.authorization;
-  const service = await UserFindByAuthorizationService.call({
-    authorizationHeader,
-  });
 
-  ctx.currentSession = service.session;
-  ctx.currentUser = await ctx.currentSession.getUser();
+  const service = await callService(authorizationHeader);
 
-  await next();
+  if (service) {
+    ctx.currentSession = service.session;
+    ctx.currentUser = await ctx.currentSession.getUser();
+
+    await next();
+  } else {
+    ctx.status = 403;
+  }
 };
 
-export default authRouterHelper;
+// private
+
+async function callService(authorizationHeader: string) {
+  try {
+    const service = await UserFindByAuthorizationService.call({
+      authorizationHeader,
+    });
+
+    return service;
+  } catch (err) {
+    // Always welcome to set debug logger if you would like to track the case.
+  }
+}

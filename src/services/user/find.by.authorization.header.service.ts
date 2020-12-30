@@ -14,8 +14,6 @@ export default class FindByAuthorizationService extends BaseService<RequestParam
 
   public session: UserSession;
 
-  protected errorServiceStatusCode = 403;
-
   // Etc.
   async process() {
     this.extractTokenFrom(this.requestParams.authorizationHeader);

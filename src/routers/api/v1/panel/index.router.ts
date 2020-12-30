@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import usersRoutes from './users.router';
-import authRouterHelper from '../../../helpers/auth.router.helper';
+import { authRouterHelper } from '../../../helpers/auth.router.helper';
 
 const router = new Router();
 

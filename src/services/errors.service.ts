@@ -4,24 +4,13 @@ import ErrorsInstanceInterface from '../types/services/errors/instance.interface
 export default class ErrorsService {
   public localePath: string;
 
-  public statusCode: number;
+  public statusCode: number = 422;
   public errors: { [key: string]: string[] } = {};
 
-  constructor({
-    localePath,
-    statusCode = 422,
-  }: {
-    localePath: string;
-    statusCode?: number;
-  }) {
-    this.statusCode = statusCode;
+  constructor({ localePath }: { localePath: string }) {
     this.localePath = localePath
       .replace(/.*\/src\/(.*)/gm, '$1')
       .replace(/\//g, '.');
-  }
-
-  changeStatusCode(code: number) {
-    this.statusCode = code;
   }
 
   messages() {

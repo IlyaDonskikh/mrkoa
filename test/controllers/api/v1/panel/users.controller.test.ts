@@ -84,7 +84,7 @@ describe('Panel | Users Controller', () => {
         delete itemAttrs.email;
       });
 
-      test('return status 403', async () => {
+      test('return status 422', async () => {
         const currentRequest = await createRequest(path, itemAttrs);
 
         expect(currentRequest.status).toBe(422);

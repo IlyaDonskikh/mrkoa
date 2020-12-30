@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import * as users from '../../../../controllers/api/v1/auth/sessions.controller';
-import auth from '../../../helpers/auth.router.helper';
+import { authRouterHelper } from '../../../helpers/auth.router.helper';
 
 const router = new Router();
 
@@ -8,7 +8,7 @@ const router = new Router();
 router.post('/sign_in', users.create);
 
 // Sign Out
-router.use('/sign_out', auth);
+router.use('/sign_out', authRouterHelper);
 router.delete('/sign_out', users.destroy);
 
 // Export
