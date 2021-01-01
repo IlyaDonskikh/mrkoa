@@ -1,8 +1,8 @@
 import * as Koa from 'koa';
 
-import SessionDefaultSerializer from '../../../../serializers/session/default.serializer';
-import SignInService from '../../../../services/user/sign.in.service';
-import SignOutService from '../../../../services/user/sign.out.service';
+import { SessionDefaultSerializer } from '../../../../serializers/session/default.serializer';
+import { UserSignInService } from '../../../../services/user/sign.in.service';
+import { UserSignOutService } from '../../../../services/user/sign.out.service';
 import { schemas } from '../../../../utils/schemas';
 import { validate } from '../../../../utils/requestValidator';
 
@@ -13,29 +13,21 @@ const create = async (ctx: Koa.Context) => {
     localePath: __filename + '.create',
   });
 
-  const service = await SignInService.call(attrs);
+  const service = await UserSignInService.call(attrs);
 
-  if (service.isSuccess()) {
-    ctx.body = {
-      session: await SessionDefaultSerializer.serialize(service.session),
-    };
-  } else {
-    ctx.body = { errors: service.errors.messages() };
-    ctx.status = 422;
-  }
+  ctx.body = {
+    session: await SessionDefaultSerializer.serialize(service.session),
+  };
 };
 
 const destroy = async (ctx: Koa.Context) => {
-  const service = await SignOutService.call({
+  await UserSignOutService.call({
     id: ctx.currentSession.id,
   });
 
-  if (service.isSuccess()) {
-    ctx.status = 200;
-  } else {
-    ctx.body = { errors: service.errors.messages() };
-    ctx.status = 422;
-  }
+  ctx.status = 200;
+
+  ctx.body = {};
 };
 
 export { create, destroy };

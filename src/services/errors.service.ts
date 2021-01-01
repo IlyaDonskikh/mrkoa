@@ -1,12 +1,13 @@
-import i18n from '../lib/i18n';
-import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
+import { customI18n as I18n } from '../lib/i18n';
+import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
 
-export default class ErrorsService {
+export class ErrorsService {
   public localePath: string;
 
+  public statusCode: number = 422;
   public errors: { [key: string]: string[] } = {};
 
-  constructor(localePath: string) {
+  constructor({ localePath }: { localePath: string }) {
     this.localePath = localePath
       .replace(/.*\/src\/(.*)/gm, '$1')
       .replace(/\//g, '.');
@@ -45,7 +46,7 @@ export default class ErrorsService {
 
   private buildLocalePathsBy(key: string): Array<string> {
     return this.errors[key].map((code: string) =>
-      i18n.t(`${this.localePath}.${key}.${code}`),
+      I18n.t(`${this.localePath}.${key}.${code}`),
     );
   }
 }

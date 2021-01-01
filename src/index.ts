@@ -5,17 +5,15 @@ import * as logger from 'koa-logger';
 import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 
-import { db } from './models';
-import router from './routers/index';
+import { sequelize } from './models';
+import { router } from './routers/index';
 
 require('dotenv').config();
-
-// ToDo handle queries by QS.
 
 const app = new Koa();
 
 // Context
-app.context.db = db;
+app.context.sequelize = sequelize;
 
 // Middleware
 if (process.env.NODE_ENV !== 'test') {
@@ -35,4 +33,5 @@ if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.PORT);
 }
 
-export = app;
+// Exports
+export { app };

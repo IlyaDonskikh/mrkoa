@@ -1,5 +1,5 @@
 import * as userFactory from '../../factories/user.factory';
-import SignInService from '../../../src/services/user/sign.in.service';
+import { UserSignInService } from '../../../src/services/user/sign.in.service';
 import { User } from '../../../src/models/user.model';
 
 describe('User Services', () => {
@@ -18,7 +18,7 @@ describe('User Services', () => {
       });
 
       test('success', async () => {
-        const service = await SignInService.call({
+        const service = await UserSignInService.call({
           email: user.email,
           password,
         });
@@ -27,11 +27,10 @@ describe('User Services', () => {
       });
 
       test('return user session', async () => {
-        const service = await SignInService.call({
+        const service = await UserSignInService.call({
           email: user.email,
           password,
         });
-        const serviceUser = service.session;
 
         expect(service.session.userId).toEqual(user.id);
       });
@@ -44,24 +43,12 @@ describe('User Services', () => {
           };
         });
 
-        test('fail', async () => {
-          const service = await SignInService.call(attrs);
+        test('rejected with password error', async () => {
+          const servicePromise = UserSignInService.call(attrs);
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return localized password error', async () => {
-          const service = await SignInService.call(attrs);
-          const passwordErrors = service.errors.messages().password;
-
-          expect(passwordErrors).toContain("doesn't valid or match email");
-        });
-
-        test('return password error', async () => {
-          const service = await SignInService.call(attrs);
-          const passwordErrors = service.errors.errors.password;
-
-          expect(passwordErrors).toContain('valid');
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { password: ['valid'] },
+          });
         });
       });
 
@@ -73,17 +60,12 @@ describe('User Services', () => {
           };
         });
 
-        test('fail', async () => {
-          const service = await SignInService.call(attrs);
+        test('reject with password error', async () => {
+          const servicePromise = UserSignInService.call(attrs);
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return password error', async () => {
-          const service = await SignInService.call(attrs);
-          const passwordErrors = service.errors.errors.password;
-
-          expect(passwordErrors).toContain('valid');
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { password: ['valid'] },
+          });
         });
       });
 
@@ -95,17 +77,12 @@ describe('User Services', () => {
           };
         });
 
-        test('fail', async () => {
-          const service = await SignInService.call(attrs);
+        test('reject with email error', async () => {
+          const servicePromise = UserSignInService.call(attrs);
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return email error', async () => {
-          const service = await SignInService.call(attrs);
-          const emailErrors = service.errors.errors.email;
-
-          expect(emailErrors).toContain('find');
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { email: ['find'] },
+          });
         });
       });
     });

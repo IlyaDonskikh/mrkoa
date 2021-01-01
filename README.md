@@ -11,8 +11,8 @@ Fantastic boilerplate based on the fantastic koa framework that (not a surprise)
 1. Clone repo.
 2. Setup environment variables `cp .env.sample .env`.
 3. Run `npm install`.
-4. Create database by `sequelize db:create`.
-5. Run migrations `sequelize db:migrate`.
+4. Create database by `npm run db:create`.
+5. Run migrations `npm run db:migrate`.
 
 Once everything is ready, the last step is start the server `npm run dev`.
 
@@ -20,8 +20,8 @@ Once everything is ready, the last step is start the server `npm run dev`.
 
 You have to follow only few extra steps to run the tests:
 
-1. Create test db `sequelize db:create --env test`
-2. Run migrations `sequelize db:migrate --env test`.
+1. Create test db `npm run db:create:test`
+2. Run migrations `npm run db:migrate:test`.
 3. Run tests `npm test`
 
 That's it!

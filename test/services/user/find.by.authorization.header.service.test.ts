@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import FindByAuthorizationService from '../../../src/services/user/find.by.authorization.header.service';
+import { UserFindByAuthorizationService } from '../../../src/services/user/find.by.authorization.header.service';
 import * as userFactory from '../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../helpers';
 
@@ -20,7 +20,7 @@ describe('User Services', () => {
 
     describe('#call', () => {
       test('success', async () => {
-        const service = await FindByAuthorizationService.call({
+        const service = await UserFindByAuthorizationService.call({
           authorizationHeader: await buildAuthorizationHeader(user),
         });
 
@@ -28,21 +28,14 @@ describe('User Services', () => {
       });
 
       describe('when authorizationHeader is undefined', () => {
-        test('fail', async () => {
-          const service = await FindByAuthorizationService.call({
+        test('reject with token blank error', async () => {
+          const servicePromise = UserFindByAuthorizationService.call({
             authorizationHeader: undefined,
           });
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return token user error', async () => {
-          const service = await FindByAuthorizationService.call({
-            authorizationHeader: undefined,
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { token: ['blank', 'invalid', 'session'] },
           });
-          const tokenErrors = service.errors.errors.token;
-
-          expect(tokenErrors).toContain('blank');
         });
       });
     });

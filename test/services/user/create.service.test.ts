@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
 import * as userFactory from '../../factories/user.factory';
-import CreateService from '../../../src/services/user/create.service';
+import { UserCreateService } from '../../../src/services/user/create.service';
 
 describe('User Services', () => {
   describe('Create', () => {
@@ -14,7 +14,7 @@ describe('User Services', () => {
         user: userAttrs,
       };
 
-      return CreateService.call(attrs);
+      return UserCreateService.call(attrs);
     }
 
     let userAttrs: any;
@@ -25,7 +25,7 @@ describe('User Services', () => {
       userAttrs = user.toJSON();
     });
 
-    test.only('success', async () => {
+    test('success', async () => {
       const service = await serviceCall(userAttrs);
 
       expect(service.isSuccess()).toBeTruthy();
@@ -39,10 +39,10 @@ describe('User Services', () => {
       });
 
       test('downcase email', async () => {
-        const downcasedEmail = emailWithCapitalChars.toLowerCase();
+        const lowercaseEmail = emailWithCapitalChars.toLowerCase();
         const service = await serviceCall(userAttrs);
 
-        expect(service.user.email).toEqual(downcasedEmail);
+        expect(service.user.email).toEqual(lowercaseEmail);
       });
     });
 
@@ -54,16 +54,10 @@ describe('User Services', () => {
         userAttrs.email = user.email;
       });
 
-      test('failed', async () => {
-        const service = await serviceCall(userAttrs);
-        expect(service.isFailed()).toBeTruthy();
-      });
-
-      test('return email uniq error', async () => {
-        const service = await serviceCall(userAttrs);
-        const emailErrors = service.errors.errors.email;
-
-        expect(emailErrors).toContain('uniq');
+      test('reject with email uniq error', async () => {
+        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+          errors: { email: ['uniq'] },
+        });
       });
     });
   });

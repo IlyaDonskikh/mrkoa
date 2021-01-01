@@ -1,8 +1,9 @@
 import * as Koa from 'koa';
 
-import UserDefaultSerializer from '../../../../serializers/user/default.serializer';
-import PanelPrimeUserCreateService from '../../../../services/panel/user/create.service';
-import PanelUserListService from '../../../../services/panel/user/list.service';
+import { UserDefaultSerializer } from '../../../../serializers/user/default.serializer';
+import { PanelUserCreateService } from '../../../../services/panel/user/create.service';
+import { PanelUserListService } from '../../../../services/panel/user/list.service';
+
 import { validate } from '../../../../utils/requestValidator';
 import { schemas } from '../../../../utils/schemas';
 
@@ -25,16 +26,11 @@ const create = async (ctx: Koa.Context) => {
     localePath: __filename + '.create',
   });
 
-  const service = await PanelPrimeUserCreateService.call(attrs);
+  const service = await PanelUserCreateService.call(attrs);
 
-  if (service.isSuccess()) {
-    ctx.body = {
-      user: await UserDefaultSerializer.serialize(service.user),
-    };
-  } else {
-    ctx.body = { errors: service.errors.messages() };
-    ctx.status = 422;
-  }
+  ctx.body = {
+    user: await UserDefaultSerializer.serialize(service.user),
+  };
 };
 
 export { index, create };

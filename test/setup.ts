@@ -1,7 +1,18 @@
-import * as app from '../src/index';
+import { sequelize } from '../src/models';
+import * as nock from 'nock';
 
-const { db } = app.context;
+beforeAll(async () => {
+  setNockSettings();
+});
 
 afterAll(async () => {
-  db.sequelize.close();
+  await sequelize.close();
 });
+
+// private
+
+function setNockSettings() {
+  nock.cleanAll();
+  nock.disableNetConnect();
+  nock.enableNetConnect('127.0.0.1');
+}

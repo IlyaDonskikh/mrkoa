@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
-import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
 
-export default class BaseValidator {
+import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
+
+export class BaseValidator {
   [key: string]: any;
 
   // Attrs.

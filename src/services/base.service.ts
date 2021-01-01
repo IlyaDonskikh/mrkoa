@@ -1,8 +1,7 @@
-import { setFlagsFromString } from 'v8';
-import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
-import ErrorsService from './errors.service';
+import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
+import { ErrorsService } from './errors.service';
 
-export default function BaseService<T>() {
+export function BaseService<T>() {
   class BaseService {
     [key: string]: any;
 
@@ -24,10 +23,12 @@ export default function BaseService<T>() {
       return new this(params).call();
     }
 
-    async isValid() {
-      await this.validate();
+    async validate() {
+      await this.checks();
 
-      return this.isSuccess();
+      if (this.isFailed()) {
+        throw this.errors;
+      }
     }
 
     isSuccess() {
@@ -39,7 +40,7 @@ export default function BaseService<T>() {
     }
 
     private async call() {
-      this.errors = new ErrorsService(this.localePath);
+      this.errors = new ErrorsService({ localePath: this.localePath });
 
       await this.process();
 

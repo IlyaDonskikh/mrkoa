@@ -1,10 +1,10 @@
 import * as bcrypt from 'bcrypt';
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 
 interface RequestParams {
   password: string;
 }
-export default class EncryptPasswordService extends BaseService<RequestParams>() {
+export class UserEncryptPasswordService extends BaseService<RequestParams>() {
   // Attrs
   private readonly saltRounds = 10;
 

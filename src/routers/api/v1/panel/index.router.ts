@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
-import usersRoutes from './users.router';
-import authRouterHelper from '../../../helpers/auth.router.helper';
+import { panelUsersRoutes } from './users.router';
+import { authRouterHelper } from '../../../helpers/auth.router.helper';
 
 const router = new Router();
 
@@ -8,7 +8,7 @@ const router = new Router();
 router.use('/', authRouterHelper);
 
 // Devices
-router.use('/users', usersRoutes);
+router.use('/users', panelUsersRoutes);
 
 // Export
-export default router.routes();
+export const panelRoutes = router.routes();

@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
@@ -9,7 +9,7 @@ interface RequestParams {
   password: string;
 }
 
-export default class SignInService extends BaseService<RequestParams>() {
+export class UserSignInService extends BaseService<RequestParams>() {
   // Attrs
   protected localePath = 'services.user.signInService';
 
@@ -21,9 +21,7 @@ export default class SignInService extends BaseService<RequestParams>() {
   async process() {
     await this.setupVariables();
 
-    if (!(await this.isValid())) {
-      return;
-    }
+    await this.validate();
 
     this.session = await UserSession.create({
       userId: this.user!.id,
@@ -31,7 +29,7 @@ export default class SignInService extends BaseService<RequestParams>() {
     });
   }
 
-  private async validate() {
+  protected async checks() {
     if (this.requestParams.email === undefined) {
       this.errors.add('password', 'presence');
     }

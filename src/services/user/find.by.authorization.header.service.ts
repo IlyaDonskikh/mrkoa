@@ -1,14 +1,13 @@
 import * as _ from 'lodash';
 import * as jwt from 'jsonwebtoken';
-import BaseService from '../base.service';
-import { User } from '../../models/user.model';
+import { BaseService } from '../base.service';
 import { UserSession } from '../../models/user/session.model';
 
 interface RequestParams {
   authorizationHeader?: string;
 }
 
-export default class FindByAuthorizationService extends BaseService<RequestParams>() {
+export class UserFindByAuthorizationService extends BaseService<RequestParams>() {
   private token: string | null = null;
 
   private decodedToken: any;
@@ -19,14 +18,17 @@ export default class FindByAuthorizationService extends BaseService<RequestParam
   async process() {
     this.extractTokenFrom(this.requestParams.authorizationHeader);
     this.assignDecodedToken();
+
     await this.assignSession();
 
-    await this.isValid();
+    await this.validate();
 
     // We already have all data set
   }
 
-  private async validate() {
+  // private
+
+  protected async checks() {
     if (!this.token) this.errors.add('token', 'blank');
     if (!this.decodedToken) this.errors.add('token', 'invalid');
     if (!this.session) this.errors.add('token', 'session');

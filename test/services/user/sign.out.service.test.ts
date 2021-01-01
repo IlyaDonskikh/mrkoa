@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import SignOutService from '../../../src/services/user/sign.out.service';
+import { UserSignOutService } from '../../../src/services/user/sign.out.service';
 import * as userSessionFactory from '../../factories/user/session.factory';
 import { UserSession } from '../../../src/models/user/session.model';
 
@@ -14,7 +14,7 @@ describe('User Services', () => {
 
     describe('#call', () => {
       test('success', async () => {
-        const service = await SignOutService.call({
+        const service = await UserSignOutService.call({
           id: session.id,
         });
 
@@ -22,7 +22,7 @@ describe('User Services', () => {
       });
 
       test('delete session', async () => {
-        await SignOutService.call({
+        await UserSignOutService.call({
           id: session.id,
         });
 
@@ -34,21 +34,14 @@ describe('User Services', () => {
       });
 
       describe('when currentSession id is wrong', () => {
-        test('failed', async () => {
-          const service = await SignOutService.call({
+        test('reject with currentSession presence error', async () => {
+          const servicePromise = UserSignOutService.call({
             id: -1,
           });
 
-          expect(service.isFailed()).toBeTruthy();
-        });
-
-        test('return currentSession presence error', async () => {
-          const service = await SignOutService.call({
-            id: -1,
+          await expect(servicePromise).rejects.toMatchObject({
+            errors: { currentSession: ['presence'] },
           });
-          const currentSessionErrors = service.errors.errors.currentSession;
-
-          expect(currentSessionErrors).toContain('presence');
         });
       });
     });

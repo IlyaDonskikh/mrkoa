@@ -1,27 +1,24 @@
-import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
-import BaseService from '../base.service';
+import { BaseService } from '../base.service';
 
 interface RequestParams {
   id: number;
 }
 
-export default class SignOutService extends BaseService<RequestParams>() {
+export class UserSignOutService extends BaseService<RequestParams>() {
   session: UserSession | null;
 
   // Etc.
   async process() {
     await this.setupVariables();
 
-    if (!(await this.isValid())) {
-      return;
-    }
+    await this.validate();
 
     await this.session!.destroy();
   }
 
   // Private
-  private async validate() {
+  protected async checks() {
     if (!this.session) {
       this.errors.add('currentSession', 'presence');
     }

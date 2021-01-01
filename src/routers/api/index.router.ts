@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import v1Routes from './v1/index.router';
+import { v1Routes } from './v1/index.router';
 
 const router = new Router();
 
@@ -11,4 +11,4 @@ router.get('/', async (ctx) => {
 router.use('/v1', v1Routes);
 
 // Export
-export default router.routes();
+export const apiRoutes = router.routes();

@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
-import * as app from '../../../../../src';
+import { app } from '../../../../../src';
 import * as userFactory from '../../../../factories/user.factory';
 
 interface CreateSessionAttributes {

@@ -8,4 +8,4 @@ router.get('/', users.index);
 router.post('/', users.create);
 
 // Export
-export default router.routes();
+export const panelUsersRoutes = router.routes();

@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 
-import * as app from '../../../../../src';
+import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
 import * as userFactory from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
@@ -84,7 +84,7 @@ describe('Panel | Users Controller', () => {
         delete itemAttrs.email;
       });
 
-      test('return status 403', async () => {
+      test('return status 422', async () => {
         const currentRequest = await createRequest(path, itemAttrs);
 
         expect(currentRequest.status).toBe(422);

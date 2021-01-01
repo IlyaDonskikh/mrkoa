@@ -1,4 +1,4 @@
-export default class BaseSerializer {
+export class BaseSerializer {
   object: any;
 
   protected attributes: Array<string | Function> = [];

@@ -1,18 +1,12 @@
 import { Sequelize } from 'sequelize';
-import { glob } from 'glob';
-import * as path from 'path';
+import { UserSession } from './user/session.model';
+import { User } from './user.model';
 
 require('dotenv').config();
 
 const env = process.env.NODE_ENV as string;
-const models: Array<any> = [];
-
 const config = require('../../db/config.js')[env];
-
-glob.sync(`${__dirname}/**/*.model.{js,ts}`).forEach((file) => {
-  const model = require(path.resolve(file)); // eslint-disable-line
-  models.push(model);
-});
+const models = [User, UserSession];
 
 const sequelize = new Sequelize(config.url, config);
 
@@ -24,9 +18,4 @@ models.forEach((model) => {
   model.setupAssociations();
 });
 
-const db = {
-  sequelize,
-  Sequelize,
-};
-
-export { db };
+export { sequelize };

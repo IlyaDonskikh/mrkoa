@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
-import apiRoutes from './api/index.router';
-import errorsRouterHelper from './helpers/errors.router.helper';
+import { apiRoutes } from './api/index.router';
+import { errorsRouterHelper } from './helpers/errors.router.helper';
 
 const router = new Router();
 
@@ -9,4 +9,4 @@ router.use('/', errorsRouterHelper);
 router.use('/api', apiRoutes);
 
 // Export
-export default router;
+export { router };
