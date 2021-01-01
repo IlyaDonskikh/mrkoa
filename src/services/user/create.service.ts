@@ -1,7 +1,7 @@
 import { BaseService } from '../base.service';
 import { UserEncryptPasswordService } from './encrypt.password.service';
 import { User } from '../../models/user.model';
-import { UserBaseValidator } from '../../validators/base/user.validator';
+import { PanelUserValidator } from '../../validators/panel/user.validator';
 
 interface RequestParams {
   user: {
@@ -27,7 +27,7 @@ export class UserCreateService extends BaseService<RequestParams>() {
 
   // Private
   protected async checks() {
-    this.validator = await UserBaseValidator.validate(
+    this.validator = await PanelUserValidator.validate(
       this.errors,
       User.build(),
       this.requestParams.user,
