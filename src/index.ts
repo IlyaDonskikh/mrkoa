@@ -6,7 +6,7 @@ import * as json from 'koa-json';
 import * as bodyParser from 'koa-bodyparser';
 
 import { sequelize } from './models';
-import router from './routers/index';
+import { router } from './routers/index';
 
 require('dotenv').config();
 

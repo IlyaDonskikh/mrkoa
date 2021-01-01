@@ -9,4 +9,4 @@ router.use('/', errorsRouterHelper);
 router.use('/api', apiRoutes);
 
 // Export
-export default router;
+export { router };
