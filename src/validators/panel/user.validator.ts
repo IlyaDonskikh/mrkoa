@@ -1,3 +1,3 @@
-import UserBaseValidator from '../base/user.validator';
+import { UserBaseValidator } from '../base/user.validator';
 
-export default class PrimePanelUserValidator extends UserBaseValidator {}
+export class PrimePanelUserValidator extends UserBaseValidator {}

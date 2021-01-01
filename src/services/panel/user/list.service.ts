@@ -4,7 +4,7 @@ import { BaseService } from '../../base.service';
 interface RequestParams {
   page?: number | null;
 }
-export default class PanelUserListService extends BaseService<RequestParams>() {
+export class PanelUserListService extends BaseService<RequestParams>() {
   // Attrs
   readonly defaultItemsPerPage = 24;
 

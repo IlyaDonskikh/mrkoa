@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
-import panelRoutes from './panel/index.router';
-import authRoutes from './auth/index.router';
+import { panelRoutes } from './panel/index.router';
+import { authRoutes } from './auth/index.router';
 
 const router = new Router();
 
@@ -11,4 +11,4 @@ router.use('/auth', authRoutes);
 router.use('/panel', panelRoutes);
 
 // Export
-export default router.routes();
+export const v1Routes = router.routes();

@@ -9,7 +9,7 @@ interface RequestParams {
   password: string;
 }
 
-export default class SignInService extends BaseService<RequestParams>() {
+export class UserSignInService extends BaseService<RequestParams>() {
   // Attrs
   protected localePath = 'services.user.signInService';
 

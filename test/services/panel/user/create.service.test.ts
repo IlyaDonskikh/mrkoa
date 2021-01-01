@@ -1,6 +1,6 @@
 import * as faker from 'faker';
 
-import CreateService from '../../../../src/services/panel/user/create.service';
+import { PanelUserCreateService } from '../../../../src/services/panel/user/create.service';
 import * as userFactory from '../../../factories/user.factory';
 
 interface UserAttrs {
@@ -16,7 +16,7 @@ describe('Panel | User Services', () => {
         user: userAttrs,
       };
 
-      return CreateService.call(attrs);
+      return PanelUserCreateService.call(attrs);
     }
 
     let userAttrs: UserAttrs;

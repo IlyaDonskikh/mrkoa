@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import FindByAuthorizationService from '../../../src/services/user/find.by.authorization.header.service';
+import { UserFindByAuthorizationService } from '../../../src/services/user/find.by.authorization.header.service';
 import * as userFactory from '../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../helpers';
 
@@ -20,7 +20,7 @@ describe('User Services', () => {
 
     describe('#call', () => {
       test('success', async () => {
-        const service = await FindByAuthorizationService.call({
+        const service = await UserFindByAuthorizationService.call({
           authorizationHeader: await buildAuthorizationHeader(user),
         });
 
@@ -29,7 +29,7 @@ describe('User Services', () => {
 
       describe('when authorizationHeader is undefined', () => {
         test('reject with token blank error', async () => {
-          const servicePromise = FindByAuthorizationService.call({
+          const servicePromise = UserFindByAuthorizationService.call({
             authorizationHeader: undefined,
           });
 

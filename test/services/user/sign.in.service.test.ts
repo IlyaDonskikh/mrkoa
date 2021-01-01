@@ -1,5 +1,5 @@
 import * as userFactory from '../../factories/user.factory';
-import SignInService from '../../../src/services/user/sign.in.service';
+import { UserSignInService } from '../../../src/services/user/sign.in.service';
 import { User } from '../../../src/models/user.model';
 
 describe('User Services', () => {
@@ -18,7 +18,7 @@ describe('User Services', () => {
       });
 
       test('success', async () => {
-        const service = await SignInService.call({
+        const service = await UserSignInService.call({
           email: user.email,
           password,
         });
@@ -27,7 +27,7 @@ describe('User Services', () => {
       });
 
       test('return user session', async () => {
-        const service = await SignInService.call({
+        const service = await UserSignInService.call({
           email: user.email,
           password,
         });
@@ -44,7 +44,7 @@ describe('User Services', () => {
         });
 
         test('rejected with password error', async () => {
-          const servicePromise = SignInService.call(attrs);
+          const servicePromise = UserSignInService.call(attrs);
 
           await expect(servicePromise).rejects.toMatchObject({
             errors: { password: ['valid'] },
@@ -61,7 +61,7 @@ describe('User Services', () => {
         });
 
         test('reject with password error', async () => {
-          const servicePromise = SignInService.call(attrs);
+          const servicePromise = UserSignInService.call(attrs);
 
           await expect(servicePromise).rejects.toMatchObject({
             errors: { password: ['valid'] },
@@ -78,7 +78,7 @@ describe('User Services', () => {
         });
 
         test('reject with email error', async () => {
-          const servicePromise = SignInService.call(attrs);
+          const servicePromise = UserSignInService.call(attrs);
 
           await expect(servicePromise).rejects.toMatchObject({
             errors: { email: ['find'] },

@@ -1,5 +1,5 @@
 import * as Koa from 'koa';
-import ErrorsService from '../../services/errors.service';
+import { ErrorsService } from '../../services/errors.service';
 
 const errorsRouterHelper = async (ctx: Koa.Context, next: Function) => {
   try {
@@ -14,4 +14,4 @@ const errorsRouterHelper = async (ctx: Koa.Context, next: Function) => {
   }
 };
 
-export default errorsRouterHelper;
+export { errorsRouterHelper };

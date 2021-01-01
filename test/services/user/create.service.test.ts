@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 
 import * as userFactory from '../../factories/user.factory';
-import CreateService from '../../../src/services/user/create.service';
+import { UserCreateService } from '../../../src/services/user/create.service';
 
 describe('User Services', () => {
   describe('Create', () => {
@@ -14,7 +14,7 @@ describe('User Services', () => {
         user: userAttrs,
       };
 
-      return CreateService.call(attrs);
+      return UserCreateService.call(attrs);
     }
 
     let userAttrs: any;

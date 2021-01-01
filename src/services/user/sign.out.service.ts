@@ -5,7 +5,7 @@ interface RequestParams {
   id: number;
 }
 
-export default class SignOutService extends BaseService<RequestParams>() {
+export class UserSignOutService extends BaseService<RequestParams>() {
   session: UserSession | null;
 
   // Etc.

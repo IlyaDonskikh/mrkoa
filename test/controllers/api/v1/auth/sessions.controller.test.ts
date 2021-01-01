@@ -34,7 +34,7 @@ describe('Sessions Controller', () => {
       return request(app.callback()).post(path).send(attrs);
     }
 
-    test('return 200 response', async () => {
+    test.only('return 200 response', async () => {
       const currentRequest = await createRequest(sessionAttributes);
 
       expect(currentRequest.status).toBe(200);

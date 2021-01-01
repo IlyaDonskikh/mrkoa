@@ -20,4 +20,4 @@ i18n.configure({
 });
 
 // eslint-disable-next-line import/no-default-export
-export default customI18n;
+export { customI18n };

@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
 
-import UserFindByAuthorizationService from '../../services/user/find.by.authorization.header.service';
+import { UserFindByAuthorizationService } from '../../services/user/find.by.authorization.header.service';
 
 export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
   const authorizationHeader = ctx.request.headers.authorization;

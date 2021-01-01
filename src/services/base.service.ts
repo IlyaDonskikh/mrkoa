@@ -1,5 +1,5 @@
-import ErrorsInstanceInterface from '../types/services/errors/instance.interface';
-import ErrorsService from './errors.service';
+import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
+import { ErrorsService } from './errors.service';
 
 export function BaseService<T>() {
   class BaseService {

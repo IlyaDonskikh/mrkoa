@@ -1,10 +1,10 @@
 import * as Router from 'koa-router';
-import sessionsRoutes from './sessions.router';
+import { authSessionsRoutes } from './sessions.router';
 
 const router = new Router();
 
 // Users
-router.use('', sessionsRoutes);
+router.use('', authSessionsRoutes);
 
 // Export
-export default router.routes();
+export const authRoutes = router.routes();

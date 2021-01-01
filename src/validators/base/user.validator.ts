@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import { Op } from 'sequelize';
 import isEmail from 'validator/lib/isEmail';
-import BaseValidator from '../base.validator';
+import { BaseValidator } from '../base.validator';
 import { User } from '../../models/user.model';
 
 // The validator used as base for others, please do changes carefully.
 
-export default class UserBaseValidator extends BaseValidator {
+export class UserBaseValidator extends BaseValidator {
   private minPasswordLength = 6;
 
   protected permittedAttributes: string[] = [

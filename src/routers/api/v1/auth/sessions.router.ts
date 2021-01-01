@@ -12,4 +12,4 @@ router.use('/sign_out', authRouterHelper);
 router.delete('/sign_out', users.destroy);
 
 // Export
-export default router.routes();
+export const authSessionsRoutes = router.routes();

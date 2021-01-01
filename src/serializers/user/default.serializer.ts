@@ -1,5 +1,5 @@
-import BaseSerializer from '../base.serializer';
+import { BaseSerializer } from '../base.serializer';
 
-export default class UserDefaultSerializer extends BaseSerializer {
+export class UserDefaultSerializer extends BaseSerializer {
   protected attributes = ['id', 'email', 'createdAt', 'updatedAt'];
 }
