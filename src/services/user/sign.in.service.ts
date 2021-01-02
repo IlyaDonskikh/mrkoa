@@ -11,8 +11,6 @@ interface RequestParams {
 
 export class UserSignInService extends BaseService<RequestParams>() {
   // Attrs
-  protected localePath = 'services.user.signInService';
-
   private user: User | null = null;
 
   public session: UserSession;
