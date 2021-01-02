@@ -1,5 +1,5 @@
-const userLocales = require('./user/index.js');
+const userSignInService = require('./user/sign.in.service');
 
 module.exports = {
-  user: userLocales,
+  userSignInService,
 };

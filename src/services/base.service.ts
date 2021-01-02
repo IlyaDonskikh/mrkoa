@@ -7,8 +7,6 @@ export function BaseService<T>() {
 
     requestParams: T;
 
-    protected localePath = 'services.base';
-
     public errors: ErrorsInstanceInterface;
 
     constructor(params: T) {
@@ -39,12 +37,22 @@ export function BaseService<T>() {
       return !this.isSuccess();
     }
 
+    // private
+
     private async call() {
-      this.errors = new ErrorsService({ localePath: this.localePath });
+      this.errors = new ErrorsService({ localePath: this.buildLocalePath() });
 
       await this.process();
 
       return this;
+    }
+
+    private buildLocalePath() {
+      const className = this.constructor.name;
+      const formattedClassName =
+        className[0].toLowerCase() + className.slice(1);
+
+      return `services.${formattedClassName}`;
     }
   }
 
