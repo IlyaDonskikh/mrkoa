@@ -40,14 +40,14 @@ export function BaseService<T>() {
     // private
 
     private async call() {
-      this.errors = new ErrorsService({ localePath: this.localePath() });
+      this.errors = new ErrorsService({ localePath: this.buildLocalePath() });
 
       await this.process();
 
       return this;
     }
 
-    private localePath() {
+    private buildLocalePath() {
       const className = this.constructor.name;
       const formattedClassName =
         className[0].toLowerCase() + className.slice(1);
