@@ -1,6 +1,6 @@
 import * as faker from 'faker';
 
-import { PanelUserCreateService } from '../../../../src/services/panel/user/create.service';
+import { PanelUserCreateCase } from '../../../../src/usecases/panel/user/create.case';
 import * as userFactory from '../../../factories/user.factory';
 
 interface UserAttrs {
@@ -11,12 +11,12 @@ interface UserAttrs {
 
 describe('Panel | User Services', () => {
   describe('Create', () => {
-    function serviceCall(userAttrs: UserAttrs) {
+    function useCaseCall(userAttrs: UserAttrs) {
       const attrs = {
         user: userAttrs,
       };
 
-      return PanelUserCreateService.call(attrs);
+      return PanelUserCreateCase.call(attrs);
     }
 
     let userAttrs: UserAttrs;
@@ -32,9 +32,9 @@ describe('Panel | User Services', () => {
     });
 
     it('success', async () => {
-      const service = await serviceCall(userAttrs);
+      const useCase = await useCaseCall(userAttrs);
 
-      expect(service.isSuccess()).toBeTruthy();
+      expect(useCase.isSuccess()).toBeTruthy();
     });
 
     describe('when email contains capital chars', () => {
@@ -46,9 +46,9 @@ describe('Panel | User Services', () => {
 
       it('downcase email', async () => {
         const lowercaseEmail = emailWithCapitalChars.toLowerCase();
-        const service = await serviceCall(userAttrs);
+        const useCase = await useCaseCall(userAttrs);
 
-        expect(service.user.email).toEqual(lowercaseEmail);
+        expect(useCase.user.email).toEqual(lowercaseEmail);
       });
     });
 
@@ -58,7 +58,7 @@ describe('Panel | User Services', () => {
       });
 
       it('reject with password presence error', async () => {
-        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+        await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { password: ['length', 'confirmation'] },
         });
       });
@@ -70,7 +70,7 @@ describe('Panel | User Services', () => {
       });
 
       it('reject with password confirmation error', async () => {
-        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+        await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { password: ['confirmation'] },
         });
       });
@@ -84,7 +84,7 @@ describe('Panel | User Services', () => {
       });
 
       test('reject with email format error', async () => {
-        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+        await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { email: ['format'] },
         });
       });
@@ -100,7 +100,7 @@ describe('Panel | User Services', () => {
       });
 
       test('reject with email uniq error', async () => {
-        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+        await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { email: ['uniq'] },
         });
       });

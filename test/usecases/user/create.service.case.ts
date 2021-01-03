@@ -1,11 +1,11 @@
 import * as faker from 'faker';
 
 import * as userFactory from '../../factories/user.factory';
-import { UserCreateService } from '../../../src/services/user/create.service';
+import { UserCreateCase } from '../../../src/usecases/user/create.case';
 
 describe('User Services', () => {
   describe('Create', () => {
-    function serviceCall(userAttrs: {
+    function useCaseCall(userAttrs: {
       email: string;
       password: string;
       passwordConfirmation: string;
@@ -14,7 +14,7 @@ describe('User Services', () => {
         user: userAttrs,
       };
 
-      return UserCreateService.call(attrs);
+      return UserCreateCase.call(attrs);
     }
 
     let userAttrs: any;
@@ -26,9 +26,9 @@ describe('User Services', () => {
     });
 
     test('success', async () => {
-      const service = await serviceCall(userAttrs);
+      const useCase = await useCaseCall(userAttrs);
 
-      expect(service.isSuccess()).toBeTruthy();
+      expect(useCase.isSuccess()).toBeTruthy();
     });
 
     describe('when email contains capital chars', () => {
@@ -40,9 +40,9 @@ describe('User Services', () => {
 
       test('downcase email', async () => {
         const lowercaseEmail = emailWithCapitalChars.toLowerCase();
-        const service = await serviceCall(userAttrs);
+        const useCase = await useCaseCall(userAttrs);
 
-        expect(service.user.email).toEqual(lowercaseEmail);
+        expect(useCase.user.email).toEqual(lowercaseEmail);
       });
     });
 
@@ -55,7 +55,7 @@ describe('User Services', () => {
       });
 
       test('reject with email uniq error', async () => {
-        await expect(serviceCall(userAttrs)).rejects.toMatchObject({
+        await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { email: ['uniq'] },
         });
       });

@@ -7,7 +7,7 @@ interface RequestParams {
   authorizationHeader?: string;
 }
 
-export class UserFindByAuthorizationService extends BaseService<RequestParams>() {
+export class UserFindByAuthorizationCase extends BaseService<RequestParams>() {
   private token: string | null = null;
 
   private decodedToken: any;

@@ -1,5 +1,5 @@
 import { BaseService } from '../base.service';
-import { UserEncryptPasswordService } from './encrypt.password.service';
+import { UserEncryptPasswordCase } from './encrypt.password.case';
 import { User } from '../../models/user.model';
 import { PanelUserValidator } from '../../validators/panel/user.validator';
 
@@ -10,7 +10,7 @@ interface RequestParams {
     passwordConfirmation: string;
   };
 }
-export class UserCreateService extends BaseService<RequestParams>() {
+export class UserCreateCase extends BaseService<RequestParams>() {
   // Attrs
   private validator: any;
 
@@ -49,9 +49,9 @@ export class UserCreateService extends BaseService<RequestParams>() {
   private async encryptAttrsPassword() {
     const { password } = this.requestParams.user;
 
-    const service = await UserEncryptPasswordService.call({ password });
+    const useCase = await UserEncryptPasswordCase.call({ password });
 
-    this.requestParams.user.password = service.encryptedPassword;
+    this.requestParams.user.password = useCase.encryptedPassword;
   }
 
   private async downcaseAttrsEmail() {

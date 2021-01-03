@@ -9,7 +9,7 @@ interface RequestParams {
   password: string;
 }
 
-export class UserSignInService extends BaseService<RequestParams>() {
+export class UserSignInCase extends BaseService<RequestParams>() {
   // Attrs
   private user: User | null = null;
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 
-import { UserSignOutService } from '../../../src/services/user/sign.out.service';
+import { UserSignOutCase } from '../../../src/usecases/user/sign.out.case';
 import * as userSessionFactory from '../../factories/user/session.factory';
 import { UserSession } from '../../../src/models/user/session.model';
 
@@ -14,15 +14,15 @@ describe('User Services', () => {
 
     describe('#call', () => {
       test('success', async () => {
-        const service = await UserSignOutService.call({
+        const useCase = await UserSignOutCase.call({
           id: session.id,
         });
 
-        expect(service.isSuccess()).toBeTruthy();
+        expect(useCase.isSuccess()).toBeTruthy();
       });
 
       test('delete session', async () => {
-        await UserSignOutService.call({
+        await UserSignOutCase.call({
           id: session.id,
         });
 
@@ -35,7 +35,7 @@ describe('User Services', () => {
 
       describe('when currentSession id is wrong', () => {
         test('reject with currentSession presence error', async () => {
-          const servicePromise = UserSignOutService.call({
+          const servicePromise = UserSignOutCase.call({
             id: -1,
           });
 

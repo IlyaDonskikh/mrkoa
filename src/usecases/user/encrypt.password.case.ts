@@ -4,7 +4,7 @@ import { BaseService } from '../base.service';
 interface RequestParams {
   password: string;
 }
-export class UserEncryptPasswordService extends BaseService<RequestParams>() {
+export class UserEncryptPasswordCase extends BaseService<RequestParams>() {
   // Attrs
   private readonly saltRounds = 10;
 

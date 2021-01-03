@@ -1,5 +1,5 @@
 import * as userFactory from '../../factories/user.factory';
-import { UserSignInService } from '../../../src/services/user/sign.in.service';
+import { UserSignInCase } from '../../../src/usecases/user/sign.in.case';
 import { User } from '../../../src/models/user.model';
 
 describe('User Services', () => {
@@ -18,21 +18,21 @@ describe('User Services', () => {
       });
 
       test('success', async () => {
-        const service = await UserSignInService.call({
+        const useCase = await UserSignInCase.call({
           email: user.email,
           password,
         });
 
-        expect(service.isSuccess()).toBeTruthy();
+        expect(useCase.isSuccess()).toBeTruthy();
       });
 
       test('return user session', async () => {
-        const service = await UserSignInService.call({
+        const useCase = await UserSignInCase.call({
           email: user.email,
           password,
         });
 
-        expect(service.session.userId).toEqual(user.id);
+        expect(useCase.session.userId).toEqual(user.id);
       });
 
       describe('when password are wrong', () => {
@@ -44,7 +44,7 @@ describe('User Services', () => {
         });
 
         test('rejected with password error', async () => {
-          const servicePromise = UserSignInService.call(attrs);
+          const servicePromise = UserSignInCase.call(attrs);
 
           await expect(servicePromise).rejects.toMatchObject({
             errors: { password: ['valid'] },
@@ -61,7 +61,7 @@ describe('User Services', () => {
         });
 
         test('reject with password error', async () => {
-          const servicePromise = UserSignInService.call(attrs);
+          const servicePromise = UserSignInCase.call(attrs);
 
           await expect(servicePromise).rejects.toMatchObject({
             errors: { password: ['valid'] },
@@ -78,7 +78,7 @@ describe('User Services', () => {
         });
 
         test('reject with email error', async () => {
-          const servicePromise = UserSignInService.call(attrs);
+          const servicePromise = UserSignInCase.call(attrs);
 
           await expect(servicePromise).rejects.toMatchObject({
             errors: { email: ['find'] },

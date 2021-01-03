@@ -1,7 +1,7 @@
-const servicesLocales = require('./services/index.js');
+const useCasesLocales = require('./usecases/index.js');
 const controllersLocales = require('./controllers/index.js');
 
 module.exports = {
-  services: servicesLocales,
+  useCases: useCasesLocales,
   controllers: controllersLocales,
 };

@@ -52,7 +52,7 @@ export function BaseService<T>() {
       const formattedClassName =
         className[0].toLowerCase() + className.slice(1);
 
-      return `services.${formattedClassName}`;
+      return `useCases.${formattedClassName}`;
     }
   }
 
