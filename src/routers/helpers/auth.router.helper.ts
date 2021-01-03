@@ -1,14 +1,14 @@
 import * as Koa from 'koa';
 
-import { UserFindByAuthorizationService } from '../../services/user/find.by.authorization.header.service';
+import { UserFindByAuthorizationCase } from '../../usecases/user/find.by.authorization.header.case';
 
 export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
   const authorizationHeader = ctx.request.headers.authorization;
 
-  const service = await callService(authorizationHeader);
+  const useCase = await callService(authorizationHeader);
 
-  if (service) {
-    ctx.currentSession = service.session;
+  if (useCase) {
+    ctx.currentSession = useCase.session;
     ctx.currentUser = await ctx.currentSession.getUser();
 
     await next();
@@ -21,12 +21,12 @@ export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
 
 async function callService(authorizationHeader: string) {
   try {
-    const service = await UserFindByAuthorizationService.call({
+    const useCase = await UserFindByAuthorizationCase.call({
       authorizationHeader,
     });
 
-    return service;
+    return useCase;
   } catch (err) {
-    // Always welcome to set debug logger if you would like to track the case.
+    // Always welcome to set debug logger if you would like to track the useCase.
   }
 }

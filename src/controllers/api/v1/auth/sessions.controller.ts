@@ -1,27 +1,26 @@
 import * as Koa from 'koa';
 
 import { SessionDefaultSerializer } from '../../../../serializers/session/default.serializer';
-import { UserSignInService } from '../../../../services/user/sign.in.service';
-import { UserSignOutService } from '../../../../services/user/sign.out.service';
+import { UserSignInCase } from '../../../../usecases/user/sign.in.case';
+import { UserSignOutCase } from '../../../../usecases/user/sign.out.case';
 import { schemas } from '../../../../utils/schemas';
-import { validate } from '../../../../utils/requestValidator';
+import { validate } from '../../../../utils/request.validator';
 
 const create = async (ctx: Koa.Context) => {
   const attrs = validate<Api.MrAuthSessionCreateRequest>({
     schema: schemas.MrAuthSessionCreateRequest,
     data: ctx.request.body,
-    localePath: __filename + '.create',
   });
 
-  const service = await UserSignInService.call(attrs);
+  const useCase = await UserSignInCase.call(attrs);
 
   ctx.body = {
-    session: await SessionDefaultSerializer.serialize(service.session),
+    session: await SessionDefaultSerializer.serialize(useCase.session),
   };
 };
 
 const destroy = async (ctx: Koa.Context) => {
-  await UserSignOutService.call({
+  await UserSignOutCase.call({
     id: ctx.currentSession.id,
   });
 
