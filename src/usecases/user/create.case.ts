@@ -1,4 +1,4 @@
-import { BaseService } from '../base.service';
+import { BaseCase } from '../base.case';
 import { UserEncryptPasswordCase } from './encrypt.password.case';
 import { User } from '../../models/user.model';
 import { PanelUserValidator } from '../../validators/panel/user.validator';
@@ -10,7 +10,7 @@ interface RequestParams {
     passwordConfirmation: string;
   };
 }
-export class UserCreateCase extends BaseService<RequestParams>() {
+export class UserCreateCase extends BaseCase<RequestParams>() {
   // Attrs
   private validator: any;
 

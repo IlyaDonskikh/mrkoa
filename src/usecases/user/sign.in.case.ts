@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { BaseService } from '../base.service';
+import { BaseCase } from '../base.case';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
@@ -9,7 +9,7 @@ interface RequestParams {
   password: string;
 }
 
-export class UserSignInCase extends BaseService<RequestParams>() {
+export class UserSignInCase extends BaseCase<RequestParams>() {
   // Attrs
   private user: User | null = null;
 

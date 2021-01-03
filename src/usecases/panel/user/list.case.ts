@@ -1,10 +1,10 @@
 import { User } from '../../../models/user.model';
-import { BaseService } from '../../base.service';
+import { BaseCase } from '../../base.case';
 
 interface RequestParams {
   page?: number | null;
 }
-export class PanelUserListCase extends BaseService<RequestParams>() {
+export class PanelUserListCase extends BaseCase<RequestParams>() {
   // Attrs
   readonly defaultItemsPerPage = 24;
 

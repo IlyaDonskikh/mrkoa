@@ -7,11 +7,9 @@ import { validateSchema } from './schema.validator';
 export function validate<T>({
   schema,
   data,
-  localePath,
 }: {
   schema: JSONSchema6;
   data: object;
-  localePath: string;
 }): T | never {
   if (typeof schema.type !== 'string') {
     throw new Error('Invalid JSON Schema');
@@ -20,7 +18,7 @@ export function validate<T>({
   try {
     validateSchema(schema, data); // ToDo: return all fields errors, not only first one
   } catch (err) {
-    throwErrors(err, localePath);
+    throwErrors(err);
   }
 
   return (data as unknown) as T;
@@ -28,11 +26,13 @@ export function validate<T>({
 
 // private
 
-function throwErrors(err: any, localePath: string) {
+function throwErrors(err: any) {
   if (!err.errors) {
     error('Unexpected Validation Error', { error: err });
     throw new Error('Unexpected Validation Error');
   }
+
+  const localePath = 'utils.requestValidator';
 
   const errorsBuilder = new ErrorsBuilder({ localePath });
 

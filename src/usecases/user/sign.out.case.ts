@@ -1,11 +1,11 @@
 import { UserSession } from '../../models/user/session.model';
-import { BaseService } from '../base.service';
+import { BaseCase } from '../base.case';
 
 interface RequestParams {
   id: number;
 }
 
-export class UserSignOutCase extends BaseService<RequestParams>() {
+export class UserSignOutCase extends BaseCase<RequestParams>() {
   session: UserSession | null;
 
   // Etc.

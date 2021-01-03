@@ -1,8 +1,8 @@
 import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
 import { ErrorsBuilder } from '../utils/errors.builder';
 
-export function BaseService<T>() {
-  class BaseService {
+export function BaseCase<T>() {
+  class BaseCase {
     [key: string]: any;
 
     requestParams: T;
@@ -56,5 +56,5 @@ export function BaseService<T>() {
     }
   }
 
-  return BaseService;
+  return BaseCase;
 }

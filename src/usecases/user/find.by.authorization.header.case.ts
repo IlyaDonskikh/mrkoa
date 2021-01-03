@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
 import * as jwt from 'jsonwebtoken';
-import { BaseService } from '../base.service';
+import { BaseCase } from '../base.case';
 import { UserSession } from '../../models/user/session.model';
 
 interface RequestParams {
   authorizationHeader?: string;
 }
 
-export class UserFindByAuthorizationCase extends BaseService<RequestParams>() {
+export class UserFindByAuthorizationCase extends BaseCase<RequestParams>() {
   private token: string | null = null;
 
   private decodedToken: any;

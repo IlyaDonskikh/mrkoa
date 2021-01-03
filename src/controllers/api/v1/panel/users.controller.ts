@@ -11,7 +11,6 @@ const index = async (ctx: any) => {
   const attrs = validate<Api.MrPanelUserIndexRequest>({
     schema: schemas.MrPanelUserIndexRequest,
     data: ctx.request.query,
-    localePath: __filename + '.index',
   });
 
   const { body } = await PanelUserListCase.call(attrs);
@@ -23,7 +22,6 @@ const create = async (ctx: Koa.Context) => {
   const attrs = validate<Api.MrPanelUserCreateRequest>({
     schema: schemas.MrPanelUserCreateRequest,
     data: ctx.request.body,
-    localePath: __filename + '.create',
   });
 
   const useCase = await PanelUserCreateCase.call(attrs);
