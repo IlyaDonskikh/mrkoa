@@ -1,5 +1,5 @@
 import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
-import { ErrorsService } from './errors.service';
+import { ErrorsBuilder } from '../utils/errors.builder';
 
 export function BaseService<T>() {
   class BaseService {
@@ -40,7 +40,7 @@ export function BaseService<T>() {
     // private
 
     private async call() {
-      this.errors = new ErrorsService({ localePath: this.buildLocalePath() });
+      this.errors = new ErrorsBuilder({ localePath: this.buildLocalePath() });
 
       await this.process();
 

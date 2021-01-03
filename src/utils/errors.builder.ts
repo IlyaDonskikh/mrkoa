@@ -1,7 +1,7 @@
-import { customI18n as I18n } from '../lib/i18n';
+import { customI18n as I18n } from './i18n';
 import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
 
-export class ErrorsService {
+export class ErrorsBuilder {
   public localePath: string;
 
   public statusCode: number = 422;
@@ -34,8 +34,8 @@ export class ErrorsService {
     this.errors[name].push(code);
   }
 
-  merge(errorsService: ErrorsInstanceInterface) {
-    const errorsList = errorsService.errors;
+  merge(errorsBuilder: ErrorsInstanceInterface) {
+    const errorsList = errorsBuilder.errors;
 
     Object.keys(errorsList).forEach((key: string) => {
       errorsList[key].forEach((errorCode: string) => {

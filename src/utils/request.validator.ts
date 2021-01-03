@@ -1,7 +1,7 @@
 import { error } from 'console';
 import { JSONSchema6 } from 'json-schema';
 
-import { ErrorsService } from '../services/errors.service';
+import { ErrorsBuilder } from './errors.builder';
 import { validateSchema } from './schema.validator';
 
 export function validate<T>({
@@ -34,11 +34,11 @@ function throwErrors(err: any, localePath: string) {
     throw new Error('Unexpected Validation Error');
   }
 
-  const errorsService = new ErrorsService({ localePath });
+  const errorsBuilder = new ErrorsBuilder({ localePath });
 
   err.errors.forEach((element: any) => {
-    errorsService.add(element.params.missingProperty, element.keyword);
+    errorsBuilder.add(element.params.missingProperty, element.keyword);
   });
 
-  throw errorsService;
+  throw errorsBuilder;
 }
