@@ -4,7 +4,7 @@ import { SessionDefaultSerializer } from '../../../../serializers/session/defaul
 import { UserSignInService } from '../../../../services/user/sign.in.service';
 import { UserSignOutService } from '../../../../services/user/sign.out.service';
 import { schemas } from '../../../../utils/schemas';
-import { validate } from '../../../../utils/requestValidator';
+import { validate } from '../../../../utils/request.validator';
 
 const create = async (ctx: Koa.Context) => {
   const attrs = validate<Api.MrAuthSessionCreateRequest>({

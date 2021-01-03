@@ -2,7 +2,7 @@ import { error } from 'console';
 import { JSONSchema6 } from 'json-schema';
 
 import { ErrorsService } from '../services/errors.service';
-import { validateSchema } from './schemaValidator';
+import { validateSchema } from './schema.validator';
 
 export function validate<T>({
   schema,

@@ -4,7 +4,7 @@ import { UserDefaultSerializer } from '../../../../serializers/user/default.seri
 import { PanelUserCreateService } from '../../../../services/panel/user/create.service';
 import { PanelUserListService } from '../../../../services/panel/user/list.service';
 
-import { validate } from '../../../../utils/requestValidator';
+import { validate } from '../../../../utils/request.validator';
 import { schemas } from '../../../../utils/schemas';
 
 const index = async (ctx: any) => {
