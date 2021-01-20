@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 import * as authSessions from '../../../controllers/api/v1/auth/sessions.controller';
 import * as panelUsers from '../../../controllers/api/v1/panel/users.controller';
-import { authRouterHelper } from '../../helpers/auth.router.helper';
+import { authRouterHelper } from '../../../helpers/routers/auth.router.helper';
 
 const router = new Router();
 
