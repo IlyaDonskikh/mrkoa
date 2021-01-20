@@ -13,7 +13,7 @@ router.use('/auth/sign_out', authRouterHelper);
 router.delete('/auth/sign_out', authSessions.destroy);
 
 // PANEL
-router.use('/panel', authRouterHelper);
+router.use('/panel', authRouterHelper); // access to panel only for authorized persons
 
 // Users
 router.get('/panel/users', panelUsers.index);
