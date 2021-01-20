@@ -34,28 +34,55 @@ As a general overview you may look on the flow like:
 
 1. Routers pass request to controllers and during the process do permission check to use the route.
 2. Controller validate the request data and pass the data to Use Case.
-3. Use case take care about validation and execution of business logic.
-   3.1. Sometimes if the validation logic can be described as massive or DRY-able, Validators are recommended.
-4. Serializer format final data.
-5. And controller back on duty to take control and return the data.
+3. Use case take care about validation and execution of business logic (Validators are recommended if the validation logic can be described as massive or DRY-able).
+4. Serializer formats the processed data.
+5. And controller is back on duty to take control and return the data.
 
-## Use Cases
+### Use Cases
 
-This is the only way to execute business logic. Pay attention that it is strictly not recommended to use one Use Case from another and prohibited use single Use Case to execute describe than one business case.
+This is the only way to execute business logic. Pay attention that it is strictly not recommended to use one Use Case from another and prohibited use single Use Case to describe more than one business case.
 
-If you really need to execute some code more than once and it's a part of business logic of Use Case then you have to use Helpers or Validators, if it's not a business logic the right way is utils.
+If you really need to execute some code more than once and it's a part of business logic of a Use Case then you have to use Helpers or Validators, if it's not a business logic the right way is Utils.
 
-## Helpers
+```typescript
+interface RequestParams {
+  email: string;
+}
 
-Widely used fragments of middleware or supportive like business logic (e.g. permission check during session request or model scopes).
+export class UserCreateCase extends BaseCase<RequestParams>() {
+  public user: User;
 
-## Utils
+  async process() {
+    await this.validate(); // it call checks section and throw error if something going wrong
 
-Primitives to help support different not business logic issues like encryption of data, localisation handling and etc.
+    this.user = await User.create({ email: this.requestParams.email });
+  }
+
+  // private
+
+  protected async checks() {
+    if (!this.requestParams.email) {
+      this.errors.add('email', 'presence');
+    }
+  }
+}
+
+const useCase = UserCreateCase.call({ email: 'love@use.case' }); // only right way to run Use Case is static method `call`.
+
+useCase.user; // return user object
+```
 
 ### Validators
 
 The layer serve to give direct and comprehensive answer about current validation status of dataset.
+
+### Helpers
+
+Widely used fragments of middleware or supportive business logic (e.g. permission check during session request or model scopes).
+
+### Utils
+
+Various elements designed to serve the application and are not part of the business logic.
 
 ### Serializers
 
@@ -93,4 +120,4 @@ The boilerplate ready to go with heroku environment. All you need to do is setup
 
 All request to the panel should contain header `Authorization: Bearer $token`.
 
-How to generate the token you may see by following examples into the tests: `test/controllers/api/v1/panel/users.controller.spec.ts`
+How to generate the token you may see by following examples into the tests: `test/controllers/api/v1/panel/users.controller.test.ts`

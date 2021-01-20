@@ -4,6 +4,8 @@ import { BaseCase } from '../base.case';
 interface RequestParams {
   password: string;
 }
+
+// ToDo: Move to utils
 export class UserEncryptPasswordCase extends BaseCase<RequestParams>() {
   // Attrs
   private readonly saltRounds = 10;
