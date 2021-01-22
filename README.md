@@ -49,13 +49,17 @@ interface Request {
   email: string;
 }
 
-export class UserCreateCase extends BaseCase<Request>() {
-  public user: User;
+interface Response {
+  user: User;
+}
 
+export class UserCreateCase extends BaseCase<Request, Response>() {
   async process() {
     await this.validate(); // it call checks section and throw error if something going wrong
 
-    this.user = await User.create({ email: this.request.email });
+    this.response = {
+      user: await User.create({ email: this.request.email });
+    }
   }
 
   // private
@@ -67,9 +71,7 @@ export class UserCreateCase extends BaseCase<Request>() {
   }
 }
 
-const useCase = UserCreateCase.call({ email: 'love@use.case' }); // only right way to run Use Case is static method `call`.
-
-useCase.user; // return user object
+const { user } = UserCreateCase.call({ email: 'love@use.case' }); // only right way to run Use Case is static method `call`.
 ```
 
 ### Validators
