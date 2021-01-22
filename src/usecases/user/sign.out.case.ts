@@ -5,7 +5,7 @@ interface RequestParams {
   id: number;
 }
 
-export class UserSignOutCase extends BaseCase<RequestParams>() {
+export class UserSignOutCase extends BaseCase<RequestParams, null>() {
   session: UserSession | null;
 
   // Etc.
@@ -18,9 +18,10 @@ export class UserSignOutCase extends BaseCase<RequestParams>() {
   }
 
   // Private
+
   protected async checks() {
     if (!this.session) {
-      this.errors.add('currentSession', 'presence');
+      this.errors.add('id', 'find');
     }
   }
 

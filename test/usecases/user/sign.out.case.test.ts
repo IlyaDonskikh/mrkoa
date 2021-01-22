@@ -13,14 +13,6 @@ describe('User Services', () => {
     });
 
     describe('#call', () => {
-      test('success', async () => {
-        const useCase = await UserSignOutCase.call({
-          id: session.id,
-        });
-
-        expect(useCase.isSuccess()).toBeTruthy();
-      });
-
       test('delete session', async () => {
         await UserSignOutCase.call({
           id: session.id,
@@ -34,13 +26,13 @@ describe('User Services', () => {
       });
 
       describe('when currentSession id is wrong', () => {
-        test('reject with currentSession presence error', async () => {
+        test('reject with id find error', async () => {
           const servicePromise = UserSignOutCase.call({
             id: -1,
           });
 
           await expect(servicePromise).rejects.toMatchObject({
-            errors: { currentSession: ['presence'] },
+            errors: { id: ['find'] },
           });
         });
       });

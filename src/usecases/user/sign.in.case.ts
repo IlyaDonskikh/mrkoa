@@ -9,11 +9,13 @@ interface RequestParams {
   password: string;
 }
 
-export class UserSignInCase extends BaseCase<RequestParams>() {
+interface Response {
+  session: UserSession;
+}
+
+export class UserSignInCase extends BaseCase<RequestParams, Response>() {
   // Attrs
   private user: User | null = null;
-
-  public session: UserSession;
 
   // Etc.
   async process() {
@@ -21,11 +23,15 @@ export class UserSignInCase extends BaseCase<RequestParams>() {
 
     await this.validate();
 
-    this.session = await UserSession.create({
-      userId: this.user!.id,
-      token: await this.buildNewUniqToken(),
-    });
+    this.response = {
+      session: await UserSession.create({
+        userId: this.user!.id,
+        token: await this.buildNewUniqToken(),
+      }),
+    };
   }
+
+  // Private
 
   protected async checks() {
     if (this.requestParams.email === undefined) {

@@ -1,14 +1,16 @@
 import * as Koa from 'koa';
+import * as _ from 'lodash';
+import * as jwt from 'jsonwebtoken';
 
-import { UserFindByAuthorizationCase } from '../../usecases/user/find.by.authorization.header.case';
+import { UserSession } from '../../models/user/session.model';
 
 export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
   const authorizationHeader = ctx.request.headers.authorization;
 
-  const useCase = await callService(authorizationHeader);
+  const session = await findSession(authorizationHeader);
 
-  if (useCase) {
-    ctx.currentSession = useCase.session;
+  if (session) {
+    ctx.currentSession = session;
     ctx.currentUser = await ctx.currentSession.getUser();
 
     await next();
@@ -19,14 +21,39 @@ export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
 
 // private
 
-async function callService(authorizationHeader: string) {
-  try {
-    const useCase = await UserFindByAuthorizationCase.call({
-      authorizationHeader,
-    });
+async function findSession(authorizationHeader: string) {
+  const token = extractTokenFrom(authorizationHeader);
+  const decodedToken = decodeToken(token);
 
-    return useCase;
+  if (!decodedToken) {
+    return;
+  }
+
+  const session = await UserSession.findOne({
+    where: { token: decodedToken.sessionToken },
+  });
+
+  return session;
+}
+
+function extractTokenFrom(authorizationHeader?: string) {
+  if (typeof authorizationHeader !== 'string') return;
+
+  if (authorizationHeader.startsWith('Bearer ')) {
+    return _.replace(authorizationHeader, 'Bearer ', '');
+  }
+}
+
+function decodeToken(rawToken?: string): { sessionToken: string } | undefined {
+  if (!rawToken) {
+    return;
+  }
+
+  try {
+    const token = jwt.verify(rawToken, process.env.NODE_APP_TOKEN as string);
+
+    return token as { sessionToken: string };
   } catch (err) {
-    // Always welcome to set debug logger if you would like to track the useCase.
+    return;
   }
 }

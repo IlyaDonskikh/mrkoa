@@ -1,5 +1,6 @@
 import * as faker from 'faker';
 
+import { User } from '../../../../src/models/user.model';
 import { PanelUserCreateCase } from '../../../../src/usecases/panel/user/create.case';
 import * as userFactory from '../../../factories/user.factory';
 
@@ -34,7 +35,7 @@ describe('Panel | User Services', () => {
     it('success', async () => {
       const useCase = await useCaseCall(userAttrs);
 
-      expect(useCase.isSuccess()).toBeTruthy();
+      expect(useCase.user).toBeInstanceOf(User);
     });
 
     describe('when email contains capital chars', () => {

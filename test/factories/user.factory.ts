@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 import * as crypto from 'crypto';
 import { User } from '../../src/models/user.model';
-import { UserEncryptPasswordCase } from '../../src/usecases/user/encrypt.password.case';
+import { encryptBySimpleBcrypt } from '../../src/utils/encryptors';
 
 const data = async (props = {}) => {
   const password = faker.internet.password();
@@ -18,8 +18,8 @@ const data = async (props = {}) => {
 const create = async (props = {}) => {
   const attrs: any = await data(props);
   const { password } = attrs;
-  const { encryptedPassword } = await UserEncryptPasswordCase.call({
-    password,
+  const encryptedPassword = encryptBySimpleBcrypt({
+    value: password,
   });
 
   attrs.password = encryptedPassword;

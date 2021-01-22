@@ -1,7 +1,7 @@
 import { BaseCase } from '../base.case';
-import { UserEncryptPasswordCase } from './encrypt.password.case';
 import { User } from '../../models/user.model';
 import { PanelUserValidator } from '../../validators/panel/user.validator';
+import { encryptBySimpleBcrypt } from '../../utils/encryptors';
 
 interface RequestParams {
   user: {
@@ -10,11 +10,14 @@ interface RequestParams {
     passwordConfirmation: string;
   };
 }
-export class UserCreateCase extends BaseCase<RequestParams>() {
+
+interface Response {
+  user: User;
+}
+
+export class UserCreateCase extends BaseCase<RequestParams, Response>() {
   // Attrs
   private validator: any;
-
-  public user: User;
 
   // Etc.
   async process() {
@@ -22,7 +25,9 @@ export class UserCreateCase extends BaseCase<RequestParams>() {
 
     await this.transformAttributes();
 
-    this.user = await User.create(this.requestParams.user);
+    this.response = {
+      user: await User.create(this.requestParams.user),
+    };
   }
 
   // Private
@@ -49,9 +54,9 @@ export class UserCreateCase extends BaseCase<RequestParams>() {
   private async encryptAttrsPassword() {
     const { password } = this.requestParams.user;
 
-    const useCase = await UserEncryptPasswordCase.call({ password });
+    const encryptedPassword = encryptBySimpleBcrypt({ value: password });
 
-    this.requestParams.user.password = useCase.encryptedPassword;
+    this.requestParams.user.password = encryptedPassword;
   }
 
   private async downcaseAttrsEmail() {

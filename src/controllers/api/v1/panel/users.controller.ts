@@ -24,10 +24,10 @@ const create = async (ctx: Koa.Context) => {
     data: ctx.request.body,
   });
 
-  const useCase = await PanelUserCreateCase.call(attrs);
+  const { user } = await PanelUserCreateCase.call(attrs);
 
   ctx.body = {
-    user: await UserDefaultSerializer.serialize(useCase.user),
+    user: await UserDefaultSerializer.serialize(user),
   };
 };
 

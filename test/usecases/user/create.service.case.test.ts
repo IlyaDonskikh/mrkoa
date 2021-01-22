@@ -2,10 +2,11 @@ import * as faker from 'faker';
 
 import * as userFactory from '../../factories/user.factory';
 import { UserCreateCase } from '../../../src/usecases/user/create.case';
+import { User } from '../../../src/models/user.model';
 
 describe('User Services', () => {
   describe('Create', () => {
-    function useCaseCall(userAttrs: {
+    async function useCaseCall(userAttrs: {
       email: string;
       password: string;
       passwordConfirmation: string;
@@ -25,10 +26,10 @@ describe('User Services', () => {
       userAttrs = user.toJSON();
     });
 
-    test('success', async () => {
+    test('create user', async () => {
       const useCase = await useCaseCall(userAttrs);
 
-      expect(useCase.isSuccess()).toBeTruthy();
+      expect(useCase.user).toBeInstanceOf(User);
     });
 
     describe('when email contains capital chars', () => {
