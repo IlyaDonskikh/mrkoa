@@ -12,10 +12,10 @@ const create = async (ctx: Koa.Context) => {
     data: ctx.request.body,
   });
 
-  const useCase = await UserSignInCase.call(attrs);
+  const { session } = await UserSignInCase.call(attrs);
 
   ctx.body = {
-    session: await SessionDefaultSerializer.serialize(useCase.session),
+    session: await SessionDefaultSerializer.serialize(session),
   };
 };
 

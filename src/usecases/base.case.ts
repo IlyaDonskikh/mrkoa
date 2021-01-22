@@ -1,11 +1,12 @@
 import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
 import { ErrorsBuilder } from '../utils/errors.builder';
 
-export function BaseCase<T>() {
+export function BaseCase<T, R>() {
   class BaseCase {
     [key: string]: any;
 
-    requestParams: T;
+    request: T;
+    response: R;
 
     public errors: ErrorsInstanceInterface;
 
@@ -14,37 +15,31 @@ export function BaseCase<T>() {
         throw new Error();
       }
 
-      this.requestParams = params;
+      this.request = params;
     }
 
     static call(params: T) {
-      return new this(params).call();
-    }
+      const instance = new this(params).call();
 
-    async validate() {
-      await this.checks();
-
-      if (this.isFailed()) {
-        throw this.errors;
-      }
-    }
-
-    isSuccess() {
-      return Object.keys(this.errors.errors).length === 0;
-    }
-
-    isFailed() {
-      return !this.isSuccess();
+      return instance;
     }
 
     // private
+
+    protected async validate() {
+      await this.checks();
+
+      if (!this.isValid()) {
+        throw this.errors;
+      }
+    }
 
     private async call() {
       this.errors = new ErrorsBuilder({ localePath: this.buildLocalePath() });
 
       await this.process();
 
-      return this;
+      return this.response;
     }
 
     private buildLocalePath() {
@@ -53,6 +48,10 @@ export function BaseCase<T>() {
         className[0].toLowerCase() + className.slice(1);
 
       return `useCases.${formattedClassName}`;
+    }
+
+    private isValid() {
+      return Object.keys(this.errors.errors).length === 0;
     }
   }
 

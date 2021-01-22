@@ -1,6 +1,7 @@
 import * as userFactory from '../../factories/user.factory';
 import { UserSignInCase } from '../../../src/usecases/user/sign.in.case';
 import { User } from '../../../src/models/user.model';
+import { UserSession } from '../../../src/models/user/session.model';
 
 describe('User Services', () => {
   describe('SignIn', () => {
@@ -23,7 +24,7 @@ describe('User Services', () => {
           password,
         });
 
-        expect(useCase.isSuccess()).toBeTruthy();
+        expect(useCase.session).toBeInstanceOf(UserSession);
       });
 
       test('return user session', async () => {

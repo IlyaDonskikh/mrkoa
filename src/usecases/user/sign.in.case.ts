@@ -4,16 +4,18 @@ import { BaseCase } from '../base.case';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
-interface RequestParams {
+interface Request {
   email: string;
   password: string;
 }
 
-export class UserSignInCase extends BaseCase<RequestParams>() {
+interface Response {
+  session: UserSession;
+}
+
+export class UserSignInCase extends BaseCase<Request, Response>() {
   // Attrs
   private user: User | null = null;
-
-  public session: UserSession;
 
   // Etc.
   async process() {
@@ -21,17 +23,20 @@ export class UserSignInCase extends BaseCase<RequestParams>() {
 
     await this.validate();
 
-    this.session = await UserSession.create({
-      userId: this.user!.id,
-      token: await this.buildNewUniqToken(),
-    });
+    this.response = {
+      session: await UserSession.create({
+        userId: this.user!.id,
+        token: await this.buildNewUniqToken(),
+      }),
+    };
   }
 
+  // Private
   protected async checks() {
-    if (this.requestParams.email === undefined) {
+    if (this.request.email === undefined) {
       this.errors.add('password', 'presence');
     }
-    if (this.requestParams.email === undefined) {
+    if (this.request.email === undefined) {
       this.errors.add('email', 'presence');
     }
     if (!this.user) {
@@ -63,12 +68,12 @@ export class UserSignInCase extends BaseCase<RequestParams>() {
   }
 
   private async isPasswordValid() {
-    if (!this.user || this.requestParams.password === undefined) {
+    if (!this.user || this.request.password === undefined) {
       return false;
     }
 
     const match = await bcrypt.compare(
-      this.requestParams.password,
+      this.request.password,
       this.user.password,
     );
 
@@ -80,7 +85,7 @@ export class UserSignInCase extends BaseCase<RequestParams>() {
   }
 
   private async setupVariablesUser() {
-    const { email } = this.requestParams;
+    const { email } = this.request;
 
     if (email === undefined) {
       return;

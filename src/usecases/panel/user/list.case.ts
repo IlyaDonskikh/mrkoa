@@ -1,10 +1,22 @@
 import { User } from '../../../models/user.model';
 import { BaseCase } from '../../base.case';
 
-interface RequestParams {
+interface Request {
   page?: number | null;
 }
-export class PanelUserListCase extends BaseCase<RequestParams>() {
+
+interface Response {
+  body: {
+    users: User[];
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalItems: number;
+    time: number;
+  };
+}
+
+export class PanelUserListCase extends BaseCase<Request, Response>() {
   // Attrs
   readonly defaultItemsPerPage = 24;
 
@@ -14,16 +26,19 @@ export class PanelUserListCase extends BaseCase<RequestParams>() {
 
   // Etc.
   async process() {
-    const page = this.requestParams.page || this.defaultPage;
+    const page = this.request.page || this.defaultPage;
     const users = await User.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (page - 1),
       order: [['created_at', 'DESC']],
     });
 
-    this.body = this.buildBodyBy(users, page);
+    this.response = {
+      body: this.buildBodyBy(users, page),
+    };
   }
 
+  // Private
   private buildBodyBy(users: { rows: User[]; count: number }, page: number) {
     return {
       users: users.rows,
