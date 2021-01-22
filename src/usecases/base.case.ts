@@ -5,7 +5,7 @@ export function BaseCase<T, R>() {
   class BaseCase {
     [key: string]: any;
 
-    requestParams: T;
+    request: T;
     response: R;
 
     public errors: ErrorsInstanceInterface;
@@ -15,7 +15,7 @@ export function BaseCase<T, R>() {
         throw new Error();
       }
 
-      this.requestParams = params;
+      this.request = params;
     }
 
     static call(params: T) {

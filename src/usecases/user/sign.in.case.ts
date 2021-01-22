@@ -4,7 +4,7 @@ import { BaseCase } from '../base.case';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
-interface RequestParams {
+interface Request {
   email: string;
   password: string;
 }
@@ -13,7 +13,7 @@ interface Response {
   session: UserSession;
 }
 
-export class UserSignInCase extends BaseCase<RequestParams, Response>() {
+export class UserSignInCase extends BaseCase<Request, Response>() {
   // Attrs
   private user: User | null = null;
 
@@ -34,10 +34,10 @@ export class UserSignInCase extends BaseCase<RequestParams, Response>() {
   // Private
 
   protected async checks() {
-    if (this.requestParams.email === undefined) {
+    if (this.request.email === undefined) {
       this.errors.add('password', 'presence');
     }
-    if (this.requestParams.email === undefined) {
+    if (this.request.email === undefined) {
       this.errors.add('email', 'presence');
     }
     if (!this.user) {
@@ -69,12 +69,12 @@ export class UserSignInCase extends BaseCase<RequestParams, Response>() {
   }
 
   private async isPasswordValid() {
-    if (!this.user || this.requestParams.password === undefined) {
+    if (!this.user || this.request.password === undefined) {
       return false;
     }
 
     const match = await bcrypt.compare(
-      this.requestParams.password,
+      this.request.password,
       this.user.password,
     );
 
@@ -86,7 +86,7 @@ export class UserSignInCase extends BaseCase<RequestParams, Response>() {
   }
 
   private async setupVariablesUser() {
-    const { email } = this.requestParams;
+    const { email } = this.request;
 
     if (email === undefined) {
       return;

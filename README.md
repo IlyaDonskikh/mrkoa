@@ -45,23 +45,23 @@ This is the only way to execute business logic. Pay attention that it is strictl
 If you really need to execute some code more than once and it's a part of business logic of a Use Case then you have to use Helpers or Validators, if it's not a business logic the right way is Utils.
 
 ```typescript
-interface RequestParams {
+interface Request {
   email: string;
 }
 
-export class UserCreateCase extends BaseCase<RequestParams>() {
+export class UserCreateCase extends BaseCase<Request>() {
   public user: User;
 
   async process() {
     await this.validate(); // it call checks section and throw error if something going wrong
 
-    this.user = await User.create({ email: this.requestParams.email });
+    this.user = await User.create({ email: this.request.email });
   }
 
   // private
 
   protected async checks() {
-    if (!this.requestParams.email) {
+    if (!this.request.email) {
       this.errors.add('email', 'presence');
     }
   }

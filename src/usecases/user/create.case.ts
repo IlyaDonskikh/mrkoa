@@ -3,7 +3,7 @@ import { User } from '../../models/user.model';
 import { PanelUserValidator } from '../../validators/panel/user.validator';
 import { encryptBySimpleBcrypt } from '../../utils/encryptors';
 
-interface RequestParams {
+interface Request {
   user: {
     email: string;
     password: string;
@@ -15,7 +15,7 @@ interface Response {
   user: User;
 }
 
-export class UserCreateCase extends BaseCase<RequestParams, Response>() {
+export class UserCreateCase extends BaseCase<Request, Response>() {
   // Attrs
   private validator: any;
 
@@ -26,7 +26,7 @@ export class UserCreateCase extends BaseCase<RequestParams, Response>() {
     await this.transformAttributes();
 
     this.response = {
-      user: await User.create(this.requestParams.user),
+      user: await User.create(this.request.user),
     };
   }
 
@@ -35,7 +35,7 @@ export class UserCreateCase extends BaseCase<RequestParams, Response>() {
     this.validator = await PanelUserValidator.validate(
       this.errors,
       User.build(),
-      this.requestParams.user,
+      this.request.user,
     );
 
     this.errors = this.validator.errors;
@@ -48,20 +48,20 @@ export class UserCreateCase extends BaseCase<RequestParams, Response>() {
   }
 
   private updateAttrsByValidator() {
-    this.requestParams.user = this.validator.attrs;
+    this.request.user = this.validator.attrs;
   }
 
   private async encryptAttrsPassword() {
-    const { password } = this.requestParams.user;
+    const { password } = this.request.user;
 
     const encryptedPassword = encryptBySimpleBcrypt({ value: password });
 
-    this.requestParams.user.password = encryptedPassword;
+    this.request.user.password = encryptedPassword;
   }
 
   private async downcaseAttrsEmail() {
-    const { email } = this.requestParams.user;
+    const { email } = this.request.user;
 
-    this.requestParams.user.email = email.toLowerCase();
+    this.request.user.email = email.toLowerCase();
   }
 }

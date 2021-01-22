@@ -26,7 +26,7 @@ export class PanelUserListCase extends BaseCase<Request, Response>() {
 
   // Etc.
   async process() {
-    const page = this.requestParams.page || this.defaultPage;
+    const page = this.request.page || this.defaultPage;
     const users = await User.findAndCountAll({
       limit: this.defaultItemsPerPage,
       offset: this.defaultItemsPerPage * (page - 1),

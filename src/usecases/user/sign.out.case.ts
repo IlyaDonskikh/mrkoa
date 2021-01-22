@@ -1,11 +1,11 @@
 import { UserSession } from '../../models/user/session.model';
 import { BaseCase } from '../base.case';
 
-interface RequestParams {
+interface Request {
   id: number;
 }
 
-export class UserSignOutCase extends BaseCase<RequestParams, null>() {
+export class UserSignOutCase extends BaseCase<Request, null>() {
   session: UserSession | null;
 
   // Etc.
@@ -26,6 +26,6 @@ export class UserSignOutCase extends BaseCase<RequestParams, null>() {
   }
 
   private async setupVariables() {
-    this.session = await UserSession.findByPk(this.requestParams.id);
+    this.session = await UserSession.findByPk(this.request.id);
   }
 }
