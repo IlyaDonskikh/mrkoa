@@ -18,7 +18,6 @@ export class UserSignOutCase extends BaseCase<Request, null>() {
   }
 
   // Private
-
   protected async checks() {
     if (!this.session) {
       this.errors.add('id', 'find');

@@ -32,7 +32,6 @@ export class UserSignInCase extends BaseCase<Request, Response>() {
   }
 
   // Private
-
   protected async checks() {
     if (this.request.email === undefined) {
       this.errors.add('password', 'presence');

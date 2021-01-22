@@ -38,6 +38,7 @@ export class PanelUserListCase extends BaseCase<Request, Response>() {
     };
   }
 
+  // Private
   private buildBodyBy(users: { rows: User[]; count: number }, page: number) {
     return {
       users: users.rows,
