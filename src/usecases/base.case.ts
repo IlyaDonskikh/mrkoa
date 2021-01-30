@@ -1,4 +1,4 @@
-import { ErrorBuilder } from '../utils/errors.builder';
+import { ErrorsBuilder } from '../utils/errors.builder';
 
 export function BaseCase<T, R>() {
   class BaseCase {
@@ -6,7 +6,7 @@ export function BaseCase<T, R>() {
 
     request: T;
     response: R;
-    errors: ErrorBuilder;
+    protected errorsBuilder = ErrorsBuilder;
 
     constructor(params: T) {
       if (typeof params != 'object') {
@@ -33,7 +33,9 @@ export function BaseCase<T, R>() {
     }
 
     private async call() {
-      this.errors = new ErrorBuilder({ localePath: this.buildLocalePath() });
+      this.errors = new this.errorsBuilder({
+        localePath: this.buildLocalePath(),
+      });
 
       await this.process();
 
