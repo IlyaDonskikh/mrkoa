@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 
-import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
+import { ErrorBuilder } from '../utils/errors.builder';
 
 export class BaseValidator {
   [key: string]: any;
 
   // Attrs.
-  public errors: ErrorsInstanceInterface;
+  public errors: ErrorBuilder;
 
   public modelInstance: any;
 
@@ -15,21 +15,13 @@ export class BaseValidator {
   public mergedAttrs: any;
 
   // Etc.
-  constructor(
-    errors: ErrorsInstanceInterface,
-    modelInstance: any,
-    attrs: object,
-  ) {
+  constructor(errors: ErrorBuilder, modelInstance: any, attrs: object) {
     this.errors = errors;
     this.modelInstance = modelInstance;
     this.attrs = attrs;
   }
 
-  static validate(
-    errors: ErrorsInstanceInterface,
-    modelInstance: any,
-    attrs: object,
-  ) {
+  static validate(errors: ErrorBuilder, modelInstance: any, attrs: object) {
     return new this(errors, modelInstance, attrs).validate();
   }
 

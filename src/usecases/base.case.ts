@@ -1,5 +1,4 @@
-import { ErrorsInstanceInterface } from '../types/services/errors/instance.interface';
-import { ErrorsBuilder } from '../utils/errors.builder';
+import { ErrorBuilder } from '../utils/errors.builder';
 
 export function BaseCase<T, R>() {
   class BaseCase {
@@ -7,8 +6,7 @@ export function BaseCase<T, R>() {
 
     request: T;
     response: R;
-
-    public errors: ErrorsInstanceInterface;
+    errors: ErrorBuilder;
 
     constructor(params: T) {
       if (typeof params != 'object') {
@@ -35,7 +33,7 @@ export function BaseCase<T, R>() {
     }
 
     private async call() {
-      this.errors = new ErrorsBuilder({ localePath: this.buildLocalePath() });
+      this.errors = new ErrorBuilder({ localePath: this.buildLocalePath() });
 
       await this.process();
 

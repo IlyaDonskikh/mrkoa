@@ -1,7 +1,7 @@
 import { error } from 'console';
 import { JSONSchema6 } from 'json-schema';
 
-import { ErrorsBuilder } from './errors.builder';
+import { ErrorBuilder } from './errors.builder';
 import { validateSchema } from './schema.validator';
 
 export function validate<T>({
@@ -34,7 +34,7 @@ function throwErrors(err: any) {
 
   const localePath = 'utils.requestValidator';
 
-  const errorsBuilder = new ErrorsBuilder({ localePath });
+  const errorsBuilder = new ErrorBuilder({ localePath });
 
   err.errors.forEach((element: any) => {
     errorsBuilder.add(element.params.missingProperty, element.keyword);

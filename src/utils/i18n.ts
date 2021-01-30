@@ -13,10 +13,6 @@ i18n.configure({
   staticCatalog: {
     en: require('../../locales/en'),
   },
-  api: {
-    __: 't', // now req.__ becomes req.t
-    __n: 'tn', // and req.__n can be called as req.tn
-  },
 });
 
 // eslint-disable-next-line import/no-default-export
