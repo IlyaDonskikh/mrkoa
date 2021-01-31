@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { BaseCase } from '../base.case';
+import { UseCase } from '../../utils/use.case';
 import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
@@ -13,7 +13,7 @@ interface Response {
   session: UserSession;
 }
 
-export class UserSignInCase extends BaseCase<Request, Response>() {
+export class UserSignInCase extends UseCase<Request, Response>() {
   // Attrs
   private user: User | null = null;
 

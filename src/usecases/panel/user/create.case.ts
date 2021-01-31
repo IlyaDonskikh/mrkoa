@@ -1,7 +1,7 @@
 import { User } from '../../../models/user.model';
 import { encryptBySimpleBcrypt } from '../../../utils/encryptors';
 import { PanelUserValidator } from '../../../validators/panel/user.validator';
-import { BaseCase } from '../../base.case';
+import { UseCase } from '../../../utils/use.case';
 
 interface Request {
   user: {
@@ -15,7 +15,7 @@ interface Response {
   user: User;
 }
 
-export class PanelUserCreateCase extends BaseCase<Request, Response>() {
+export class PanelUserCreateCase extends UseCase<Request, Response>() {
   // Attrs
   private validator: any;
 

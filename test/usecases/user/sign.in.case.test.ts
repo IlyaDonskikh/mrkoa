@@ -85,6 +85,15 @@ describe('User Services', () => {
             errors: { email: ['find'] },
           });
         });
+
+        test('localize email error', async () => {
+          try {
+            await UserSignInCase.call(attrs);
+          } catch (err) {
+            const messages = err.messages();
+            expect(messages.email).toContain('not found');
+          }
+        });
       });
     });
   });

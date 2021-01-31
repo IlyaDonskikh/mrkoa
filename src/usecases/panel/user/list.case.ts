@@ -1,5 +1,5 @@
 import { User } from '../../../models/user.model';
-import { BaseCase } from '../../base.case';
+import { UseCase } from '../../../utils/use.case';
 
 interface Request {
   page?: number | null;
@@ -16,7 +16,7 @@ interface Response {
   };
 }
 
-export class PanelUserListCase extends BaseCase<Request, Response>() {
+export class PanelUserListCase extends UseCase<Request, Response>() {
   // Attrs
   readonly defaultItemsPerPage = 24;
 
