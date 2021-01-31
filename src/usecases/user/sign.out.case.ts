@@ -1,11 +1,11 @@
 import { UserSession } from '../../models/user/session.model';
-import { BaseCase } from '../base.case';
+import { UseCase } from '../../utils/use.case';
 
 interface Request {
   id: number;
 }
 
-export class UserSignOutCase extends BaseCase<Request, null>() {
+export class UserSignOutCase extends UseCase<Request, null>() {
   session: UserSession | null;
 
   // Etc.

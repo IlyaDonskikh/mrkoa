@@ -1,12 +1,11 @@
 import * as _ from 'lodash';
-
-import { ErrorsBuilder } from '../utils/errors.builder';
+import { MrError } from 'mr-error';
 
 export class BaseValidator {
   [key: string]: any;
 
   // Attrs.
-  public errors: ErrorsBuilder;
+  public errors: MrError;
 
   public modelInstance: any;
 
@@ -15,13 +14,13 @@ export class BaseValidator {
   public mergedAttrs: any;
 
   // Etc.
-  constructor(errors: ErrorsBuilder, modelInstance: any, attrs: object) {
+  constructor(errors: MrError, modelInstance: any, attrs: object) {
     this.errors = errors;
     this.modelInstance = modelInstance;
     this.attrs = attrs;
   }
 
-  static validate(errors: ErrorsBuilder, modelInstance: any, attrs: object) {
+  static validate(errors: MrError, modelInstance: any, attrs: object) {
     return new this(errors, modelInstance, attrs).validate();
   }
 
