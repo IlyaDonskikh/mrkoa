@@ -9,7 +9,7 @@ interface Request {
 interface Response {
   body: {
     items: User[];
-    totalCount: number;
+    itemsTotalCount: number;
   };
 }
 
@@ -38,7 +38,7 @@ export class PanelUserListCase extends UseCase<Request, Response>() {
   private buildBodyBy(users: { rows: User[]; count: number }) {
     return {
       items: users.rows,
-      totalItems: users.count,
+      itemsTotalCount: users.count,
     };
   }
 }

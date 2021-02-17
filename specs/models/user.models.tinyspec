@@ -13,7 +13,7 @@ MrPanelUserIndexRequest {
 
 MrPanelUserIndexResponse {
   items: MrPanelUserIndexResponseUser[],
-  totalCount: i,
+  itemsTotalCount: i,
   perPage: i,
   page: i,
 }
