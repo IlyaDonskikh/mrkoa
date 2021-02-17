@@ -15,10 +15,12 @@ const index = async (ctx: any) => {
   });
 
   const { page, perPage } = attrs;
-
   const pagination = buildPagination({ page, perPage });
 
-  const { body } = await PanelUserListCase.call({ ...attrs, ...pagination });
+  const { body } = await PanelUserListCase.call({
+    ...attrs,
+    ...buildPagination({ page, perPage }),
+  });
 
   ctx.body = { ...body, ...pagination };
 };

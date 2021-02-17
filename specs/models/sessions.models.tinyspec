@@ -12,7 +12,7 @@ MrAuthSessionCreateRequest !{
 }
 
 MrAuthSessionCreateResponse !{
-  session: MrAuthSessionCreateResponseSession
+  item: MrAuthSessionCreateResponseItem
 }
 
-MrAuthSessionCreateResponseSession < MrSession { -token }
+MrAuthSessionCreateResponseItem < MrSession { -token }

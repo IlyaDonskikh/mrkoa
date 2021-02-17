@@ -9,7 +9,7 @@ interface Request {
 interface Response {
   body: {
     items: User[];
-    totalItems: number;
+    totalCount: number;
   };
 }
 

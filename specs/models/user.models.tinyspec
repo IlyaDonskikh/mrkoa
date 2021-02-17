@@ -12,7 +12,9 @@ MrPanelUserIndexRequest {
 }
 
 MrPanelUserIndexResponse {
-  users: MrPanelUserIndexResponseUser[],
+  items: MrPanelUserIndexResponseUser[],
+  totalCount: i,
+  perPage: i,
   page: i,
 }
 
@@ -21,7 +23,7 @@ MrPanelUserCreateRequest !{
 }
 
 MrPanelUserCreateResponse !{
-  user: MrPanelUserCreateResponseUser,
+  item: MrPanelUserCreateResponseItem,
 }
 
 MrPanelUserIndexResponseUser < MrUser {
@@ -35,7 +37,7 @@ MrPanelUserCreateRequestUser < MrUser {
   passwordConfirmation: string,
 }
 
-MrPanelUserCreateResponseUser < MrUser {
+MrPanelUserCreateResponseItem < MrUser {
   -password
 }
 
