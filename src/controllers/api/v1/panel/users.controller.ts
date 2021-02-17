@@ -9,8 +9,8 @@ import { validate } from '../../../../utils/request.validator';
 import { schemas } from '../../../../utils/schemas';
 
 const index = async (ctx: any) => {
-  const attrs = validate<Api.MrPanelUserIndexRequest>({
-    schema: schemas.MrPanelUserIndexRequest,
+  const attrs = validate<Api.MrPanelUserIndexRequestQuery>({
+    schema: schemas.MrPanelUserIndexRequestQuery,
     data: ctx.request.query,
   });
 

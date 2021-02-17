@@ -1,5 +1,5 @@
 
-GET /panel/users MrPanelUserIndexRequest
+GET /panel/users?MrPanelUserIndexRequestQuery
   => MrPanelUserIndexResponse
 
 POST /panel/users MrPanelUserIndexRequestUser
