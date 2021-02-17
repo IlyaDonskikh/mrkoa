@@ -2,17 +2,14 @@ import { User } from '../../../models/user.model';
 import { UseCase } from '../../../utils/use.case';
 
 interface Request {
-  page?: number | null;
+  offset: number;
+  perPage: number;
 }
 
 interface Response {
   body: {
-    users: User[];
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalItems: number;
-    time: number;
+    items: User[];
+    itemsTotalCount: number;
   };
 }
 
@@ -26,27 +23,22 @@ export class PanelUserListCase extends UseCase<Request, Response>() {
 
   // Etc.
   async process() {
-    const page = this.request.page || this.defaultPage;
     const users = await User.findAndCountAll({
-      limit: this.defaultItemsPerPage,
-      offset: this.defaultItemsPerPage * (page - 1),
+      limit: this.request.perPage,
+      offset: this.request.offset,
       order: [['created_at', 'DESC']],
     });
 
     this.response = {
-      body: this.buildBodyBy(users, page),
+      body: this.buildBodyBy(users),
     };
   }
 
   // Private
-  private buildBodyBy(users: { rows: User[]; count: number }, page: number) {
+  private buildBodyBy(users: { rows: User[]; count: number }) {
     return {
-      users: users.rows,
-      page,
-      itemsPerPage: this.defaultItemsPerPage,
-      totalPages: Math.ceil(users.count / (this.defaultItemsPerPage * page)),
-      totalItems: users.count,
-      time: Date.now(),
+      items: users.rows,
+      itemsTotalCount: users.count,
     };
   }
 }

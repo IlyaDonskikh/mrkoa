@@ -6,12 +6,15 @@ MrUser !{
   updatedAt: d,
 }
 
-MrPanelUserIndexRequest {
+MrPanelUserIndexRequestQuery {
   page?: i,
+  perPage?: i,
 }
 
 MrPanelUserIndexResponse {
-  users: MrPanelUserIndexResponseUser[],
+  items: MrPanelUserIndexResponseItem[],
+  itemsTotalCount: i,
+  perPage: i,
   page: i,
 }
 
@@ -20,10 +23,10 @@ MrPanelUserCreateRequest !{
 }
 
 MrPanelUserCreateResponse !{
-  user: MrPanelUserCreateResponseUser,
+  item: MrPanelUserCreateResponseItem,
 }
 
-MrPanelUserIndexResponseUser < MrUser {
+MrPanelUserIndexResponseItem < MrUser {
   -password
 }
 
@@ -34,7 +37,7 @@ MrPanelUserCreateRequestUser < MrUser {
   passwordConfirmation: string,
 }
 
-MrPanelUserCreateResponseUser < MrUser {
+MrPanelUserCreateResponseItem < MrUser {
   -password
 }
 

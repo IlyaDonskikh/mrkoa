@@ -6,13 +6,13 @@ MrSession {
   updatedAt: d
 }
 
-MrAuthSessionCreateRequest !{
+MrAuthSessionCreateRequestBody !{
   email: s,
   password: s,
 }
 
 MrAuthSessionCreateResponse !{
-  session: MrAuthSessionCreateResponseSession
+  item: MrAuthSessionCreateResponseItem
 }
 
-MrAuthSessionCreateResponseSession < MrSession { -token }
+MrAuthSessionCreateResponseItem < MrSession { -token }

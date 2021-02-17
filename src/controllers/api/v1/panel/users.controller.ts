@@ -3,19 +3,26 @@ import * as Koa from 'koa';
 import { UserDefaultSerializer } from '../../../../serializers/user/default.serializer';
 import { PanelUserCreateCase } from '../../../../usecases/panel/user/create.case';
 import { PanelUserListCase } from '../../../../usecases/panel/user/list.case';
+import { buildPagination } from '../../../../utils/pagination';
 
 import { validate } from '../../../../utils/request.validator';
 import { schemas } from '../../../../utils/schemas';
 
 const index = async (ctx: any) => {
-  const attrs = validate<Api.MrPanelUserIndexRequest>({
-    schema: schemas.MrPanelUserIndexRequest,
+  const attrs = validate<Api.MrPanelUserIndexRequestQuery>({
+    schema: schemas.MrPanelUserIndexRequestQuery,
     data: ctx.request.query,
   });
 
-  const { body } = await PanelUserListCase.call(attrs);
+  const { page, perPage } = attrs;
+  const pagination = buildPagination({ page, perPage });
 
-  ctx.body = body;
+  const { body } = await PanelUserListCase.call({
+    ...attrs,
+    ...buildPagination({ page, perPage }),
+  });
+
+  ctx.body = { ...body, ...pagination };
 };
 
 const create = async (ctx: Koa.Context) => {
@@ -27,7 +34,7 @@ const create = async (ctx: Koa.Context) => {
   const { user } = await PanelUserCreateCase.call(attrs);
 
   ctx.body = {
-    user: await UserDefaultSerializer.serialize(user),
+    item: await UserDefaultSerializer.serialize(user),
   };
 };
 
