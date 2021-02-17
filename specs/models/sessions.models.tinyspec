@@ -6,7 +6,7 @@ MrSession {
   updatedAt: d
 }
 
-MrAuthSessionCreateRequest !{
+MrAuthSessionCreateRequestBody !{
   email: s,
   password: s,
 }

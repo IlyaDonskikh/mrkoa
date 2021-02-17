@@ -7,8 +7,8 @@ import { schemas } from '../../../../utils/schemas';
 import { validate } from '../../../../utils/request.validator';
 
 const create = async (ctx: Koa.Context) => {
-  const attrs = validate<Api.MrAuthSessionCreateRequest>({
-    schema: schemas.MrAuthSessionCreateRequest,
+  const attrs = validate<Api.MrAuthSessionCreateRequestBody>({
+    schema: schemas.MrAuthSessionCreateRequestBody,
     data: ctx.request.body,
   });
 

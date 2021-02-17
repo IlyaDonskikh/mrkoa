@@ -12,7 +12,7 @@ MrPanelUserIndexRequest {
 }
 
 MrPanelUserIndexResponse {
-  items: MrPanelUserIndexResponseUser[],
+  items: MrPanelUserIndexResponseItem[],
   itemsTotalCount: i,
   perPage: i,
   page: i,
@@ -26,7 +26,7 @@ MrPanelUserCreateResponse !{
   item: MrPanelUserCreateResponseItem,
 }
 
-MrPanelUserIndexResponseUser < MrUser {
+MrPanelUserIndexResponseItem < MrUser {
   -password
 }
 
