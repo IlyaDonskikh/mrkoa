@@ -15,7 +15,7 @@ const create = async (ctx: Koa.Context) => {
   const { session } = await UserSignInCase.call(attrs);
 
   ctx.body = {
-    session: await SessionDefaultSerializer.serialize(session),
+    item: await SessionDefaultSerializer.serialize(session),
   };
 };
 

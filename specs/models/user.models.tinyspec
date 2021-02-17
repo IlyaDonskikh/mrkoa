@@ -8,6 +8,7 @@ MrUser !{
 
 MrPanelUserIndexRequest {
   page?: i,
+  perPage?: i,
 }
 
 MrPanelUserIndexResponse {

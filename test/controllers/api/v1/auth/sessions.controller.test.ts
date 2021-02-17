@@ -43,7 +43,7 @@ describe('Sessions Controller', () => {
     test('return tokenJWT', async () => {
       const currentRequest = await createRequest(sessionAttributes);
 
-      expect(currentRequest.body.session.tokenJWT).not.toBeUndefined();
+      expect(currentRequest.body.item.tokenJWT).not.toBeUndefined();
     });
 
     describe('when email not passed', () => {

@@ -31,7 +31,7 @@ describe('Panel | Users Controller', () => {
         .get(path)
         .set(authHeader[0], authHeader[1]);
 
-      expect(currentRequest.body.users).toBeInstanceOf(Array);
+      expect(currentRequest.body.items).toBeInstanceOf(Array);
     });
 
     test('return user in the array', async () => {
@@ -39,7 +39,7 @@ describe('Panel | Users Controller', () => {
         .get(path)
         .set(authHeader[0], authHeader[1]);
 
-      const userIds = currentRequest.body.users.map((u: User) => u.id);
+      const userIds = currentRequest.body.items.map((u: User) => u.id);
 
       expect(userIds).toContain(user.id);
     });
@@ -72,7 +72,7 @@ describe('Panel | Users Controller', () => {
     test('return user', async () => {
       const currentRequest = await createRequest(path, itemAttrs);
 
-      expect(currentRequest.body.user).toMatchObject({
+      expect(currentRequest.body.item).toMatchObject({
         id: expect.any(Number),
         email: itemAttrs.email,
       });
