@@ -1,7 +1,7 @@
 module.exports = {
   email: {
     presence: 'fill in the field',
-    find: 'not found',
+    find: '{{ email }} not found',
     active: 'deactivated',
   },
   password: {
