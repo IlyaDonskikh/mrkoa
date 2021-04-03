@@ -40,7 +40,9 @@ export class UserSignInCase extends UseCase<Request, Response>() {
       this.errors.add('email', 'presence');
     }
     if (!this.user) {
-      this.errors.add('email', 'find');
+      this.errors.add('email', 'find', {
+        replacements: { email: this.request.email },
+      });
     }
     if (!(await this.isPasswordValid())) {
       this.errors.add('password', 'valid');
