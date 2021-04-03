@@ -91,7 +91,7 @@ describe('User Services', () => {
             await UserSignInCase.call(attrs);
           } catch (err) {
             const messages = err.messages();
-            expect(messages.email).toContain('not found');
+            expect(messages.email).toContain(`${attrs.email} not found`);
           }
         });
       });

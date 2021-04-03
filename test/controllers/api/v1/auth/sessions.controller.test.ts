@@ -1,5 +1,4 @@
 import * as request from 'supertest';
-import * as faker from 'faker';
 
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 import { app } from '../../../../../src';
@@ -58,20 +57,6 @@ describe('Sessions Controller', () => {
         const currentRequest = await createRequest(sessionAttributes);
 
         expect(currentRequest.body.errors.email).toContain('fill in the filed');
-      });
-    });
-
-    describe('when user with email not found', () => {
-      beforeEach(async () => {
-        sessionAttributes.email = `${faker.random.uuid()}-${user.email}`;
-      });
-
-      test('return email error', async () => {
-        const currentRequest = await createRequest(sessionAttributes);
-
-        expect(currentRequest.body.errors.email).toContain(
-          `${sessionAttributes.email} not found`,
-        );
       });
     });
   });
