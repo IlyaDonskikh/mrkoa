@@ -1,3 +1,5 @@
+import * as faker from 'faker';
+
 import * as userFactory from '../../factories/user.factory';
 import { UserSignInCase } from '../../../src/usecases/user/sign.in.case';
 import { User } from '../../../src/models/user.model';
@@ -73,7 +75,7 @@ describe('User Services', () => {
       describe('when email are wrong', () => {
         beforeEach(() => {
           attrs = {
-            email: 'i@am.wrong',
+            email: `${faker.random.uuid()}@iam.wrong`,
             password: user.password,
           };
         });
