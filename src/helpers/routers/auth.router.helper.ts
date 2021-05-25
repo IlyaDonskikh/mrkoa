@@ -21,7 +21,7 @@ export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
 
 // private
 
-async function findSession(authorizationHeader: string) {
+async function findSession(authorizationHeader?: string) {
   const rawToken = extractTokenFrom(authorizationHeader);
   const decodedToken = decodeToken(rawToken);
 
