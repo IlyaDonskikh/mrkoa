@@ -56,10 +56,9 @@ interface Response {
 export class UserCreateCase extends BaseCase<Request, Response>() {
   async process() {
     await this.validate(); // it call checks section and throw error if something going wrong
+    const user = await User.create({ email: this.request.email });
 
-    this.response = {
-      user: await User.create({ email: this.request.email });
-    }
+    return { user };
   }
 
   // private
