@@ -29,7 +29,7 @@ export class PanelUserListCase extends UseCase<Request, Response>() {
       order: [['created_at', 'DESC']],
     });
 
-    this.response = {
+    return {
       body: this.buildBodyBy(users),
     };
   }

@@ -25,7 +25,7 @@ export class PanelUserCreateCase extends UseCase<Request, Response>() {
 
     await this.transformAttributes();
 
-    this.response = {
+    return {
       user: await User.create(this.request.user),
     };
   }

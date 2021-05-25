@@ -23,7 +23,7 @@ export class UserSignInCase extends UseCase<Request, Response>() {
 
     await this.validate();
 
-    this.response = {
+    return {
       session: await UserSession.create({
         userId: this.user!.id,
         token: await this.buildNewUniqToken(),
