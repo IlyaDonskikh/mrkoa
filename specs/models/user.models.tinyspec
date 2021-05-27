@@ -37,7 +37,11 @@ MrPanelUserCreateRequestUser < MrUser {
   passwordConfirmation: string,
 }
 
+MrPanelUserCreateResponse {
+  item: MrPanelUserCreateResponseItem,
+}
+
 MrPanelUserCreateResponseItem < MrUser {
-  -password
+  -password,
 }
 

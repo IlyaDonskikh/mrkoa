@@ -12,6 +12,7 @@ const create = async (ctx: Koa.Context) => {
     data: ctx.request.body,
   });
 
+  // put attributes and session namespace
   const { session } = await UserSignInCase.call(attrs);
 
   ctx.body = {

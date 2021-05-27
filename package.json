@@ -16,12 +16,13 @@
     "db:migrate:test": "sequelize db:migrate --env test",
     "build": "npm run specs && tsc --project tsconfig.production.json && npm run db:migrate",
     "build:check": "npm run specs && tsc --noEmit",
-    "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && sw2dts specs/openapi.json -o src/types/Api/index.d.ts -n Api",
+    "specs": "cp specs/header.yaml.tpl specs/header.yaml && mkdir -p src/types/Api && tinyspec --json --add-nulls -o specs/ && dtsgen -o src/types/Api/index.d.ts specs/openapi.json",
     "dot-only-hunter": "dot-only-hunter test",
     "postinstall": "husky install",
     "unused-exports": "ts-unused-exports tsconfig.json"
   },
   "dependencies": {
+    "@dtsgenerator/replace-namespace": "^1.4.1",
     "@koa/cors": "^3.1.0",
     "@types/bluebird": "^3.5.35",
     "@types/json-schema": "^7.0.7",
@@ -29,6 +30,7 @@
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.6.0",
+    "dtsgenerator": "^3.12.1",
     "glob": "^7.1.7",
     "i18n": "^0.12.0",
     "json-schema-deref-sync": "^0.14.0",
