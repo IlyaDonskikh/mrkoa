@@ -21,7 +21,7 @@ export function validate<T>({
     throwErrors(err);
   }
 
-  return (data as unknown) as T;
+  return data as unknown as T;
 }
 
 // private
