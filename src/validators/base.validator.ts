@@ -2,8 +2,6 @@ import * as _ from 'lodash';
 import { MrError } from 'mr-error';
 
 export class BaseValidator {
-  [key: string]: any;
-
   // Attrs.
   public errors: MrError;
 
@@ -12,6 +10,10 @@ export class BaseValidator {
   public attrs: object | any;
 
   public mergedAttrs: any;
+
+  private instanceAttributes: any;
+
+  protected permittedAttributes: any;
 
   // Etc.
   constructor(errors: MrError, modelInstance: any, attrs: object) {
@@ -56,4 +58,6 @@ export class BaseValidator {
   permittedUpdateAttributes() {
     return this.permittedAttributes;
   }
+
+  async runValidations() {}
 }

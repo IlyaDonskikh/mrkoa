@@ -16,12 +16,12 @@ export function validate<T>({
   }
 
   try {
-    validateSchema(schema, data); // ToDo: return all fields errors, not only first one
+    validateSchema(schema, data);
   } catch (err) {
     throwErrors(err);
   }
 
-  return (data as unknown) as T;
+  return data as unknown as T;
 }
 
 // private

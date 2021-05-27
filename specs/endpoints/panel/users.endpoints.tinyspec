@@ -1,6 +1,5 @@
-
 GET /panel/users?MrPanelUserIndexRequestQuery
   => MrPanelUserIndexResponse
 
-POST /panel/users MrPanelUserIndexRequestUser
-  => MrPanelUserCreateResponseUser
+POST /panel/users MrPanelUserCreateRequest
+  => MrPanelUserCreateResponse
