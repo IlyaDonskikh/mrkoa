@@ -12,7 +12,6 @@ const create = async (ctx: Koa.Context) => {
     data: ctx.request.body,
   });
 
-  // put attributes and session namespace
   const { session } = await AuthSessionCreateCase.call(attrs);
 
   ctx.body = {
