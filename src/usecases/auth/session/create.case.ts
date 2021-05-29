@@ -1,31 +1,34 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { UseCase } from '../../utils/use.case';
-import { User } from '../../models/user.model';
-import { UserSession } from '../../models/user/session.model';
+import { UseCase } from '../../../utils/use.case';
+import { User } from '../../../models/user.model';
+import { UserSession } from '../../../models/user/session.model';
 
 interface Request {
-  email: string;
-  password: string;
+  session: {
+    email: string;
+    password: string;
+  };
 }
 
 interface Response {
   session: UserSession;
 }
 
-export class UserSignInCase extends UseCase<Request, Response>() {
+export class AuthSessionCreateCase extends UseCase<Request, Response>() {
   // Attrs
-  private user: User | null = null;
+  private user: User | null;
+  private userValidated: User;
 
   // Etc.
   async process() {
-    await this.setupVariables();
+    await this.attachVariables();
 
     await this.validate();
 
     return {
       session: await UserSession.create({
-        userId: this.user!.id,
+        userId: this.userValidated.id,
         token: await this.buildNewUniqToken(),
       }),
     };
@@ -33,61 +36,63 @@ export class UserSignInCase extends UseCase<Request, Response>() {
 
   // Private
   protected async checks() {
-    if (this.request.email === undefined) {
+    if (this.request.session.email === undefined) {
       this.errors.add('password', 'presence');
     }
-    if (this.request.email === undefined) {
+    if (this.request.session.email === undefined) {
       this.errors.add('email', 'presence');
-    }
-    if (!this.user) {
-      this.errors.add('email', 'find', {
-        replacements: { email: this.request.email },
-      });
     }
     if (!(await this.isPasswordValid())) {
       this.errors.add('password', 'valid');
     }
+    if (!this.user) {
+      this.errors.add('email', 'find', {
+        replacements: { email: this.request.session.email },
+      });
+
+      return;
+    }
+
+    this.userValidated = this.user;
   }
 
   private async buildNewUniqToken(): Promise<String> {
     let session: any = null;
     let newToken: string | undefined = undefined;
 
-    /* eslint-disable no-await-in-loop */
     while (!newToken) {
       const token: string = crypto.randomBytes(64).toString('hex');
       session = await UserSession.findOne({
-        where: { userId: this.user!.id, token },
+        where: { userId: this.userValidated.id, token },
       });
 
       if (!session) {
         newToken = token;
       }
     }
-    /* eslint-disable no-await-in-loop */
 
     return newToken;
   }
 
   private async isPasswordValid() {
-    if (!this.user || this.request.password === undefined) {
+    if (!this.user || this.request.session.password === undefined) {
       return false;
     }
 
     const match = await bcrypt.compare(
-      this.request.password,
+      this.request.session.password,
       this.user.password,
     );
 
     return match;
   }
 
-  private async setupVariables() {
-    await this.setupVariablesUser();
+  private async attachVariables() {
+    await this.attachVariablesUser();
   }
 
-  private async setupVariablesUser() {
-    const { email } = this.request;
+  private async attachVariablesUser() {
+    const { email } = this.request.session;
 
     if (email === undefined) {
       return;

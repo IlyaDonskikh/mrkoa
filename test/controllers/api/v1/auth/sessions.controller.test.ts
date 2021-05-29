@@ -3,58 +3,37 @@ import * as request from 'supertest';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 import { app } from '../../../../../src';
 import * as userFactory from '../../../../factories/user.factory';
-
-interface CreateSessionAttributes {
-  email?: string;
-  password?: string;
-}
+import { User } from '../../../../../src/models/user.model';
 
 describe('Sessions Controller', () => {
-  let user: any;
-  let path: string;
-  let authHeader: string[];
-
-  beforeEach(async () => {
-    user = await userFactory.create();
-  });
-
   // create
   describe('#create', () => {
-    let sessionAttributes: CreateSessionAttributes;
-
-    beforeEach(async () => {
-      path = '/api/v1/auth/sign_in';
-      sessionAttributes = {
-        email: user.email,
-        password: user.passwordConfirmation,
-      };
-    });
-
-    function createRequest(attrs: CreateSessionAttributes) {
-      return request(app.callback()).post(path).send(attrs);
-    }
-
     test('return 200 response', async () => {
-      const currentRequest = await createRequest(sessionAttributes);
+      const user = await userFactory.create();
+      const attrs = buildSessionsAttributes({ user });
+
+      const currentRequest = await createRequest({ attrs });
 
       expect(currentRequest.status).toBe(200);
     });
 
     test('return tokenJWT', async () => {
-      const currentRequest = await createRequest(sessionAttributes);
+      const user = await userFactory.create();
+      const attrs = buildSessionsAttributes({ user });
+
+      const currentRequest = await createRequest({ attrs });
 
       expect(currentRequest.body.item.tokenJWT).not.toBeUndefined();
     });
 
     describe('when email not passed', () => {
-      beforeEach(async () => {
-        sessionAttributes = {
-          password: user.passwordConfirmation,
-        };
-      });
-
       test('return email error', async () => {
-        const currentRequest = await createRequest(sessionAttributes);
+        const user = await userFactory.create();
+        const attrs = buildSessionsAttributes({ user });
+
+        delete attrs.email;
+
+        const currentRequest = await createRequest({ attrs });
 
         expect(currentRequest.body.errors.email).toContain('fill in the filed');
       });
@@ -63,14 +42,6 @@ describe('Sessions Controller', () => {
 
   // destroy
   describe('#destroy', () => {
-    beforeEach(async () => {
-      path = '/api/v1/auth/sign_out';
-    });
-
-    function destroyRequest() {
-      return request(app.callback()).delete(path);
-    }
-
     describe('when auth header not passed', () => {
       test('return 403 response', async () => {
         const currentRequest = await destroyRequest();
@@ -80,11 +51,10 @@ describe('Sessions Controller', () => {
     });
 
     describe('when auth header passed', () => {
-      beforeEach(async () => {
-        authHeader = await buildAuthHeaderTestHelper(user);
-      });
-
       test('return 200 response', async () => {
+        const user = await userFactory.create();
+        const authHeader = await buildAuthHeaderTestHelper(user);
+
         const currentRequest = await destroyRequest().set(
           authHeader[0],
           authHeader[1],
@@ -95,3 +65,35 @@ describe('Sessions Controller', () => {
     });
   });
 });
+
+// helpers
+
+function createRequest({
+  attrs,
+}: {
+  attrs: Partial<Api.MrAuthSessionCreateRequestSession>;
+}) {
+  const path = '/api/v1/auth/sessions';
+
+  return request(app.callback()).post(path).send({ session: attrs });
+}
+
+function buildSessionsAttributes({
+  user,
+  overrides,
+}: {
+  user: User;
+  overrides?: Partial<Api.MrAuthSessionCreateRequestSession>;
+}): Partial<Api.MrAuthSessionCreateRequestSession> {
+  return {
+    email: user.email,
+    password: user.passwordConfirmation,
+    ...overrides,
+  };
+}
+
+function destroyRequest() {
+  const path = '/api/v1/auth/session';
+
+  return request(app.callback()).delete(path);
+}

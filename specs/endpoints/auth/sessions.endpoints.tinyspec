@@ -1,5 +1,5 @@
-POST /auth/sign_in MrAuthSessionCreateRequestBody
+POST /auth/sessions MrAuthSessionCreateRequest
   => MrAuthSessionCreateResponse
 
-DELETE /auth/sign_out
+DELETE /auth/sessions
   => {}
