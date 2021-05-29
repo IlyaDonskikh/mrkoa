@@ -83,7 +83,7 @@ function buildSessionsAttributes({
   overrides,
 }: {
   user: User;
-  overrides?: Api.MrAuthSessionCreateRequestSession;
+  overrides?: Partial<Api.MrAuthSessionCreateRequestSession>;
 }): Partial<Api.MrAuthSessionCreateRequestSession> {
   return {
     email: user.email,

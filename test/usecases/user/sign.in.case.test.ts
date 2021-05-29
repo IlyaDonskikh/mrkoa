@@ -7,90 +7,88 @@ import { UserSession } from '../../../src/models/user/session.model';
 
 describe('User Services', () => {
   describe('SignIn', () => {
-    let user: User;
-    let password: string;
-    let attrs: any;
-
-    beforeEach(async () => {
-      user = await userFactory.create({});
-    });
-
     describe('#call', () => {
-      beforeEach(() => {
-        password = user.passwordConfirmation;
-      });
-
       test('success', async () => {
+        const user = await userFactory.create({});
+
         const useCase = await UserSignInCase.call({
-          email: user.email,
-          password,
+          session: buildSessionsAttributes({ user }),
         });
 
         expect(useCase.session).toBeInstanceOf(UserSession);
       });
 
       test('return user session', async () => {
+        const user = await userFactory.create({});
+
         const useCase = await UserSignInCase.call({
-          email: user.email,
-          password,
+          session: buildSessionsAttributes({ user }),
         });
 
         expect(useCase.session.userId).toEqual(user.id);
       });
 
       describe('when password are wrong', () => {
-        beforeEach(() => {
-          attrs = {
-            email: user.email,
-            password: 'sorry, but i am wrong. And always was :(',
-          };
-        });
-
         test('rejected with password error', async () => {
-          const servicePromise = UserSignInCase.call(attrs);
+          const user = await userFactory.create({});
+          const wrongPassword = 'sorry, but i am wrong. And always was :(';
+          const attrs = buildSessionsAttributes({
+            user,
+            overrides: { password: wrongPassword },
+          });
 
-          await expect(servicePromise).rejects.toMatchObject({
+          const useCase = UserSignInCase.call({
+            session: attrs,
+          });
+
+          await expect(useCase).rejects.toMatchObject({
             errors: { password: ['valid'] },
           });
         });
       });
 
       describe('when password are encrypted', () => {
-        beforeEach(() => {
-          attrs = {
-            email: user.email,
-            password: user.password,
-          };
-        });
-
         test('reject with password error', async () => {
-          const servicePromise = UserSignInCase.call(attrs);
+          const user = await userFactory.create({});
+          const attrs = buildSessionsAttributes({
+            user,
+            overrides: { password: user.password },
+          });
 
-          await expect(servicePromise).rejects.toMatchObject({
+          const useCase = UserSignInCase.call({
+            session: attrs,
+          });
+
+          await expect(useCase).rejects.toMatchObject({
             errors: { password: ['valid'] },
           });
         });
       });
 
       describe('when email are wrong', () => {
-        beforeEach(() => {
-          attrs = {
-            email: `${faker.random.uuid()}@iam.wrong`,
-            password: user.password,
-          };
-        });
-
         test('reject with email error', async () => {
-          const servicePromise = UserSignInCase.call(attrs);
+          const emailWrong = `${faker.random.uuid()}@iam.wrong`;
+          const user = await userFactory.create({});
+          const attrs = buildSessionsAttributes({
+            user,
+            overrides: { email: emailWrong },
+          });
 
-          await expect(servicePromise).rejects.toMatchObject({
+          const useCase = UserSignInCase.call({
+            session: attrs,
+          });
+
+          await expect(useCase).rejects.toMatchObject({
             errors: { email: ['find'] },
           });
         });
 
         test('localize email error', async () => {
+          const user = await userFactory.create({});
+          const attrs = buildSessionsAttributes({ user });
+
           try {
-            await UserSignInCase.call(attrs);
+            await UserSignInCase.call({ session: attrs });
           } catch (err) {
             const messages = err.messages();
             expect(messages.email).toContain(`${attrs.email} not found`);
@@ -100,3 +98,17 @@ describe('User Services', () => {
     });
   });
 });
+
+function buildSessionsAttributes({
+  user,
+  overrides,
+}: {
+  user: User;
+  overrides?: Partial<Api.MrAuthSessionCreateRequestSession>;
+}): Api.MrAuthSessionCreateRequestSession {
+  return {
+    email: user.email,
+    password: user.passwordConfirmation,
+    ...overrides,
+  };
+}
