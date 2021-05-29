@@ -1,8 +1,8 @@
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { UseCase } from '../../utils/use.case';
-import { User } from '../../models/user.model';
-import { UserSession } from '../../models/user/session.model';
+import { UseCase } from '../../../utils/use.case';
+import { User } from '../../../models/user.model';
+import { UserSession } from '../../../models/user/session.model';
 
 interface Request {
   session: {
@@ -15,7 +15,7 @@ interface Response {
   session: UserSession;
 }
 
-export class UserSignInCase extends UseCase<Request, Response>() {
+export class AuthSessionCreateCase extends UseCase<Request, Response>() {
   // Attrs
   private user: User | null;
   private userValidated: User;
