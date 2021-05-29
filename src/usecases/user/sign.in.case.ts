@@ -42,15 +42,15 @@ export class UserSignInCase extends UseCase<Request, Response>() {
     if (this.request.session.email === undefined) {
       this.errors.add('email', 'presence');
     }
+    if (!(await this.isPasswordValid())) {
+      this.errors.add('password', 'valid');
+    }
     if (!this.user) {
       this.errors.add('email', 'find', {
         replacements: { email: this.request.session.email },
       });
 
       return;
-    }
-    if (!(await this.isPasswordValid())) {
-      this.errors.add('password', 'valid');
     }
 
     this.userValidated = this.user;
