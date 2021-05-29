@@ -1,6 +1,7 @@
+import { User } from '../src/models/user.model';
 import * as sessionFactory from './factories/user/session.factory';
 
-export async function buildAuthHeaderTestHelper(user: any): Promise<string[]> {
+export async function buildAuthHeaderTestHelper(user: User): Promise<string[]> {
   const token: string = await buildAuthTokenBy(user);
 
   return ['Authorization', `Bearer ${token}`];
@@ -8,7 +9,7 @@ export async function buildAuthHeaderTestHelper(user: any): Promise<string[]> {
 
 /// private
 
-async function buildAuthTokenBy(user: any): Promise<string> {
+async function buildAuthTokenBy(user: User): Promise<string> {
   const session: any = await sessionFactory.create({ userId: user.id });
 
   return session.tokenJWT;

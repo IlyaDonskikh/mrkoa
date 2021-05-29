@@ -5,8 +5,10 @@ import { User } from '../../models/user.model';
 import { UserSession } from '../../models/user/session.model';
 
 interface Request {
-  email: string;
-  password: string;
+  session: {
+    email: string;
+    password: string;
+  };
 }
 
 interface Response {
@@ -15,7 +17,8 @@ interface Response {
 
 export class UserSignInCase extends UseCase<Request, Response>() {
   // Attrs
-  private user: User | null = null;
+  private user: User | null;
+  private userValidated: User;
 
   // Etc.
   async process() {
@@ -25,7 +28,7 @@ export class UserSignInCase extends UseCase<Request, Response>() {
 
     return {
       session: await UserSession.create({
-        userId: this.user!.id,
+        userId: this.userValidated.id,
         token: await this.buildNewUniqToken(),
       }),
     };
@@ -33,20 +36,24 @@ export class UserSignInCase extends UseCase<Request, Response>() {
 
   // Private
   protected async checks() {
-    if (this.request.email === undefined) {
+    if (this.request.session.email === undefined) {
       this.errors.add('password', 'presence');
     }
-    if (this.request.email === undefined) {
+    if (this.request.session.email === undefined) {
       this.errors.add('email', 'presence');
     }
     if (!this.user) {
       this.errors.add('email', 'find', {
-        replacements: { email: this.request.email },
+        replacements: { email: this.request.session.email },
       });
+
+      return;
     }
     if (!(await this.isPasswordValid())) {
       this.errors.add('password', 'valid');
     }
+
+    this.userValidated = this.user;
   }
 
   private async buildNewUniqToken(): Promise<String> {
@@ -57,7 +64,7 @@ export class UserSignInCase extends UseCase<Request, Response>() {
     while (!newToken) {
       const token: string = crypto.randomBytes(64).toString('hex');
       session = await UserSession.findOne({
-        where: { userId: this.user!.id, token },
+        where: { userId: this.userValidated.id, token },
       });
 
       if (!session) {
@@ -70,12 +77,12 @@ export class UserSignInCase extends UseCase<Request, Response>() {
   }
 
   private async isPasswordValid() {
-    if (!this.user || this.request.password === undefined) {
+    if (!this.user || this.request.session.password === undefined) {
       return false;
     }
 
     const match = await bcrypt.compare(
-      this.request.password,
+      this.request.session.password,
       this.user.password,
     );
 
@@ -87,7 +94,7 @@ export class UserSignInCase extends UseCase<Request, Response>() {
   }
 
   private async setupVariablesUser() {
-    const { email } = this.request;
+    const { email } = this.request.session;
 
     if (email === undefined) {
       return;

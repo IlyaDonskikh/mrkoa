@@ -1,4 +1,4 @@
-POST /auth/sign_in MrAuthSessionCreateRequestBody
+POST /auth/sign_in MrAuthSessionCreateRequest
   => MrAuthSessionCreateResponse
 
 DELETE /auth/sign_out
