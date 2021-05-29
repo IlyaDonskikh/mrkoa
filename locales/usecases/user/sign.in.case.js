@@ -1,11 +1,11 @@
 module.exports = {
   email: {
-    presence: 'fill in the field',
-    find: '{{ email }} not found',
-    active: 'deactivated',
+    presence: 'Email fill in the field',
+    find: 'Email {{ email }} not found',
+    active: 'Email deactivated',
   },
   password: {
-    valid: "doesn't valid or match email",
-    presence: 'fill in the field',
+    valid: "Password doesn't valid or match email",
+    presence: 'Fill in the Password field',
   },
 };

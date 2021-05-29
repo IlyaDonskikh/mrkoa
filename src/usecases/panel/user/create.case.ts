@@ -1,6 +1,7 @@
+import isEmail from 'validator/lib/isEmail';
+
 import { User } from '../../../models/user.model';
 import { encryptBySimpleBcrypt } from '../../../utils/encryptors';
-import { PanelUserValidator } from '../../../validators/panel/user.validator';
 import { UseCase } from '../../../utils/use.case';
 
 interface Request {
@@ -17,51 +18,68 @@ interface Response {
 
 export class PanelUserCreateCase extends UseCase<Request, Response>() {
   // Attrs
-  private validator: any;
+  private readonly minPasswordLength: number = 6;
 
   // Etc.
   async process() {
     await this.validate();
 
-    await this.transformAttributes();
+    const user = await this.createUser();
 
-    return {
-      user: await User.create(this.request.user),
-    };
+    return { user };
   }
 
   // Private
   protected async checks() {
-    this.validator = await PanelUserValidator.validate(
-      this.errors,
-      User.build(),
-      this.request.user,
-    );
+    // ToDo: Add access validation
 
-    this.errors = this.validator.errors;
+    this.checksPassword();
+    await this.checksEmail();
   }
 
-  private async transformAttributes() {
-    this.updateAttrsByValidator();
-    await this.encryptAttrsPassword();
-    await this.downcaseAttrsEmail();
+  private checksPassword() {
+    const { password, passwordConfirmation } = this.request.user;
+
+    if (password.length < this.minPasswordLength) {
+      this.errors.add('password', 'length', {
+        replacements: { length: String(this.minPasswordLength) },
+      });
+    }
+    if (password !== passwordConfirmation) {
+      this.errors.add('password', 'confirmation');
+    }
   }
 
-  private updateAttrsByValidator() {
-    this.request.user = this.validator.attrs;
-  }
-
-  private async encryptAttrsPassword() {
-    const { password } = this.request.user;
-
-    const encryptedPassword = encryptBySimpleBcrypt({ value: password });
-
-    this.request.user.password = encryptedPassword;
-  }
-
-  private async downcaseAttrsEmail() {
+  private async checksEmail() {
     const { email } = this.request.user;
 
-    this.request.user.email = email.toLowerCase();
+    if (!isEmail(email)) {
+      this.errors.add('email', 'format');
+    }
+
+    const isEmailUniq = await this.isEmailUniq();
+
+    if (!isEmailUniq) {
+      this.errors.add('email', 'uniq');
+    }
+  }
+
+  private async isEmailUniq() {
+    const { email } = this.request.user;
+
+    const user = await User.findOne({
+      where: { email: email.toLowerCase() },
+    });
+
+    return user === null;
+  }
+
+  private createUser() {
+    const email = this.request.user.email.toLowerCase();
+    const password = encryptBySimpleBcrypt({
+      value: this.request.user.password,
+    });
+
+    return User.create({ email, password });
   }
 }
