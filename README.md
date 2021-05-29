@@ -34,7 +34,7 @@ As a general overview you may look on the flow like:
 
 1. Routers pass request to controllers and during the process do permission check to use the route.
 2. Controller validate the request data and pass the data to Use Case.
-3. Use case take care about validation and execution of business logic (Validators are recommended if the validation logic can be described as massive or DRY-able).
+3. Use case take care about validation and execution of business logic.
 4. Serializer formats the processed data.
 5. And controller is back on duty to take control and return the data.
 
@@ -42,7 +42,7 @@ As a general overview you may look on the flow like:
 
 This is the only way to execute business logic. Pay attention that it is strictly not recommended to use one Use Case from another and prohibited use single Use Case to describe more than one business case.
 
-If you really need to execute some code more than once and it's a part of business logic of a Use Case then you have to use Helpers or Validators, if it's not a business logic the right way is Utils.
+If you really need to execute some code more than once and it's a part of business logic of a Use Case then you have to use Helpers, if it's not the right way is Utils.
 
 ```typescript
 interface Request {
@@ -72,10 +72,6 @@ export class UserCreateCase extends BaseCase<Request, Response>() {
 
 const { user } = UserCreateCase.call({ email: 'love@use.case' }); // only right way to run Use Case is static method `call`.
 ```
-
-### Validators
-
-The layer serve to give direct and comprehensive answer about current validation status of dataset.
 
 ### Helpers
 

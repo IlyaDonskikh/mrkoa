@@ -14,15 +14,10 @@ interface Response {
 }
 
 export class PanelUserListCase extends UseCase<Request, Response>() {
-  // Attrs
-  readonly defaultItemsPerPage = 24;
-
-  readonly defaultPage = 1;
-
-  public body: object = {};
-
   // Etc.
   async process() {
+    // ToDo: Add access validation
+
     const users = await User.findAndCountAll({
       limit: this.request.perPage,
       offset: this.request.offset,
