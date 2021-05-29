@@ -22,7 +22,7 @@ export class UserSignInCase extends UseCase<Request, Response>() {
 
   // Etc.
   async process() {
-    await this.setupVariables();
+    await this.attachVariables();
 
     await this.validate();
 
@@ -60,7 +60,6 @@ export class UserSignInCase extends UseCase<Request, Response>() {
     let session: any = null;
     let newToken: string | undefined = undefined;
 
-    /* eslint-disable no-await-in-loop */
     while (!newToken) {
       const token: string = crypto.randomBytes(64).toString('hex');
       session = await UserSession.findOne({
@@ -71,7 +70,6 @@ export class UserSignInCase extends UseCase<Request, Response>() {
         newToken = token;
       }
     }
-    /* eslint-disable no-await-in-loop */
 
     return newToken;
   }
@@ -89,11 +87,11 @@ export class UserSignInCase extends UseCase<Request, Response>() {
     return match;
   }
 
-  private async setupVariables() {
-    await this.setupVariablesUser();
+  private async attachVariables() {
+    await this.attachVariablesUser();
   }
 
-  private async setupVariablesUser() {
+  private async attachVariablesUser() {
     const { email } = this.request.session;
 
     if (email === undefined) {
