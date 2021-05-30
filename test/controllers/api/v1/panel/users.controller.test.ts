@@ -2,6 +2,7 @@ import * as request from 'supertest';
 
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
+import { schemas } from '../../../../../src/utils/schemas';
 import { UserFactory } from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 
@@ -26,6 +27,9 @@ describe('Panel', () => {
 
         expect(currentRequest.status).toBe(200);
         expect(userIds).toContain(user.id);
+        expect(currentRequest.body).toMatchSchema(
+          schemas.MrPanelUserIndexResponse,
+        );
       });
     });
 
@@ -38,6 +42,9 @@ describe('Panel', () => {
         const currentRequest = await createRequest(itemAttrs, authHeader);
 
         expect(currentRequest.status).toBe(200);
+        expect(currentRequest.body).toMatchSchema(
+          schemas.MrPanelUserCreateResponse,
+        );
       });
 
       test('return user', async () => {
