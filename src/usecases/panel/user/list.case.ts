@@ -16,8 +16,6 @@ interface Response {
 export class PanelUserListCase extends UseCase<Request, Response>() {
   // process
   async process() {
-    // ToDo: Add access validation
-
     const users = await User.findAndCountAll({
       limit: this.request.perPage,
       offset: this.request.offset,

@@ -94,7 +94,7 @@ function buildSessionsAttributes({
 }
 
 function destroyRequest() {
-  const path = '/api/v1/auth/session';
+  const path = '/api/v1/auth/sessions';
 
   return request(app.callback()).delete(path);
 }

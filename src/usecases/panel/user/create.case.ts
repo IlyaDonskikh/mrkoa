@@ -31,8 +31,6 @@ export class PanelUserCreateCase extends UseCase<Request, Response>() {
 
   // private
   protected async checks() {
-    // ToDo: Add access validation
-
     this.checksPassword();
     await this.checksEmail();
   }
@@ -55,6 +53,8 @@ export class PanelUserCreateCase extends UseCase<Request, Response>() {
 
     if (!isEmail(email)) {
       this.errors.add('email', 'format');
+
+      return;
     }
 
     const isEmailUniq = await this.isEmailUniq();

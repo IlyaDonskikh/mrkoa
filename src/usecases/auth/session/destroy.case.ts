@@ -21,8 +21,6 @@ export class AuthSessionDestroyCase extends UseCase<Request, null>() {
 
   // private
   protected async checks() {
-    // ToDo: Add access validation
-
     if (!this.session) {
       this.errors.add('id', 'find');
 

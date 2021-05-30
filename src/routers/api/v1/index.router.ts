@@ -15,8 +15,8 @@ const router = new Router();
 
 // Sessions
 router.post('/auth/sessions', authSessionsCreate);
-router.use('/auth/session', authRouterHelper);
-router.delete('/auth/session', authSessionsDestroy);
+router.use('/auth/sessions', authRouterHelper);
+router.delete('/auth/sessions', authSessionsDestroy);
 
 // PANEL
 router.use('/panel', authRouterHelper); // access to panel only for authorized persons
