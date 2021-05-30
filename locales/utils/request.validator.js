@@ -1,11 +1,11 @@
 module.exports = {
   email: {
-    required: 'fill in the filed',
+    required: 'Fill in the Email filed',
   },
   password: {
-    required: 'fill in the filed',
+    required: 'Fill in the Password filed',
   },
   passwordConfirmation: {
-    required: 'fill in the filed',
+    required: 'fill in the Password Confirmation filed',
   },
 };

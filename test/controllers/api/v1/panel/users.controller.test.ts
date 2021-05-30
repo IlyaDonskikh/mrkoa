@@ -5,96 +5,114 @@ import { User } from '../../../../../src/models/user.model';
 import * as userFactory from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 
-describe('Panel | Users Controller', () => {
-  let user: User;
-  let authHeader: string[];
+describe('Panel', () => {
+  describe('Users Controller', () => {
+    // index
+    describe('#index', () => {
+      test('return 200 response', async () => {
+        const authHeader = await buildAuthHeader();
+        const currentRequest = await indexRequest(authHeader);
 
-  beforeEach(async () => {
-    user = await userFactory.create();
-    authHeader = await buildAuthHeaderTestHelper(user);
-  });
+        expect(currentRequest.status).toBe(200);
+        expect(currentRequest.body.items).toBeInstanceOf(Array);
+      });
 
-  // index
-  describe('#index', () => {
-    const path = '/api/v1/panel/users';
+      test('return user in the list', async () => {
+        const user = await userFactory.create();
+        const authHeader = await buildAuthHeader({ user });
+        const currentRequest = await indexRequest(authHeader);
 
-    test('return 200 response', async () => {
-      const currentRequest = await request(app.callback())
-        .get(path)
-        .set(authHeader[0], authHeader[1]);
+        const userIds = currentRequest.body.items.map((u: User) => u.id);
 
-      expect(currentRequest.status).toBe(200);
-    });
-
-    test('return users array', async () => {
-      const currentRequest = await request(app.callback())
-        .get(path)
-        .set(authHeader[0], authHeader[1]);
-
-      expect(currentRequest.body.items).toBeInstanceOf(Array);
-    });
-
-    test('return user in the array', async () => {
-      const currentRequest = await request(app.callback())
-        .get(path)
-        .set(authHeader[0], authHeader[1]);
-
-      const userIds = currentRequest.body.items.map((u: User) => u.id);
-
-      expect(userIds).toContain(user.id);
-    });
-  });
-
-  // create
-  describe('#create', () => {
-    function createRequest(path: string, itemAttrs: object) {
-      return request(app.callback())
-        .post(path)
-        .set(authHeader[0], authHeader[1])
-        .send({ user: itemAttrs });
-    }
-
-    const path = '/api/v1/panel/users';
-    let itemAttrs: any;
-
-    beforeEach(async () => {
-      const userInstance = await userFactory.build();
-
-      itemAttrs = userInstance.toJSON();
-    });
-
-    test('return 200 response', async () => {
-      const currentRequest = await createRequest(path, itemAttrs);
-
-      expect(currentRequest.status).toBe(200);
-    });
-
-    test('return user', async () => {
-      const currentRequest = await createRequest(path, itemAttrs);
-
-      expect(currentRequest.body.item).toMatchObject({
-        id: expect.any(Number),
-        email: itemAttrs.email,
+        expect(currentRequest.status).toBe(200);
+        expect(userIds).toContain(user.id);
       });
     });
 
-    describe('when email not passed', () => {
-      beforeEach(async () => {
-        delete itemAttrs.password;
-        delete itemAttrs.email;
+    // create
+    describe('#create', () => {
+      test('return 200 response', async () => {
+        const authHeader = await buildAuthHeader();
+        const itemAttrs = buildUserAttributes();
+
+        const currentRequest = await createRequest(itemAttrs, authHeader);
+
+        expect(currentRequest.status).toBe(200);
       });
 
-      test('return status 422', async () => {
-        const currentRequest = await createRequest(path, itemAttrs);
+      test('return user', async () => {
+        const authHeader = await buildAuthHeader();
+        const itemAttrs = buildUserAttributes();
 
-        expect(currentRequest.status).toBe(422);
+        const currentRequest = await createRequest(itemAttrs, authHeader);
+
+        expect(currentRequest.body.item).toMatchObject({
+          id: expect.any(Number),
+          email: itemAttrs.email,
+        });
       });
 
-      test('return email error', async () => {
-        const currentRequest = await createRequest(path, itemAttrs);
+      describe('when email not passed', () => {
+        test('return error', async () => {
+          const authHeader = await buildAuthHeader();
+          const itemAttrs = buildUserAttributes({
+            overrides: { email: undefined },
+          });
 
-        expect(currentRequest.body.errors.email).toContain('fill in the filed');
+          const currentRequest = await createRequest(itemAttrs, authHeader);
+
+          expect(currentRequest.status).toBe(422);
+          expect(currentRequest.body.errors.email).toContain(
+            'Fill in the Email filed',
+          );
+        });
       });
     });
   });
 });
+
+// helpers
+async function buildAuthHeader({ user }: { user?: User } = {}) {
+  let currentUser: User | undefined = user;
+
+  if (!currentUser) {
+    currentUser = await userFactory.create();
+  }
+
+  return buildAuthHeaderTestHelper(currentUser);
+}
+
+function indexRequest(authHeader: [string, string]) {
+  const path = '/api/v1/panel/users';
+
+  return request(app.callback())
+    .get(path)
+    .set(...authHeader);
+}
+
+function createRequest(
+  itemAttrs: Partial<Api.MrPanelUserCreateRequestUser>,
+  authHeader: [string, string],
+) {
+  const path = '/api/v1/panel/users';
+
+  return request(app.callback())
+    .post(path)
+    .set(...authHeader)
+    .send({ user: itemAttrs });
+}
+
+function buildUserAttributes({
+  overrides,
+}: {
+  overrides?: Partial<Api.MrPanelUserCreateRequestUser>;
+} = {}): Partial<Api.MrPanelUserCreateRequestUser> {
+  const user = userFactory.build({ ...overrides });
+
+  return {
+    email: user.email,
+    password: user.password,
+    passwordConfirmation: user.passwordConfirmation,
+    ...overrides,
+  };
+}

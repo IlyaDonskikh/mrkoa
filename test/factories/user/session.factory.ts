@@ -2,7 +2,7 @@ import * as faker from 'faker';
 import { UserSession } from '../../../src/models/user/session.model';
 import * as userFactory from '../user.factory';
 
-const data = async (props: any = {}) => {
+const data = async (props: Partial<UserSession> = {}) => {
   const defaultProps: object | any = {
     token: faker.lorem.word(),
   };
@@ -15,8 +15,10 @@ const data = async (props: any = {}) => {
   return { ...defaultProps, ...props };
 };
 
-const create = async (props = {}) => UserSession.create(await data(props));
+const create = async (props: Partial<UserSession> = {}) =>
+  UserSession.create(await data(props));
 
-const build = async (props = {}) => UserSession.build(await data(props));
+const build = async (props: Partial<UserSession> = {}) =>
+  UserSession.build(await data(props));
 
 export { create, build };

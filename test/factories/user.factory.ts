@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 import { User } from '../../src/models/user.model';
 import { encryptBySimpleBcrypt } from '../../src/utils/encryptors';
 
-const data = async (props = {}) => {
+const data = (props: Partial<User> = {}) => {
   const password = faker.internet.password();
   const email = `${faker.random.uuid()}${faker.internet.email().toLowerCase()}`;
   const defaultProps = {
@@ -15,8 +15,8 @@ const data = async (props = {}) => {
   return { ...defaultProps, ...props };
 };
 
-const create = async (props = {}) => {
-  const attrs: any = await data(props);
+const create = async (props: Partial<User> = {}) => {
+  const attrs: any = data(props);
   const { password } = attrs;
   const encryptedPassword = encryptBySimpleBcrypt({
     value: password,
@@ -27,6 +27,6 @@ const create = async (props = {}) => {
   return User.create(attrs);
 };
 
-const build = async (props = {}) => User.build(await data(props));
+const build = (props: Partial<User> = {}) => User.build(data(props));
 
 export { create, build };
