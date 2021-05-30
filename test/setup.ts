@@ -1,5 +1,9 @@
-import { sequelize } from '../src/models';
+import { matchers } from 'jest-json-schema';
 import * as nock from 'nock';
+
+import { sequelize } from '../src/models';
+
+expect.extend(matchers);
 
 beforeAll(async () => {
   setNockSettings();
