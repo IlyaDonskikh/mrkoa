@@ -24,8 +24,6 @@ const destroy = async (ctx: Koa.Context) => {
     id: ctx.currentSession.id,
   });
 
-  ctx.status = 200;
-
   ctx.body = {};
 };
 

@@ -6,7 +6,7 @@ MrUser !{
   updatedAt: d,
 }
 
-MrPanelUserIndexRequestQuery {
+MrPanelUserIndexQuery {
   page?: i,
   perPage?: i,
 }

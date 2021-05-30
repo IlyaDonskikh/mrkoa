@@ -1,22 +1,32 @@
 import * as faker from 'faker';
+import { User } from '../../../src/models/user.model';
 import { UserSession } from '../../../src/models/user/session.model';
-import * as userFactory from '../user.factory';
+import { UserFactory } from '../user.factory';
 
-const data = async (props: any = {}) => {
-  const defaultProps: object | any = {
-    token: faker.lorem.word(),
-  };
+export class UserSessionFactory {
+  static async create(props: Partial<UserSession> = {}) {
+    const data = await this.data(props);
 
-  if (!props.userId) {
-    const user: any = await userFactory.create();
-    defaultProps.userId = user.id;
+    return UserSession.create(data);
   }
 
-  return { ...defaultProps, ...props };
-};
+  static async build(props: Partial<UserSession> = {}) {
+    const data = await this.data(props);
 
-const create = async (props = {}) => UserSession.create(await data(props));
+    return UserSession.build(data);
+  }
 
-const build = async (props = {}) => UserSession.build(await data(props));
+  // private
+  private static async data(props: Partial<UserSession> = {}) {
+    const defaultProps: Partial<UserSession> = {
+      token: faker.lorem.word(),
+    };
 
-export { create, build };
+    if (!props.userId) {
+      const user: User = await UserFactory.create();
+      defaultProps.userId = user.id;
+    }
+
+    return { ...defaultProps, ...props };
+  }
+}

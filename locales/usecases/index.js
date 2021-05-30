@@ -1,7 +1,7 @@
-const userSignInCase = require('./user/sign.in.case');
+const authSessionCreateCase = require('./auth/sessions/create.case');
 const panelUserCreateCase = require('./panel/user/create.case');
 
 module.exports = {
-  userSignInCase,
+  authSessionCreateCase,
   panelUserCreateCase,
 };

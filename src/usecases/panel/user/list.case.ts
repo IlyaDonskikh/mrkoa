@@ -14,10 +14,8 @@ interface Response {
 }
 
 export class PanelUserListCase extends UseCase<Request, Response>() {
-  // Etc.
+  // process
   async process() {
-    // ToDo: Add access validation
-
     const users = await User.findAndCountAll({
       limit: this.request.perPage,
       offset: this.request.offset,
@@ -29,7 +27,7 @@ export class PanelUserListCase extends UseCase<Request, Response>() {
     };
   }
 
-  // Private
+  // private
   private buildBodyBy(users: { rows: User[]; count: number }) {
     return {
       items: users.rows,

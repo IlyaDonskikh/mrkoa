@@ -10,4 +10,8 @@ consumes:
   - application/json
 produces:
   - application/json
-
+securityDefinitions:
+  token:
+    type: apiKey
+    name: Authorization
+    in: header

@@ -16,11 +16,11 @@ interface Response {
 }
 
 export class AuthSessionCreateCase extends UseCase<Request, Response>() {
-  // Attrs
+  // attrs
   private user: User | null;
   private userValidated: User;
 
-  // Etc.
+  // process
   async process() {
     await this.attachVariables();
 
@@ -34,7 +34,7 @@ export class AuthSessionCreateCase extends UseCase<Request, Response>() {
     };
   }
 
-  // Private
+  // private
   protected async checks() {
     if (this.request.session.email === undefined) {
       this.errors.add('password', 'presence');

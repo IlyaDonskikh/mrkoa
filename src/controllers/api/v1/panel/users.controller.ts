@@ -4,13 +4,12 @@ import { UserDefaultSerializer } from '../../../../serializers/user/default.seri
 import { PanelUserCreateCase } from '../../../../usecases/panel/user/create.case';
 import { PanelUserListCase } from '../../../../usecases/panel/user/list.case';
 import { buildPagination } from '../../../../utils/pagination';
-
 import { validate } from '../../../../utils/request.validator';
 import { schemas } from '../../../../utils/schemas';
 
-const index = async (ctx: any) => {
-  const attrs = validate<Api.MrPanelUserIndexRequestQuery>({
-    schema: schemas.MrPanelUserIndexRequestQuery,
+const index = async (ctx: Koa.Context) => {
+  const attrs = validate<Api.MrPanelUserIndexQuery>({
+    schema: schemas.MrPanelUserIndexQuery,
     data: ctx.request.query,
   });
 
