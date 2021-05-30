@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-expressions */
 
 import { AuthSessionDestroyCase } from '../../../../src/usecases/auth/session/destroy.case';
-import * as userSessionFactory from '../../../factories/user/session.factory';
 import { UserSession } from '../../../../src/models/user/session.model';
+import { UserSessionFactory } from '../../../factories/user/session.factory';
 
 describe('Auth', () => {
   describe('Session', () => {
     describe('AuthSessionDestroyCase', () => {
       describe('#call', () => {
         test('delete session', async () => {
-          const session = await userSessionFactory.create();
+          const session = await UserSessionFactory.create();
 
           await AuthSessionDestroyCase.call({
             id: session.id,
