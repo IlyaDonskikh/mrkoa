@@ -1,16 +1,16 @@
 import * as faker from 'faker';
 
-import * as userFactory from '../../../factories/user.factory';
 import { AuthSessionCreateCase } from '../../../../src/usecases/auth/session/create.case';
 import { User } from '../../../../src/models/user.model';
 import { UserSession } from '../../../../src/models/user/session.model';
+import { UserFactory } from '../../../factories/user.factory';
 
 describe('Auth', () => {
   describe('Session', () => {
     describe('AuthSessionCreateCase', () => {
       describe('#call', () => {
         test('success', async () => {
-          const user = await userFactory.create({});
+          const user = await UserFactory.create({});
 
           const useCase = await AuthSessionCreateCase.call({
             session: buildSessionsAttributes({ user }),
@@ -20,7 +20,7 @@ describe('Auth', () => {
         });
 
         test('return user session', async () => {
-          const user = await userFactory.create({});
+          const user = await UserFactory.create({});
 
           const useCase = await AuthSessionCreateCase.call({
             session: buildSessionsAttributes({ user }),
@@ -31,7 +31,7 @@ describe('Auth', () => {
 
         describe('when password are wrong', () => {
           test('rejected with password error', async () => {
-            const user = await userFactory.create({});
+            const user = await UserFactory.create({});
             const wrongPassword = 'sorry, but i am wrong. And always was :(';
             const attrs = buildSessionsAttributes({
               user,
@@ -50,7 +50,7 @@ describe('Auth', () => {
 
         describe('when password are encrypted', () => {
           test('reject with password error', async () => {
-            const user = await userFactory.create({});
+            const user = await UserFactory.create({});
             const attrs = buildSessionsAttributes({
               user,
               overrides: { password: user.password },
@@ -69,7 +69,7 @@ describe('Auth', () => {
         describe('when email are wrong', () => {
           test('reject with email error', async () => {
             const emailWrong = `${faker.random.uuid()}@iam.wrong`;
-            const user = await userFactory.create({});
+            const user = await UserFactory.create({});
             const attrs = buildSessionsAttributes({
               user,
               overrides: { email: emailWrong },
@@ -85,7 +85,7 @@ describe('Auth', () => {
           });
 
           test('localize email error', async () => {
-            const user = await userFactory.create({});
+            const user = await UserFactory.create({});
             const attrs = buildSessionsAttributes({ user });
 
             try {

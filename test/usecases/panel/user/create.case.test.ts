@@ -2,7 +2,7 @@ import * as faker from 'faker';
 
 import { User } from '../../../../src/models/user.model';
 import { PanelUserCreateCase } from '../../../../src/usecases/panel/user/create.case';
-import * as userFactory from '../../../factories/user.factory';
+import { UserFactory } from '../../../factories/user.factory';
 
 interface UserAttrs {
   email: string;
@@ -23,7 +23,7 @@ describe('Panel | User Services', () => {
     let userAttrs: UserAttrs;
 
     beforeEach(async () => {
-      const user = await userFactory.build();
+      const user = await UserFactory.build();
 
       userAttrs = {
         email: user.email,
@@ -95,7 +95,7 @@ describe('Panel | User Services', () => {
       let user: any;
 
       beforeEach(async () => {
-        user = await userFactory.create();
+        user = await UserFactory.create();
 
         userAttrs.email = user.email;
       });

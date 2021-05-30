@@ -2,7 +2,7 @@ import * as request from 'supertest';
 
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
-import * as userFactory from '../../../../factories/user.factory';
+import { UserFactory } from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 
 describe('Panel', () => {
@@ -18,7 +18,7 @@ describe('Panel', () => {
       });
 
       test('return user in the list', async () => {
-        const user = await userFactory.create();
+        const user = await UserFactory.create();
         const authHeader = await buildAuthHeader({ user });
         const currentRequest = await indexRequest(authHeader);
 
@@ -76,7 +76,7 @@ async function buildAuthHeader({ user }: { user?: User } = {}) {
   let currentUser: User | undefined = user;
 
   if (!currentUser) {
-    currentUser = await userFactory.create();
+    currentUser = await UserFactory.create();
   }
 
   return buildAuthHeaderTestHelper(currentUser);
@@ -107,7 +107,7 @@ function buildUserAttributes({
 }: {
   overrides?: Partial<Api.MrPanelUserCreateRequestUser>;
 } = {}): Partial<Api.MrPanelUserCreateRequestUser> {
-  const user = userFactory.build({ ...overrides });
+  const user = UserFactory.build({ ...overrides });
 
   return {
     email: user.email,

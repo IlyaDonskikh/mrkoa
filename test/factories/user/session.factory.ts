@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 import { User } from '../../../src/models/user.model';
 import { UserSession } from '../../../src/models/user/session.model';
-import * as userFactory from '../user.factory';
+import { UserFactory } from '../user.factory';
 
 const data = async (props: Partial<UserSession> = {}) => {
   const defaultProps: Partial<UserSession> = {
@@ -9,7 +9,7 @@ const data = async (props: Partial<UserSession> = {}) => {
   };
 
   if (!props.userId) {
-    const user: User = await userFactory.create();
+    const user: User = await UserFactory.create();
     defaultProps.userId = user.id;
   }
 

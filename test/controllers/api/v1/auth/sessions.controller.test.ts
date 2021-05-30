@@ -2,15 +2,15 @@ import * as request from 'supertest';
 
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 import { app } from '../../../../../src';
-import * as userFactory from '../../../../factories/user.factory';
 import { User } from '../../../../../src/models/user.model';
+import { UserFactory } from '../../../../factories/user.factory';
 
 describe('Auth', () => {
   describe('Sessions Controller', () => {
     // create
     describe('#create', () => {
       test('return 200 response', async () => {
-        const user = await userFactory.create();
+        const user = await UserFactory.create();
         const attrs = buildSessionsAttributes({ user });
 
         const currentRequest = await createRequest({ attrs });
@@ -19,7 +19,7 @@ describe('Auth', () => {
       });
 
       test('return tokenJWT', async () => {
-        const user = await userFactory.create();
+        const user = await UserFactory.create();
         const attrs = buildSessionsAttributes({ user });
 
         const currentRequest = await createRequest({ attrs });
@@ -29,7 +29,7 @@ describe('Auth', () => {
 
       describe('when email not passed', () => {
         test('return email error', async () => {
-          const user = await userFactory.create();
+          const user = await UserFactory.create();
           const attrs = buildSessionsAttributes({ user });
 
           delete attrs.email;
@@ -55,7 +55,7 @@ describe('Auth', () => {
 
       describe('when auth header passed', () => {
         test('return 200 response', async () => {
-          const user = await userFactory.create();
+          const user = await UserFactory.create();
           const authHeader = await buildAuthHeaderTestHelper(user);
 
           const currentRequest = await destroyRequest().set(...authHeader);
