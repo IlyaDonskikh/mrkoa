@@ -17,10 +17,10 @@ interface Response {
 }
 
 export class PanelUserCreateCase extends UseCase<Request, Response>() {
-  // Attrs
+  // attrs
   private readonly minPasswordLength: number = 6;
 
-  // Etc.
+  // process
   async process() {
     await this.validate();
 
@@ -29,7 +29,7 @@ export class PanelUserCreateCase extends UseCase<Request, Response>() {
     return { user };
   }
 
-  // Private
+  // private
   protected async checks() {
     // ToDo: Add access validation
 

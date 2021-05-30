@@ -14,7 +14,7 @@ interface Response {
 }
 
 export class PanelUserListCase extends UseCase<Request, Response>() {
-  // Etc.
+  // process
   async process() {
     // ToDo: Add access validation
 
@@ -29,7 +29,7 @@ export class PanelUserListCase extends UseCase<Request, Response>() {
     };
   }
 
-  // Private
+  // private
   private buildBodyBy(users: { rows: User[]; count: number }) {
     return {
       items: users.rows,

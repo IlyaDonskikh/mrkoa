@@ -6,10 +6,11 @@ interface Request {
 }
 
 export class AuthSessionDestroyCase extends UseCase<Request, null>() {
+  // attrs
   session: UserSession | null;
   sessionValidated: UserSession;
 
-  // Etc.
+  // process
   async process() {
     await this.setupVariables();
 
@@ -18,7 +19,7 @@ export class AuthSessionDestroyCase extends UseCase<Request, null>() {
     await this.sessionValidated.destroy();
   }
 
-  // Private
+  // private
   protected async checks() {
     // ToDo: Add access validation
 
