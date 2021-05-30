@@ -68,7 +68,6 @@ describe('Auth', () => {
 });
 
 // helpers
-
 function createRequest({
   attrs,
 }: {

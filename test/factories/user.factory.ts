@@ -25,7 +25,7 @@ export class UserFactory {
   // private
   private static data(props: Partial<User> = {}) {
     const password = faker.internet.password();
-    const email = `${faker.random.uuid()}${faker.internet
+    const email = `${faker.datatype.uuid()}${faker.internet
       .email()
       .toLowerCase()}`;
     const defaultProps: Partial<User> = {

@@ -68,7 +68,7 @@ describe('Auth', () => {
 
         describe('when email are wrong', () => {
           test('reject with email error', async () => {
-            const emailWrong = `${faker.random.uuid()}@iam.wrong`;
+            const emailWrong = `${faker.datatype.uuid()}@iam.wrong`;
             const user = await UserFactory.create({});
             const attrs = buildSessionsAttributes({
               user,

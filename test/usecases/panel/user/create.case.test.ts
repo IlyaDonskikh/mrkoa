@@ -12,53 +12,34 @@ interface UserAttrs {
 
 describe('Panel | User Services', () => {
   describe('Create', () => {
-    function useCaseCall(userAttrs: UserAttrs) {
-      const attrs = {
-        user: userAttrs,
-      };
-
-      return PanelUserCreateCase.call(attrs);
-    }
-
-    let userAttrs: UserAttrs;
-
-    beforeEach(async () => {
-      const user = await UserFactory.build();
-
-      userAttrs = {
-        email: user.email,
-        password: user.password,
-        passwordConfirmation: user.passwordConfirmation,
-      };
-    });
-
     it('success', async () => {
+      const userAttrs = await buildUserAttrs();
+
       const useCase = await useCaseCall(userAttrs);
 
       expect(useCase.user).toBeInstanceOf(User);
     });
 
     describe('when email contains capital chars', () => {
-      const emailWithCapitalChars = faker.internet.email().toUpperCase();
-
-      beforeEach(async () => {
-        userAttrs.email = emailWithCapitalChars;
-      });
-
       it('downcase email', async () => {
+        const emailWithCapitalChars = faker.internet.email().toUpperCase();
+        const userAttrs = await buildUserAttrs({
+          overrides: { email: emailWithCapitalChars },
+        });
         const lowercaseEmail = emailWithCapitalChars.toLowerCase();
         const useCase = await useCaseCall(userAttrs);
 
+        expect(emailWithCapitalChars).not.toEqual(lowercaseEmail);
         expect(useCase.user.email).toEqual(lowercaseEmail);
       });
     });
 
     describe('when user password too short ', () => {
-      beforeEach(async () => {
-        userAttrs.password = 'a';
-      });
-
       it('reject with password presence error', async () => {
+        const userAttrs = await buildUserAttrs({
+          overrides: { password: 'a' },
+        });
+
         await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { password: ['length', 'confirmation'] },
         });
@@ -66,11 +47,14 @@ describe('Panel | User Services', () => {
     });
 
     describe('when password and confirmation password is not same', () => {
-      beforeEach(async () => {
-        userAttrs.password = `is_not_the_same${userAttrs.passwordConfirmation}`;
-      });
-
       it('reject with password confirmation error', async () => {
+        const userAttrs = await buildUserAttrs({
+          overrides: {
+            password: faker.datatype.uuid(),
+            passwordConfirmation: faker.datatype.uuid(),
+          },
+        });
+
         await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { password: ['confirmation'] },
         });
@@ -78,13 +62,12 @@ describe('Panel | User Services', () => {
     });
 
     describe('when user email has a wrong format', () => {
-      const emailWrongFormat = 'wrong_format';
-
-      beforeEach(async () => {
-        userAttrs.email = emailWrongFormat;
-      });
-
       test('reject with email format error', async () => {
+        const emailWrongFormat = 'wrong_format';
+        const userAttrs = await buildUserAttrs({
+          overrides: { email: emailWrongFormat },
+        });
+
         await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { email: ['format'] },
         });
@@ -92,15 +75,12 @@ describe('Panel | User Services', () => {
     });
 
     describe('when user with same email exists', () => {
-      let user: any;
-
-      beforeEach(async () => {
-        user = await UserFactory.create();
-
-        userAttrs.email = user.email;
-      });
-
       test('reject with email uniq error', async () => {
+        const userExisting = await UserFactory.create();
+        const userAttrs = await buildUserAttrs({
+          overrides: { email: userExisting.email },
+        });
+
         await expect(useCaseCall(userAttrs)).rejects.toMatchObject({
           errors: { email: ['uniq'] },
         });
@@ -108,3 +88,20 @@ describe('Panel | User Services', () => {
     });
   });
 });
+
+// helpers
+async function buildUserAttrs({
+  overrides,
+}: { overrides?: Partial<User> } = {}) {
+  const user = await UserFactory.build({ ...overrides });
+
+  return {
+    email: user.email,
+    password: user.password,
+    passwordConfirmation: user.passwordConfirmation,
+  };
+}
+
+function useCaseCall(attrs: UserAttrs) {
+  return PanelUserCreateCase.call({ user: attrs });
+}
