@@ -37,7 +37,7 @@ describe('Auth', () => {
           const currentRequest = await createRequest({ attrs });
 
           expect(currentRequest.body.errors.email).toContain(
-            'fill in the filed',
+            'Fill in the Email filed',
           );
         });
       });

@@ -1,14 +1,15 @@
 import * as faker from 'faker';
+import { User } from '../../../src/models/user.model';
 import { UserSession } from '../../../src/models/user/session.model';
 import * as userFactory from '../user.factory';
 
 const data = async (props: Partial<UserSession> = {}) => {
-  const defaultProps: object | any = {
+  const defaultProps: Partial<UserSession> = {
     token: faker.lorem.word(),
   };
 
   if (!props.userId) {
-    const user: any = await userFactory.create();
+    const user: User = await userFactory.create();
     defaultProps.userId = user.id;
   }
 
