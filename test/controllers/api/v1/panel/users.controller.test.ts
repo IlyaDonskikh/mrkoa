@@ -11,32 +11,22 @@ describe('Panel', () => {
     // index
     describe('#index', () => {
       test('return 200 response', async () => {
-        const authHeader = await buildAuthHeader();
+        const { authHeader } = await buildUserWithAuthHeader();
+
         const currentRequest = await indexRequest(authHeader);
 
         expect(currentRequest.status).toBe(200);
-        expect(currentRequest.body.items).toBeInstanceOf(Array);
-      });
-
-      test('return user in the list', async () => {
-        const user = await UserFactory.create();
-        const authHeader = await buildAuthHeader({ user });
-        const currentRequest = await indexRequest(authHeader);
-
-        const userIds = currentRequest.body.items.map((u: User) => u.id);
-
-        expect(currentRequest.status).toBe(200);
-        expect(userIds).toContain(user.id);
         expect(currentRequest.body).toMatchSchema(
           schemas.MrPanelUserIndexResponse,
         );
+        expect(currentRequest.body.items).not.toHaveLength(0);
       });
     });
 
     // create
     describe('#create', () => {
       test('return 200 response', async () => {
-        const authHeader = await buildAuthHeader();
+        const { authHeader } = await buildUserWithAuthHeader();
         const itemAttrs = buildUserAttributes();
 
         const currentRequest = await createRequest(itemAttrs, authHeader);
@@ -48,7 +38,7 @@ describe('Panel', () => {
       });
 
       test('return user', async () => {
-        const authHeader = await buildAuthHeader();
+        const { authHeader } = await buildUserWithAuthHeader();
         const itemAttrs = buildUserAttributes();
 
         const currentRequest = await createRequest(itemAttrs, authHeader);
@@ -61,7 +51,7 @@ describe('Panel', () => {
 
       describe('when email not passed', () => {
         test('return error', async () => {
-          const authHeader = await buildAuthHeader();
+          const { authHeader } = await buildUserWithAuthHeader();
           const itemAttrs = buildUserAttributes({
             overrides: { email: undefined },
           });
@@ -79,14 +69,16 @@ describe('Panel', () => {
 });
 
 // helpers
-async function buildAuthHeader({ user }: { user?: User } = {}) {
+async function buildUserWithAuthHeader({ user }: { user?: User } = {}) {
   let currentUser: User | undefined = user;
 
   if (!currentUser) {
     currentUser = await UserFactory.create();
   }
 
-  return buildAuthHeaderTestHelper(currentUser);
+  const authHeader = await buildAuthHeaderTestHelper(currentUser);
+
+  return { user: currentUser, authHeader };
 }
 
 function indexRequest(authHeader: [string, string]) {
