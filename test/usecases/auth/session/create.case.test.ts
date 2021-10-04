@@ -7,6 +7,7 @@ import { UserFactory } from '../../../factories/user.factory';
 import { ErrorsBuilder } from '../../../../src/utils/errors.builder';
 
 describe('Auth', () => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   describe('Session', () => {
     describe('AuthSessionCreateCase', () => {
       describe('#call', () => {
