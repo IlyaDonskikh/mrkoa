@@ -4,6 +4,7 @@ import { AuthSessionCreateCase } from '../../../../src/usecases/auth/session/cre
 import { User } from '../../../../src/models/user.model';
 import { UserSession } from '../../../../src/models/user/session.model';
 import { UserFactory } from '../../../factories/user.factory';
+import { ErrorsBuilder } from '../../../../src/utils/errors.builder';
 
 describe('Auth', () => {
   describe('Session', () => {
@@ -91,8 +92,11 @@ describe('Auth', () => {
             try {
               await AuthSessionCreateCase.call({ session: attrs });
             } catch (err: any) {
-              const messages = err.messages();
-              expect(messages.email).toContain(`${attrs.email} not found`);
+              expect(err).toBeInstanceOf(ErrorsBuilder);
+              if (err instanceof ErrorsBuilder) {
+                const messages = err.messages();
+                expect(messages.email).toContain(`${attrs.email} not found`);
+              }
             }
           });
         });
