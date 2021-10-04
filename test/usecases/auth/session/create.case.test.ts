@@ -90,7 +90,7 @@ describe('Auth', () => {
 
             try {
               await AuthSessionCreateCase.call({ session: attrs });
-            } catch (err) {
+            } catch (err: any) {
               const messages = err.messages();
               expect(messages.email).toContain(`${attrs.email} not found`);
             }
