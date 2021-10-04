@@ -4,8 +4,10 @@ import { AuthSessionCreateCase } from '../../../../src/usecases/auth/session/cre
 import { User } from '../../../../src/models/user.model';
 import { UserSession } from '../../../../src/models/user/session.model';
 import { UserFactory } from '../../../factories/user.factory';
+import { ErrorsBuilder } from '../../../../src/utils/errors.builder';
 
 describe('Auth', () => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   describe('Session', () => {
     describe('AuthSessionCreateCase', () => {
       describe('#call', () => {
@@ -90,9 +92,12 @@ describe('Auth', () => {
 
             try {
               await AuthSessionCreateCase.call({ session: attrs });
-            } catch (err) {
-              const messages = err.messages();
-              expect(messages.email).toContain(`${attrs.email} not found`);
+            } catch (err: any) {
+              expect(err).toBeInstanceOf(ErrorsBuilder);
+              if (err instanceof ErrorsBuilder) {
+                const messages = err.messages();
+                expect(messages.email).toContain(`${attrs.email} not found`);
+              }
             }
           });
         });

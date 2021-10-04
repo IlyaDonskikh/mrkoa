@@ -1,4 +1,4 @@
-import * as Router from 'koa-router';
+import Router from 'koa-router';
 import { v1Routes } from './v1/index.router';
 
 const router = new Router();

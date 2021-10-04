@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
 import { schemas } from '../../../../../src/utils/schemas';

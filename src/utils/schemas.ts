@@ -1,6 +1,6 @@
 import { JSONSchema6 } from 'json-schema';
 // @ts-ignore
-import * as deref from 'json-schema-deref-sync';
+import deref from 'json-schema-deref-sync';
 
 // tslint:disable-next-line: no-var-requires
 const spec = require(`${__dirname}/../../specs/openapi.json`);

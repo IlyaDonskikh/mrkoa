@@ -1,9 +1,10 @@
-import * as Ajv from 'ajv';
+import Ajv from 'ajv';
 import { JSONSchema6 } from 'json-schema';
 
 const validators: { [id: string]: Ajv.ValidateFunction } = {};
 const ajv = new Ajv({
   removeAdditional: 'all',
+  coerceTypes: true,
   formats: {
     float: { type: 'number' },
   },

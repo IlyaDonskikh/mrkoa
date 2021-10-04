@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
