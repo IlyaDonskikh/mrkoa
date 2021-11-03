@@ -55,7 +55,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.6.2",
     "sw2dts": "^2.6.3",
-    "validator": "^13.6.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.1",
