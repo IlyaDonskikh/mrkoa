@@ -6,6 +6,7 @@
     "baseUrl": "./src",
     "target": "es2019",
     "lib": ["es2020", "dom"],
+    "esModuleInterop": true,
     "strict": true,
     "module": "commonjs",
     "moduleResolution": "node",
