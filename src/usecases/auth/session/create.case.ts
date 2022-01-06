@@ -56,8 +56,8 @@ export class AuthSessionCreateCase extends UseCase<Request, Response>() {
     this.userValidated = this.user;
   }
 
-  private async buildNewUniqToken(): Promise<String> {
-    let session: any = null;
+  private async buildNewUniqToken(): Promise<string> {
+    let session: UserSession | null = null;
     let newToken: string | undefined = undefined;
 
     while (!newToken) {

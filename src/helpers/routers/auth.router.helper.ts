@@ -4,7 +4,10 @@ import * as jwt from 'jsonwebtoken';
 
 import { UserSession } from '../../models/user/session.model';
 
-export const authRouterHelper = async (ctx: Koa.Context, next: Function) => {
+export const authRouterHelper = async (
+  ctx: Koa.Context,
+  next: () => Promise<any>,
+) => {
   const authorizationHeader = ctx.request.headers.authorization;
 
   const session = await findSession(authorizationHeader);

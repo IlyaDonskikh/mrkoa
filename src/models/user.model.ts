@@ -31,7 +31,7 @@ export class User extends Model {
   };
 
   static initModel(sequelize: Sequelize) {
-    const tableName: string = 'users';
+    const tableName = 'users';
 
     User.init(
       {
