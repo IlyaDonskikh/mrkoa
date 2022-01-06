@@ -1,13 +1,11 @@
 import Ajv from 'ajv';
+import { AnyValidateFunction } from 'ajv/dist/core';
 import { JSONSchema6 } from 'json-schema';
 
-const validators: { [id: string]: Ajv.ValidateFunction } = {};
+const validators: { [id: string]: AnyValidateFunction } = {};
 const ajv = new Ajv({
   removeAdditional: 'all',
   coerceTypes: true,
-  formats: {
-    float: { type: 'number' },
-  },
 });
 
 export function validateSchema(schema: JSONSchema6, data: object) {
