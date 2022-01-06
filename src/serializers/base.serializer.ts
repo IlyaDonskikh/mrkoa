@@ -1,18 +1,20 @@
+import { Model } from 'sequelize/dist';
+
 export class BaseSerializer {
   object: any;
 
-  protected attributes: Array<string | Function> = [];
+  protected attributes: Array<string | (() => any)> = [];
 
-  constructor(object: object = {}) {
+  constructor(object: Model) {
     this.object = object;
   }
 
-  static serialize(object: object = {}) {
+  static serialize(object: Model) {
     return new this(object).serialize();
   }
 
-  static async serializeCollection(objects: Array<object>) {
-    const serializedObjects: Array<object> = [];
+  static async serializeCollection(objects: Array<Model>) {
+    const serializedObjects: Array<Model> = [];
 
     // Keep order is important
     for (let i = 0; i < objects.length; i += 1) {
@@ -26,9 +28,9 @@ export class BaseSerializer {
   async serialize() {
     const serializedObject: any = {};
 
-    const promises = this.attributes.map(async (attr: string | Function) => {
+    const promises = this.attributes.map(async (attr: string | (() => any)) => {
       if (typeof attr === 'function') {
-        serializedObject[attr.name] = await attr.bind(this).call();
+        serializedObject[attr.name] = await attr.bind(this).call(null);
       } else {
         serializedObject[attr] = this.object[attr];
       }

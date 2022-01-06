@@ -51,7 +51,7 @@ export class UserSession extends Model {
   };
 
   static initModel(sequelize: Sequelize) {
-    const tableName: string = 'user_sessions';
+    const tableName = 'user_sessions';
 
     UserSession.init(
       {
