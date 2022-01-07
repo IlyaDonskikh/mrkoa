@@ -1,0 +1,2 @@
+@auth DELETE /auth/sessions
+  => { }
