@@ -1,6 +1,3 @@
 Auth:
-POST /auth/sessions MrAuthSessionCreateRequest
-  => MrAuthSessionCreateResponse
-
-@token DELETE /auth/sessions
-  => { }
+  POST /auth/sessions MrAuthSessionCreateRequest
+    => MrAuthSessionCreateResponse

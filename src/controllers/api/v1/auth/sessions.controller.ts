@@ -2,7 +2,6 @@ import * as Koa from 'koa';
 
 import { SessionDefaultSerializer } from '../../../../serializers/session/default.serializer';
 import { AuthSessionCreateCase } from '../../../../usecases/auth/session/create.case';
-import { AuthSessionDestroyCase } from '../../../../usecases/auth/session/destroy.case';
 import { schemas } from '../../../../utils/schemas';
 import { validate } from '../../../../utils/request.validator';
 
@@ -19,12 +18,5 @@ const create = async (ctx: Koa.Context) => {
   };
 };
 
-const destroy = async (ctx: Koa.Context) => {
-  await AuthSessionDestroyCase.call({
-    id: ctx.currentSession.id,
-  });
 
-  ctx.body = {};
-};
-
-export { create, destroy };
+export { create };

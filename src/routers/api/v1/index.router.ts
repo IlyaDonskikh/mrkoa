@@ -1,8 +1,6 @@
 import Router from 'koa-router';
-import {
-  create as authSessionsCreate,
-  destroy as authSessionsDestroy,
-} from '../../../controllers/api/v1/auth/sessions.controller';
+import { create as authSessionsCreate } from '../../../controllers/api/v1/auth/sessions.controller';
+import { destroy as panelSessionsDestroy } from '../../../controllers/api/v1/panel/sessions.controller';
 import {
   index as panelUsersIndex,
   create as panelUsersCreate,
@@ -15,11 +13,12 @@ const router = new Router();
 
 // Sessions
 router.post('/auth/sessions', authSessionsCreate);
-router.use('/auth/sessions', authRouterHelper);
-router.delete('/auth/sessions', authSessionsDestroy);
 
 // PANEL
 router.use('/panel', authRouterHelper); // access to panel only for authorized persons
+
+// Sessions
+router.delete('/panel/sessions', panelSessionsDestroy);
 
 // Users
 router.get('/panel/users', panelUsersIndex);
