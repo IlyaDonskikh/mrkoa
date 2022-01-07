@@ -1,2 +1,3 @@
-@auth DELETE /auth/sessions
-  => { }
+Panel:
+  @auth DELETE /panel/sessions
+    => { }
