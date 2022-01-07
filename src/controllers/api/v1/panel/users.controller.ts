@@ -16,12 +16,14 @@ const index = async (ctx: Koa.Context) => {
   const { page, perPage } = attrs;
   const pagination = buildPagination({ page, perPage });
 
-  const { body } = await PanelUserListCase.call({
+  const {
+    body: { items, itemsTotalCount },
+  } = await PanelUserListCase.call({
     ...attrs,
     ...buildPagination({ page, perPage }),
   });
 
-  ctx.body = { ...body, ...pagination };
+  ctx.body = { items, itemsTotalCount, ...pagination };
 };
 
 const create = async (ctx: Koa.Context) => {
