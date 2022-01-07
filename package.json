@@ -12,7 +12,7 @@
     "test": "npm run specs && jest",
     "test:coverage": "npm run specs && jest --coverage",
     "test:watch": "npm run specs && jest --watch",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "npm run specs && nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "start": "node index.js",
     "db:create": "sequelize db:create",
     "db:create:test": "sequelize db:create --env test",
