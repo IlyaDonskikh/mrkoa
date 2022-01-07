@@ -8,7 +8,7 @@ Fantastic boilerplate based on the fantastic koa framework that (not a surprise)
 
 ## Introduction
 
-Mr. Koa is designed to solve business challenges with quality and speed from day one.
+`Mr.Koa` is designed to solve business challenges with quality and speed from day one.
 
 ## Development setup
 
