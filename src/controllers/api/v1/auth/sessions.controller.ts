@@ -8,7 +8,7 @@ import { components } from '../../../../types/Api/openapi';
 
 const create = async (ctx: Koa.Context) => {
   const attrs = validate<components['schemas']['MrAuthSessionCreateRequest']>({
-    schema: schemas.MrAuthSessionCreateRequest,
+    schema: schemas.component.MrAuthSessionCreateRequest,
     data: ctx.request.body,
   });
 

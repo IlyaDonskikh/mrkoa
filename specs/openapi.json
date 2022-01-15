@@ -34,7 +34,7 @@
         "tags": ["Auth"],
         "summary": "Sign In",
         "description": "Sign In",
-        "operationId": "get-auth-sessions",
+        "operationId": "postAuthSessions",
         "requestBody": {
           "description": "Create new session",
           "content": {
@@ -57,7 +57,7 @@
         "tags": ["Panel"],
         "summary": "Sign Out",
         "description": "Sign Out",
-        "operationId": "delete-panel-sessions",
+        "operationId": "deletePanelSessions",
         "responses": {
           "200": {
             "description": "OK",
@@ -83,7 +83,7 @@
         "tags": ["Panel"],
         "summary": "Users List",
         "description": "List of users.",
-        "operationId": "get-panel-users",
+        "operationId": "getPanelUsers",
         "parameters": [
           {
             "name": "limit",
@@ -146,7 +146,7 @@
       "post": {
         "summary": "Create User",
         "description": "Creation of user.",
-        "operationId": "post-panel-users",
+        "operationId": "postPanelUsers",
         "responses": {
           "200": {
             "description": "OK",

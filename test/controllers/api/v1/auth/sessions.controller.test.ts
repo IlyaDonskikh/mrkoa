@@ -4,6 +4,7 @@ import { schemas } from '../../../../../src/utils/schemas';
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
 import { UserFactory } from '../../../../factories/user.factory';
+import { components } from '../../../../../src/types/Api/openapi';
 
 describe('Auth', () => {
   describe('Sessions Controller', () => {
@@ -17,7 +18,7 @@ describe('Auth', () => {
 
         expect(currentRequest.status).toBe(200);
         expect(currentRequest.body).toMatchSchema(
-          schemas.MrAuthSessionCreateResponse,
+          schemas.component.MrAuthSessionCreateResponse,
         );
       });
 
@@ -52,7 +53,7 @@ describe('Auth', () => {
 function createRequest({
   attrs,
 }: {
-  attrs: Partial<Api.MrAuthSessionCreateRequestSession>;
+  attrs: Partial<components['schemas']['MrAuthSessionCreateRequestSession']>;
 }) {
   const path = '/api/v1/auth/sessions';
 
@@ -64,8 +65,10 @@ function buildSessionsAttributes({
   overrides,
 }: {
   user: User;
-  overrides?: Partial<Api.MrAuthSessionCreateRequestSession>;
-}): Partial<Api.MrAuthSessionCreateRequestSession> {
+  overrides?: Partial<
+    components['schemas']['MrAuthSessionCreateRequestSession']
+  >;
+}): Partial<components['schemas']['MrAuthSessionCreateRequestSession']> {
   return {
     email: user.email,
     password: user.passwordConfirmation,

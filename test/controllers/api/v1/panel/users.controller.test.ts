@@ -18,7 +18,7 @@ describe('Panel', () => {
 
         expect(currentRequest.status).toBe(200);
         expect(currentRequest.body).toMatchSchema(
-          schemas.MrPanelUserIndexResponse,
+          schemas.component.MrPanelUserIndexResponse,
         );
         expect(currentRequest.body.items).not.toHaveLength(0);
       });
@@ -34,7 +34,7 @@ describe('Panel', () => {
 
         expect(currentRequest.status).toBe(200);
         expect(currentRequest.body).toMatchSchema(
-          schemas.MrPanelUserCreateResponse,
+          schemas.component.MrPanelUserCreateResponse,
         );
       });
 

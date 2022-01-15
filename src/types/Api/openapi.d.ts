@@ -6,17 +6,17 @@
 export interface paths {
   "/auth/sessions": {
     /** Sign In */
-    post: operations["get-auth-sessions"];
+    post: operations["postAuthSessions"];
   };
   "/panel/sessions": {
     /** Sign Out */
-    delete: operations["delete-panel-sessions"];
+    delete: operations["deletePanelSessions"];
   };
   "/panel/users": {
     /** List of users. */
-    get: operations["get-panel-users"];
+    get: operations["getPanelUsers"];
     /** Creation of user. */
-    post: operations["post-panel-users"];
+    post: operations["postPanelUsers"];
   };
 }
 
@@ -67,7 +67,7 @@ export interface components {
 
 export interface operations {
   /** Sign In */
-  "get-auth-sessions": {
+  postAuthSessions: {
     responses: {
       /** Success */
       200: unknown;
@@ -80,7 +80,7 @@ export interface operations {
     };
   };
   /** Sign Out */
-  "delete-panel-sessions": {
+  deletePanelSessions: {
     responses: {
       /** OK */
       200: {
@@ -91,7 +91,7 @@ export interface operations {
     };
   };
   /** List of users. */
-  "get-panel-users": {
+  getPanelUsers: {
     parameters: {
       query: {
         /** limit of records */
@@ -114,7 +114,7 @@ export interface operations {
     };
   };
   /** Creation of user. */
-  "post-panel-users": {
+  postPanelUsers: {
     responses: {
       /** OK */
       200: {

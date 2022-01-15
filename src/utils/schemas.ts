@@ -19,28 +19,42 @@ interface ApiSchema extends MrJsonSchema {
   items?: ApiSchema;
 }
 
-const queries: Record<string, MrJsonSchema> = {};
-
-Object.keys(spec.paths).forEach((path) => {
-  const operation = spec.paths[path].get;
-  const pathParameters = operation?.parameters;
-
-  if (pathParameters) {
-    const operationId = operation.operationId;
-    const parameters = convertParametersToJSONSchema(pathParameters);
-
-    if (parameters.query) {
-      queries[operationId] = { ...parameters.query, $id: path, type: 'object' };
-    }
-  }
-});
-
 // hack for $id
 
 Object.keys(spec.components.schemas).forEach((id) => {
   spec.components.schemas[id].$id = id;
 });
 
-const schemas: { [k: string]: ApiSchema } = deref(spec).components.schemas;
+const queriesSchema: Record<string, MrJsonSchema> = buildQueriesSchemas({
+  spec,
+});
+const componentsSchemas: { [k: string]: ApiSchema } =
+  deref(spec).components.schemas;
 
-export { schemas, queries };
+export const schemas = { query: queriesSchema, component: componentsSchemas };
+
+// private
+
+function buildQueriesSchemas({ spec }: { spec: any }) {
+  const queries: Record<string, MrJsonSchema> = {};
+
+  Object.keys(spec.paths).forEach((path) => {
+    const operation = spec.paths[path].get;
+    const pathParameters = operation?.parameters;
+
+    if (pathParameters) {
+      const operationId = operation.operationId;
+      const parameters = convertParametersToJSONSchema(pathParameters);
+
+      if (parameters.query) {
+        queries[operationId] = {
+          ...parameters.query,
+          $id: path,
+          type: 'object',
+        };
+      }
+    }
+  });
+
+  return queries;
+}
