@@ -4,7 +4,7 @@ import { schemas } from '../../../../../src/utils/schemas';
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
 import { UserFactory } from '../../../../factories/user.factory';
-import { components } from '../../../../../src/types/Api/openapi';
+import { components } from '../../../../../src/types/api';
 
 describe('Auth', () => {
   describe('Sessions Controller', () => {

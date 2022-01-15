@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
-import { components } from '../../../../../src/types/Api/openapi';
+import { components } from '../../../../../src/types/api';
 import { schemas } from '../../../../../src/utils/schemas';
 import { UserFactory } from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';

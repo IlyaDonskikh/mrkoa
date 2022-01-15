@@ -201,6 +201,35 @@
         },
         "required": ["email", "password"]
       },
+      "MrAuthSessionCreateResponse": {
+        "required": ["item"],
+        "type": "object",
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/MrAuthSessionCreateResponseItem"
+          }
+        }
+      },
+      "MrAuthSessionCreateResponseItem": {
+        "required": ["createdAt", "tokenJWT", "id", "updatedAt"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "tokenJWT": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "MrPanelUserCreateRequest": {
         "type": "object",
         "properties": {

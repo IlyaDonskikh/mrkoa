@@ -1,7 +1,7 @@
 import * as Koa from 'koa';
 
 import { UserDefaultSerializer } from '../../../../serializers/user/default.serializer';
-import { components, operations } from '../../../../types/Api/openapi';
+import { components, operations } from '../../../../types/api';
 import { PanelUserCreateCase } from '../../../../usecases/panel/user/create.case';
 import { PanelUserListCase } from '../../../../usecases/panel/user/list.case';
 import { buildPagination } from '../../../../utils/pagination';

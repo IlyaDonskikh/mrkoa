@@ -20,7 +20,7 @@
     "db:migrate:test": "sequelize db:migrate --env test",
     "build": "npm run specs && tsc --project tsconfig.production.json && npm run db:migrate",
     "build:check": "npm run specs && tsc --noEmit",
-    "specs": "mkdir -p src/types/Api && openapi-typescript specs/openapi.json --output src/types/Api/openapi.d.ts",
+    "specs": "mkdir -p src/types/Api && openapi-typescript specs/openapi.json --output src/types/Api/index.d.ts",
     "dot-only-hunter": "dot-only-hunter test",
     "postinstall": "husky install",
     "unused-exports": "ts-unused-exports tsconfig.json"
