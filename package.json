@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "-": "^0.0.1",
-    "@dtsgenerator/replace-namespace": "^1.4.1",
     "@koa/cors": "^3.1.0",
     "@types/bluebird": "^3.5.36",
     "@types/json-schema": "^7.0.9",
@@ -35,7 +34,6 @@
     "ajv": "^8.8.2",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
-    "dtsgenerator": "^3.13.2",
     "i18n": "^0.13.4",
     "json-schema-deref-sync": "^0.14.0",
     "jsonwebtoken": "^8.5.1",
@@ -92,7 +90,6 @@
     "prettier": "^2.5.1",
     "sequelize-cli": "^6.3.0",
     "supertest": "^6.2.1",
-    "tinyspec": "^2.5.0",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
     "ts-unused-exports": "^7.0.3",
