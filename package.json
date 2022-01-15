@@ -23,7 +23,7 @@
     "specs": "mkdir -p src/types/api && openapi-typescript specs/openapi.json --output src/types/api/index.d.ts",
     "dot-only-hunter": "dot-only-hunter test",
     "postinstall": "husky install",
-    "unused-exports": "ts-unused-exports tsconfig.json"
+    "unused-exports": "ts-unused-exports tsconfig.json --excludePathsFromReport=src/types/api"
   },
   "dependencies": {
     "-": "^0.0.1",
