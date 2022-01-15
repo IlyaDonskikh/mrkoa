@@ -1,6 +1,6 @@
 {
   "name": "mr.koa",
-  "version": "0.9.7",
+  "version": "0.9.9",
   "description": "The most beautiful koa boilerplate.",
   "main": "index.js",
   "engines": {
