@@ -7,9 +7,6 @@ module.exports = {
     project: `./tsconfig.json`,
   },
   plugins: ['@typescript-eslint', 'sonarjs', 'jest', 'import'],
-  globals: {
-    Api: 'readonly',
-  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
