@@ -8,3 +8,4 @@ coverage
 # openapi / documentation
 
 src/types/Api/index.d.ts
+src/types/Api/openapi.d.ts
