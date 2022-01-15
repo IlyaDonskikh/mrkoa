@@ -1,15 +1,16 @@
 import * as Koa from 'koa';
 
 import { UserDefaultSerializer } from '../../../../serializers/user/default.serializer';
+import { components, operations } from '../../../../types/Api/openapi';
 import { PanelUserCreateCase } from '../../../../usecases/panel/user/create.case';
 import { PanelUserListCase } from '../../../../usecases/panel/user/list.case';
 import { buildPagination } from '../../../../utils/pagination';
 import { validate } from '../../../../utils/request.validator';
-import { schemas } from '../../../../utils/schemas';
+import { queries, schemas } from '../../../../utils/schemas';
 
 const index = async (ctx: Koa.Context) => {
-  const attrs = validate<Api.MrPanelUserIndexQuery>({
-    schema: schemas.MrPanelUserIndexQuery,
+  const attrs = validate<operations['get-panel-users']['parameters']['query']>({
+    schema: queries['get-panel-users'],
     data: ctx.request.query,
   });
 
@@ -27,7 +28,7 @@ const index = async (ctx: Koa.Context) => {
 };
 
 const create = async (ctx: Koa.Context) => {
-  const attrs = validate<Api.MrPanelUserCreateRequest>({
+  const attrs = validate<components['schemas']['MrPanelUserCreateRequest']>({
     schema: schemas.MrPanelUserCreateRequest,
     data: ctx.request.body,
   });

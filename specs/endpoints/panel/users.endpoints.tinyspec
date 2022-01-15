@@ -1,6 +1,0 @@
-Panel:
-  @auth GET /panel/users?MrPanelUserIndexQuery
-    => MrPanelUserIndexResponse
-
-  @auth POST /panel/users MrPanelUserCreateRequest
-    => MrPanelUserCreateResponse

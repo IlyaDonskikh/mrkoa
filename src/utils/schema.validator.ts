@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 import { AnyValidateFunction } from 'ajv/dist/core';
-import { JSONSchema6 } from 'json-schema';
+import { MrJsonSchema } from './schemas';
 
 const validators: { [id: string]: AnyValidateFunction } = {};
 const ajv = new Ajv({
@@ -8,7 +8,7 @@ const ajv = new Ajv({
   coerceTypes: true,
 });
 
-export function validateSchema(schema: JSONSchema6, data: object) {
+export function validateSchema(schema: MrJsonSchema, data: object) {
   if (typeof schema.type !== 'string') {
     throw new Error('Invalid JSON Schema');
   }
@@ -20,7 +20,7 @@ export function validateSchema(schema: JSONSchema6, data: object) {
   }
 }
 
-function getValidator(schema: JSONSchema6) {
+function getValidator(schema: MrJsonSchema) {
   if (!schema.$id) {
     return ajv.compile(schema);
   }

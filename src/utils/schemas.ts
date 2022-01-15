@@ -1,11 +1,16 @@
-import { JSONSchema6 } from 'json-schema';
+import { IJsonSchema } from 'openapi-types';
+import { convertParametersToJSONSchema } from 'openapi-jsonschema-parameters';
 // @ts-ignore
 import deref from 'json-schema-deref-sync';
 
 // tslint:disable-next-line: no-var-requires
 const spec = require(`${__dirname}/../../specs/openapi.json`);
 
-interface ApiSchema extends JSONSchema6 {
+export interface MrJsonSchema extends IJsonSchema {
+  $id: string;
+}
+
+interface ApiSchema extends MrJsonSchema {
   properties?: {
     [k: string]: ApiSchema;
   };
@@ -14,9 +19,28 @@ interface ApiSchema extends JSONSchema6 {
   items?: ApiSchema;
 }
 
-// hack while '$id' is not in tinyspec
-Object.keys(spec.definitions).forEach((id) => {
-  spec.definitions[id].$id = id;
+const queries: Record<string, MrJsonSchema> = {};
+
+Object.keys(spec.paths).forEach((path) => {
+  const operation = spec.paths[path].get;
+  const pathParameters = operation?.parameters;
+
+  if (pathParameters) {
+    const operationId = operation.operationId;
+    const parameters = convertParametersToJSONSchema(pathParameters);
+
+    if (parameters.query) {
+      queries[operationId] = { ...parameters.query, $id: path, type: 'object' };
+    }
+  }
 });
 
-export const schemas: { [k: string]: ApiSchema } = deref(spec).definitions;
+// hack for $id
+
+Object.keys(spec.components.schemas).forEach((id) => {
+  spec.components.schemas[id].$id = id;
+});
+
+const schemas: { [k: string]: ApiSchema } = deref(spec).components.schemas;
+
+export { schemas, queries };

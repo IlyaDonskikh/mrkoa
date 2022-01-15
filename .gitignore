@@ -6,7 +6,5 @@ coverage
 .DS_Store
 
 # openapi / documentation
-specs/openapi.json
-specs/openapi.yaml
-specs/header.yaml
+
 src/types/Api/index.d.ts

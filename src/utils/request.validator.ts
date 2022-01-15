@@ -1,14 +1,14 @@
 import { error } from 'console';
-import { JSONSchema6 } from 'json-schema';
 
 import { ErrorsBuilder } from './errors.builder';
 import { validateSchema } from './schema.validator';
+import { MrJsonSchema } from './schemas';
 
 export function validate<T>({
   schema,
   data,
 }: {
-  schema: JSONSchema6;
+  schema: MrJsonSchema;
   data: object;
 }): T | never {
   if (typeof schema.type !== 'string') {

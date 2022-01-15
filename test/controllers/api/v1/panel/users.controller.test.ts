@@ -2,6 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../../../../src';
 import { User } from '../../../../../src/models/user.model';
+import { components } from '../../../../../src/types/Api/openapi';
 import { schemas } from '../../../../../src/utils/schemas';
 import { UserFactory } from '../../../../factories/user.factory';
 import { buildAuthHeaderTestHelper } from '../../../../helpers';
@@ -86,11 +87,12 @@ function indexRequest(authHeader: [string, string]) {
 
   return request(app.callback())
     .get(path)
+    .query({ ids: [12, 13] }) // Set to tests
     .set(...authHeader);
 }
 
 function createRequest(
-  itemAttrs: Partial<Api.MrPanelUserCreateRequestUser>,
+  itemAttrs: Partial<components['schemas']['MrPanelUserCreateRequestUser']>,
   authHeader: [string, string],
 ) {
   const path = '/api/v1/panel/users';
@@ -104,8 +106,8 @@ function createRequest(
 function buildUserAttributes({
   overrides,
 }: {
-  overrides?: Partial<Api.MrPanelUserCreateRequestUser>;
-} = {}): Partial<Api.MrPanelUserCreateRequestUser> {
+  overrides?: Partial<components['schemas']['MrPanelUserCreateRequestUser']>;
+} = {}): Partial<components['schemas']['MrPanelUserCreateRequestUser']> {
   const user = UserFactory.build({ ...overrides });
 
   return {

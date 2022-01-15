@@ -4,9 +4,10 @@ import { SessionDefaultSerializer } from '../../../../serializers/session/defaul
 import { AuthSessionCreateCase } from '../../../../usecases/auth/session/create.case';
 import { schemas } from '../../../../utils/schemas';
 import { validate } from '../../../../utils/request.validator';
+import { components } from '../../../../types/Api/openapi';
 
 const create = async (ctx: Koa.Context) => {
-  const attrs = validate<Api.MrAuthSessionCreateRequest>({
+  const attrs = validate<components['schemas']['MrAuthSessionCreateRequest']>({
     schema: schemas.MrAuthSessionCreateRequest,
     data: ctx.request.body,
   });
@@ -17,6 +18,5 @@ const create = async (ctx: Koa.Context) => {
     item: await SessionDefaultSerializer.serialize(session),
   };
 };
-
 
 export { create };
