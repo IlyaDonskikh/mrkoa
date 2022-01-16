@@ -1,7 +1,8 @@
 #!/bin/sh
-. "$(dirname $0)/_/husky.sh"
+. "$(dirname "$0")/_/husky.sh"
 
 npm run dot-only-hunter
 npm run build:check
 npm run lint
 npm run unused-exports
+

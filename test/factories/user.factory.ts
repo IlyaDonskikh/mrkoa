@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import faker from 'faker';
 import { User } from '../../src/models/user.model';
 import { encryptBySimpleBcrypt } from '../../src/utils/encryptors';
 
