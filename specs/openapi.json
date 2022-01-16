@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Mr.Koa Boilerplate",
-    "description": "Fantastic boilerplate based on the fantastic koa framework that (not a surprise) works fantastic.",
+    "description": "Fantastic boilerplate based on the fantastic koa framework that (not a surprise) works fantastically.",
     "contact": {
       "email": "donivrecord@gmail.com"
     },
@@ -14,18 +14,18 @@
   },
   "servers": [
     {
-      "url": "https://www.mr.koa/1.0.0",
+      "url": "https://mrkoa.herokuapp.com/api/v1",
       "description": "Mr.Koa"
     }
   ],
   "tags": [
     {
       "name": "Auth",
-      "description": "Section for Unautorized users"
+      "description": "Section for Unauthorized users"
     },
     {
       "name": "Panel",
-      "description": "Section for Unautorized users"
+      "description": "Section for Unauthorized users"
     }
   ],
   "paths": {
@@ -47,7 +47,7 @@
         },
         "responses": {
           "200": {
-            "description": "search results matching criteria",
+            "description": "Data containing authorization token for access to otherwise restricted sections.",
             "content": {
               "application/json": {
                 "schema": {
@@ -114,7 +114,7 @@
         ],
         "responses": {
           "200": {
-            "description": "search results matching criteria",
+            "description": "Search results matching criteria on particular page.",
             "content": {
               "application/json": {
                 "schema": {
@@ -132,7 +132,7 @@
       },
       "post": {
         "summary": "Create User",
-        "description": "Creation of user.",
+        "description": "Creation of a user.",
         "operationId": "postPanelUsers",
         "responses": {
           "200": {
