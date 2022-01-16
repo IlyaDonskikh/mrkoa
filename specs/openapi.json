@@ -1,0 +1,323 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mr.Koa Boilerplate",
+    "description": "Fantastic boilerplate based on the fantastic koa framework that (not a surprise) works fantastically.",
+    "contact": {
+      "email": "donivrecord@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://mrkoa.herokuapp.com/api/v1",
+      "description": "Mr.Koa"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Section for Unauthorized users"
+    },
+    {
+      "name": "Panel",
+      "description": "Section for Unauthorized users"
+    }
+  ],
+  "paths": {
+    "/auth/sessions": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sign In",
+        "description": "Sign In",
+        "operationId": "postAuthSessions",
+        "requestBody": {
+          "description": "Create new session",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MrAuthSessionCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data containing authorization token for access to otherwise restricted sections.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MrAuthSessionCreateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/panel/sessions": {
+      "delete": {
+        "tags": ["Panel"],
+        "summary": "Sign Out",
+        "description": "Sign Out",
+        "operationId": "deletePanelSessions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      }
+    },
+    "/panel/users": {
+      "get": {
+        "tags": ["Panel"],
+        "summary": "Users List",
+        "description": "List of users.",
+        "operationId": "getPanelUsers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pass an optional search string for looking up inventory",
+            "required": false,
+            "explode": true,
+            "style": "form",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "perPage",
+            "description": "limit of records per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results matching criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MrPanelUserIndexResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create User",
+        "description": "Creation of a user.",
+        "operationId": "postPanelUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MrPanelUserCreateResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["Panel"],
+        "requestBody": {
+          "description": "Create new user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MrPanelUserCreateRequest"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MrAuthSessionCreateRequest": {
+        "required": ["session"],
+        "type": "object",
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/MrAuthSessionCreateRequestSession"
+          }
+        }
+      },
+      "MrAuthSessionCreateRequestSession": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "MrAuthSessionCreateResponse": {
+        "required": ["item"],
+        "type": "object",
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/MrAuthSessionCreateResponseItem"
+          }
+        }
+      },
+      "MrAuthSessionCreateResponseItem": {
+        "required": ["createdAt", "tokenJWT", "id", "updatedAt"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "tokenJWT": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MrPanelUserCreateRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/MrPanelUserCreateRequestUser"
+          }
+        },
+        "required": ["user"]
+      },
+      "MrPanelUserCreateRequestUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "passwordConfirmation": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password", "passwordConfirmation"]
+      },
+      "MrPanelUserIndexResponse": {
+        "required": ["items", "itemsTotalCount", "page", "perPage"],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MrPanelUserIndexResponseItem"
+            }
+          },
+          "itemsTotalCount": {
+            "type": "integer"
+          },
+          "perPage": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          }
+        },
+        "x-internal": false
+      },
+      "MrPanelUserIndexResponseItem": {
+        "required": ["createdAt", "email", "id", "updatedAt"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MrPanelUserCreateResponse": {
+        "required": ["item"],
+        "type": "object",
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/MrPanelUserCreateResponseItem"
+          }
+        }
+      },
+      "MrPanelUserCreateResponseItem": {
+        "required": ["createdAt", "email", "id", "updatedAt"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

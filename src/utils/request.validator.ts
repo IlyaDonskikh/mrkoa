@@ -1,14 +1,14 @@
 import { error } from 'console';
-import { JSONSchema6 } from 'json-schema';
 
 import { ErrorsBuilder } from './errors.builder';
 import { validateSchema } from './schema.validator';
+import { MrJsonSchema } from './schemas';
 
 export function validate<T>({
   schema,
   data,
 }: {
-  schema: JSONSchema6;
+  schema: MrJsonSchema;
   data: object;
 }): T | never {
   if (typeof schema.type !== 'string') {
@@ -33,12 +33,19 @@ function throwErrors(err: any) {
   }
 
   const localePath = 'utils.requestValidator';
-
   const errorsBuilder = new ErrorsBuilder({ localePath });
 
   err.errors.forEach((element: any) => {
-    errorsBuilder.add(element.params.missingProperty, element.keyword);
+    const propertyName = buildPropertyName({ element });
+
+    errorsBuilder.add(propertyName, element.keyword);
   });
 
   throw errorsBuilder;
+}
+
+function buildPropertyName({ element }: { element: any }) {
+  const propertyName = element.params.missingProperty || element.instancePath;
+
+  return propertyName.replace(/^\/+|\/+$/gm, '').replace('/', '_');
 }
