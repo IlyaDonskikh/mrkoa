@@ -6,6 +6,9 @@ module.exports = {
     required: 'Fill in the Password filed',
   },
   passwordConfirmation: {
-    required: 'fill in the Password Confirmation filed',
+    required: 'Fill in the Password Confirmation filed',
+  },
+  page: {
+    type: 'Set the Page parameter as an integer',
   },
 };

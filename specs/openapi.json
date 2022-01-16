@@ -47,7 +47,14 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MrAuthSessionCreateResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -86,15 +93,6 @@
         "operationId": "getPanelUsers",
         "parameters": [
           {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "number"
-            },
-            "description": "limit of records"
-          },
-          {
             "name": "page",
             "in": "query",
             "description": "pass an optional search string for looking up inventory",
@@ -104,17 +102,6 @@
             "schema": {
               "type": "integer"
             }
-          },
-          {
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer"
-              }
-            },
-            "in": "query",
-            "name": "ids",
-            "description": "List of used ids"
           },
           {
             "schema": {

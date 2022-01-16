@@ -33,12 +33,19 @@ function throwErrors(err: any) {
   }
 
   const localePath = 'utils.requestValidator';
-
   const errorsBuilder = new ErrorsBuilder({ localePath });
 
   err.errors.forEach((element: any) => {
-    errorsBuilder.add(element.params.missingProperty, element.keyword);
+    const propertyName = buildPropertyName({ element });
+
+    errorsBuilder.add(propertyName, element.keyword);
   });
 
   throw errorsBuilder;
+}
+
+function buildPropertyName({ element }: { element: any }) {
+  const propertyName = element.params.missingProperty || element.instancePath;
+
+  return propertyName.replace(/^\/+|\/+$/gm, '').replace('/', '_');
 }

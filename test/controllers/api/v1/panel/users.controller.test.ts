@@ -14,13 +14,29 @@ describe('Panel', () => {
       test('return 200 response', async () => {
         const { authHeader } = await buildUserWithAuthHeader();
 
-        const currentRequest = await indexRequest(authHeader);
+        const currentRequest = await indexRequest({ authHeader });
 
         expect(currentRequest.status).toBe(200);
         expect(currentRequest.body).toMatchSchema(
           schemas.component.MrPanelUserIndexResponse,
         );
         expect(currentRequest.body.items).not.toHaveLength(0);
+      });
+
+      describe('when page filter passed in wrong format', () => {
+        test.only('return page error', async () => {
+          const { authHeader } = await buildUserWithAuthHeader();
+
+          const currentRequest = await indexRequest({
+            authHeader,
+            query: { page: 18.2 },
+          });
+
+          expect(currentRequest.status).toBe(422);
+          expect(currentRequest.body.errors.page).toContain(
+            'Set the Page parameter as an integer',
+          );
+        });
       });
     });
 
@@ -82,12 +98,18 @@ async function buildUserWithAuthHeader({ user }: { user?: User } = {}) {
   return { user: currentUser, authHeader };
 }
 
-function indexRequest(authHeader: [string, string]) {
+function indexRequest({
+  authHeader,
+  query,
+}: {
+  authHeader: [string, string];
+  query?: Record<string, any>;
+}) {
   const path = '/api/v1/panel/users';
 
   return request(app.callback())
     .get(path)
-    .query({ ids: [12, 13] }) // Set to tests
+    .query(query || {})
     .set(...authHeader);
 }
 
