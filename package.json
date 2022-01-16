@@ -26,7 +26,6 @@
     "unused-exports": "ts-unused-exports tsconfig.json --excludePathsFromReport=src/types/api"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@koa/cors": "^3.1.0",
     "@types/bluebird": "^3.5.36",
     "@types/json-schema": "^7.0.9",
@@ -80,7 +79,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-sonarjs": "^0.11.0",
-    "faker": "^6.6.6",
+    "faker": "5.5.3",
     "husky": "^7.0.4",
     "jest": "^27.4.7",
     "jest-json-schema": "^6.0.0",

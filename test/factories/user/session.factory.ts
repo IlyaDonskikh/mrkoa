@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import faker from 'faker';
 import { User } from '../../../src/models/user.model';
 import { UserSession } from '../../../src/models/user/session.model';
 import { UserFactory } from '../user.factory';

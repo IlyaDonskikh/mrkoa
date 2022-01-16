@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import faker from 'faker';
 
 import { AuthSessionCreateCase } from '../../../../src/usecases/auth/session/create.case';
 import { User } from '../../../../src/models/user.model';

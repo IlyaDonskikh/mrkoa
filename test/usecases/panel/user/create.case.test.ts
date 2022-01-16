@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import faker from 'faker';
 
 import { User } from '../../../../src/models/user.model';
 import { PanelUserCreateCase } from '../../../../src/usecases/panel/user/create.case';
