@@ -24,7 +24,7 @@ describe('Panel', () => {
       });
 
       describe('when page filter passed in wrong format', () => {
-        test.only('return page error', async () => {
+        test('return page error', async () => {
           const { authHeader } = await buildUserWithAuthHeader();
 
           const currentRequest = await indexRequest({
