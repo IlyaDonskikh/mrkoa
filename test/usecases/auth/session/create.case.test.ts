@@ -29,8 +29,8 @@ describe('Auth | Session', () => {
         expect(useCase.session.userId).toEqual(user.id);
       });
 
-      describe('when password are wrong', () => {
-        test('rejected with password error', async () => {
+      describe('when password is wrong', () => {
+        test('reject with password error', async () => {
           const user = await UserFactory.create({});
           const wrongPassword = 'sorry, but i am wrong. And always was :(';
           const attrs = buildSessionsAttributes({
@@ -48,7 +48,7 @@ describe('Auth | Session', () => {
         });
       });
 
-      describe('when password are encrypted', () => {
+      describe('when password is encrypted', () => {
         test('reject with password error', async () => {
           const user = await UserFactory.create({});
           const attrs = buildSessionsAttributes({
@@ -66,7 +66,7 @@ describe('Auth | Session', () => {
         });
       });
 
-      describe('when email are wrong', () => {
+      describe('when email is wrong', () => {
         test('reject with email error', async () => {
           const emailWrong = `${faker.datatype.uuid()}@iam.wrong`;
           const user = await UserFactory.create({});
