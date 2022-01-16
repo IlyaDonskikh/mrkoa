@@ -114,7 +114,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Search results matching criteria on particular page.",
+            "description": "Search results matching criteria.",
             "content": {
               "application/json": {
                 "schema": {
