@@ -79,10 +79,6 @@ export default [
       complexity: ['error', 6],
       'no-console': ['error'],
       'no-unused-vars': 2,
-      'sonarjs/no-duplicate-string': 'off',
-      'sonarjs/prefer-immediate-return': 'off',
-      'sonarjs/no-identical-functions': 'off',
-      'sonarjs/cognitive-complexity': ['error', 10],
     },
   },
 ];
