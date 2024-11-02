@@ -71,6 +71,7 @@
     "@types/koa-router": "^7.4.4",
     "@types/lodash": "^4.14.170",
     "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
     "dot-only-hunter": "^1.0.3",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
