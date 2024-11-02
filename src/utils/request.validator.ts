@@ -9,7 +9,7 @@ export function validate<T>({
   data,
 }: {
   schema: MrJsonSchema;
-  data: object;
+  data: unknown;
 }): T | never {
   if (typeof schema.type !== 'string') {
     throw new Error('Invalid JSON Schema');

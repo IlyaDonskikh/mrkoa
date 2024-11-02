@@ -8,7 +8,7 @@ const ajv = new Ajv({
   coerceTypes: true,
 });
 
-export function validateSchema(schema: MrJsonSchema, data: object) {
+export function validateSchema(schema: MrJsonSchema, data: unknown) {
   if (typeof schema.type !== 'string') {
     throw new Error('Invalid JSON Schema');
   }
