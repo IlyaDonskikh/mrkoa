@@ -15,7 +15,13 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
   ],
-  ignorePatterns: ['**/*.d.ts', '.eslintrc.js'],
+  ignorePatterns: [
+    '**/*.d.ts',
+    '.eslintrc.js',
+    'node_modules',
+    'dist',
+    'coverage',
+  ],
   rules: {
     '@typescript-eslint/explicit-function-return-type': ['off'],
     '@typescript-eslint/explicit-module-boundary-types': ['off'],
@@ -23,7 +29,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': ['off'],
     '@typescript-eslint/ban-ts-comment': ['off'],
     '@typescript-eslint/no-floating-promises': ['error'],
-    '@typescript-eslint/no-unused-vars': ['warn'],
     'import/no-default-export': ['error'],
     'max-params': ['error', 3],
     complexity: ['error', 6],
