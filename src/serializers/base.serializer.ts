@@ -1,4 +1,4 @@
-import { Model } from 'sequelize/dist';
+import { Model } from 'sequelize';
 
 export class BaseSerializer {
   object: any;

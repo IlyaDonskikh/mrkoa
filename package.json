@@ -1,11 +1,11 @@
 {
   "name": "mr.koa",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "description": "The most beautiful koa boilerplate.",
   "main": "index.js",
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "23.x",
+    "npm": "10.x"
   },
   "scripts": {
     "lint": "eslint 'src/**/*.ts' 'test/**/*.ts'",
@@ -26,7 +26,7 @@
     "unused-exports": "ts-unused-exports tsconfig.json --excludePathsFromReport=src/types/api"
   },
   "dependencies": {
-    "@koa/cors": "^3.1.0",
+    "@koa/cors": "^5.0.0",
     "@types/bluebird": "^3.5.36",
     "@types/json-schema": "^7.0.9",
     "@types/validator": "^13.7.1",
@@ -35,7 +35,7 @@
     "dotenv": "^12.0.4",
     "i18n": "^0.13.4",
     "json-schema-deref-sync": "^0.14.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
@@ -58,7 +58,7 @@
     "@types/i18n": "^0.13.2",
     "@types/jest": "^27.4.0",
     "@types/jest-json-schema": "^2.1.4",
-    "@types/jsonwebtoken": "^8.5.6",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/koa": "^2.13.4",
     "@types/koa__cors": "^3.1.1",
     "@types/koa-bodyparser": "^4.3.5",

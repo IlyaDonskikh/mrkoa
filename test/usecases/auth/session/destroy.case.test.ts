@@ -14,8 +14,9 @@ describe('Auth | Session', () => {
           id: session.id,
         });
 
-        const deletedSession: any = await UserSession.findByPk(session.id, {
+        const deletedSession = await UserSession.findByPk(session.id, {
           paranoid: false,
+          rejectOnEmpty: true,
         });
 
         expect(deletedSession.deletedAt).not.toBeNull();
