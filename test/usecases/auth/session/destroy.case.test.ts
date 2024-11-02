@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-
 import { AuthSessionDestroyCase } from '../../../../src/usecases/auth/session/destroy.case';
 import { UserSession } from '../../../../src/models/user/session.model';
 import { UserSessionFactory } from '../../../factories/user/session.factory';

@@ -78,7 +78,6 @@ export default [
       'max-params': ['error', 3],
       complexity: ['error', 6],
       'no-console': ['error'],
-      'no-unused-vars': 2,
     },
   },
 ];

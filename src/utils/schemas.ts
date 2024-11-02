@@ -3,7 +3,7 @@ import { convertParametersToJSONSchema } from 'openapi-jsonschema-parameters';
 // @ts-ignore
 import deref from 'json-schema-deref-sync';
 
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const spec = require(`${__dirname}/../../specs/openapi.json`);
 
 export interface MrJsonSchema extends IJsonSchema {

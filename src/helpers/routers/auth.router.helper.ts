@@ -57,6 +57,6 @@ function decodeToken(rawToken?: string) {
 
     return token as { sessionToken: string };
   } catch (err) {
-    return;
+    throw err;
   }
 }
