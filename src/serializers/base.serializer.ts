@@ -1,4 +1,4 @@
-import { Model } from 'sequelize/dist';
+import { Model } from 'sequelize';
 
 export class BaseSerializer {
   object: any;
@@ -18,7 +18,6 @@ export class BaseSerializer {
 
     // Keep order is important
     for (let i = 0; i < objects.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
       serializedObjects.push(await this.serialize(objects[i]));
     }
 

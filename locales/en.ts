@@ -1,7 +1,7 @@
 const useCases = require('./usecases');
 const utils = require('./utils');
 
-module.exports = {
+export default {
   useCases,
   utils,
 };

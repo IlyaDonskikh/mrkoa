@@ -7,8 +7,7 @@ import bodyParser from 'koa-bodyparser';
 
 import { sequelize } from './models';
 import { router } from './routers/index';
-
-require('dotenv').config();
+import 'dotenv/config';
 
 const app = new Koa();
 

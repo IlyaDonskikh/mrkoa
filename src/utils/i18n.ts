@@ -1,5 +1,5 @@
-/* eslint-disable global-require */
 import * as i18n from 'i18n';
+import EnLocale from '../../locales/en';
 
 const customI18n: any = {};
 
@@ -11,9 +11,8 @@ i18n.configure({
   updateFiles: false,
   defaultLocale: 'en',
   staticCatalog: {
-    en: require('../../locales/en'),
+    en: EnLocale,
   },
 });
 
-// eslint-disable-next-line import/no-default-export
 export { customI18n };

@@ -52,11 +52,7 @@ function decodeToken(rawToken?: string) {
     return;
   }
 
-  try {
-    const token = jwt.verify(rawToken, process.env.NODE_APP_TOKEN as string);
+  const token = jwt.verify(rawToken, process.env.NODE_APP_TOKEN as string);
 
-    return token as { sessionToken: string };
-  } catch (err) {
-    return;
-  }
+  return token as { sessionToken: string };
 }
