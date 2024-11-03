@@ -5,7 +5,7 @@ import 'dotenv/config';
 
 const env = process.env.NODE_ENV as 'test' | 'production' | 'development';
 
-// eslint-disable-next-line  @typescript-eslint/no-require-imports
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const config = require('../../db/config.js')[env];
 
 const models = [User, UserSession];
