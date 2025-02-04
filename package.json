@@ -1,11 +1,11 @@
 {
   "name": "mr.koa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The most beautiful koa boilerplate.",
   "main": "index.js",
   "engines": {
     "node": "23.x",
-    "npm": "10.x"
+    "npm": "11.x"
   },
   "scripts": {
     "lint": "eslint 'src/**/*.ts' 'test/**/*.ts'",
