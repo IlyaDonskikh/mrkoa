@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { User } from '../../../src/models/user.model';
+
 import { UserSession } from '../../../src/models/user/session.model';
 import { UserFactory } from '../user.factory';
 
@@ -18,15 +18,23 @@ export class UserSessionFactory {
 
   // private
   private static async data(props: Partial<UserSession> = {}) {
-    const defaultProps: Partial<UserSession> = {
+    const userId = await this.getUserId({ props });
+
+    const defaultProps = {
       token: faker.lorem.word(),
+      userId,
     };
 
-    if (!props.userId) {
-      const user: User = await UserFactory.create();
-      defaultProps.userId = user.id;
-    }
-
     return { ...defaultProps, ...props };
+  }
+
+  private static async getUserId({ props }: { props: Partial<UserSession> }) {
+    const userId = props.userId;
+
+    if (userId) return userId;
+
+    const user = await UserFactory.create();
+
+    return user.id;
   }
 }

@@ -7,7 +7,16 @@ import {
 } from 'sequelize';
 import { UserSession } from './user/session.model';
 
-export class User extends Model {
+interface UserAttributes {
+  id?: number;
+  email: string;
+  password: string;
+  passwordConfirmation?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export class User extends Model<UserAttributes> implements UserAttributes {
   public id!: number;
 
   public email!: string;

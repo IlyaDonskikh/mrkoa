@@ -8,7 +8,20 @@ import {
 } from 'sequelize';
 import { User } from './../user.model';
 
-export class UserSession extends Model {
+interface UserSessionAttributes {
+  id?: number;
+  userId: number;
+  token: string;
+  tokenJWT?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+}
+
+export class UserSession
+  extends Model<UserSessionAttributes>
+  implements UserSessionAttributes
+{
   public id!: number;
 
   public userId!: number;

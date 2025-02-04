@@ -4,7 +4,7 @@ import { encryptBySimpleBcrypt } from '../../src/utils/encryptors';
 
 export class UserFactory {
   static async create(props: Partial<User> = {}) {
-    const attrs: Partial<User> = this.data(props);
+    const attrs = this.data(props);
     const { password } = attrs;
 
     if (password) {
@@ -28,11 +28,13 @@ export class UserFactory {
     const email = `${faker.datatype.uuid()}${faker.internet
       .email()
       .toLowerCase()}`;
-    const defaultProps: Partial<User> = {
+
+    const defaultProps = {
       email: email,
       password,
       passwordConfirmation: password,
     };
+
     return { ...defaultProps, ...props };
   }
 }
