@@ -14,5 +14,6 @@
     "noUnusedLocals": true,
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["./index.js", "jest.config.ts", "./src/**/*", "./test/**/*", "./db/**/*", "./locales/**/*"]
+  "exclude": ["./jest.config.ts"],
+  "include": ["./index.js", "./jest.config.ts", "./src/**/*", "./test/**/*", "./db/**/*", "./locales/**/*"]
 }
