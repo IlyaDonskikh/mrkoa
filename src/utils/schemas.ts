@@ -1,7 +1,7 @@
-import { IJsonSchema } from 'openapi-types';
-import { convertParametersToJSONSchema } from 'openapi-jsonschema-parameters';
 // @ts-ignore
 import deref from 'json-schema-deref-sync';
+import { convertParametersToJSONSchema } from 'openapi-jsonschema-parameters';
+import { IJsonSchema } from 'openapi-types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const spec = require(`${__dirname}/../../specs/openapi.json`);

@@ -1,4 +1,5 @@
 import * as i18n from 'i18n';
+
 import EnLocale from '../../locales/en';
 
 const customI18n: any = {};

@@ -1,8 +1,10 @@
-import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { UseCase } from '../../../utils/use.case';
-import { User } from '../../../models/user.model';
+
+import * as bcrypt from 'bcrypt';
+
 import { UserSession } from '../../../models/user/session.model';
+import { User } from '../../../models/user.model';
+import { UseCase } from '../../../utils/use.case';
 
 interface Request {
   session: {

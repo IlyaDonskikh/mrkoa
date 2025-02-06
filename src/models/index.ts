@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+
 import { UserSession } from './user/session.model';
 import { User } from './user.model';
 import 'dotenv/config';

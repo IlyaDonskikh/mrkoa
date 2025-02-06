@@ -1,6 +1,6 @@
+import * as jwt from 'jsonwebtoken';
 import * as Koa from 'koa';
 import * as _ from 'lodash';
-import * as jwt from 'jsonwebtoken';
 
 import { UserSession } from '../../models/user/session.model';
 

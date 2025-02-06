@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import { AnyValidateFunction } from 'ajv/dist/core';
+
 import { MrJsonSchema } from './schemas';
 
 const validators: { [id: string]: AnyValidateFunction } = {};

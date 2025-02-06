@@ -5,6 +5,7 @@ import {
   Model,
   Sequelize,
 } from 'sequelize';
+
 import { UserSession } from './user/session.model';
 
 interface UserAttributes {
