@@ -12,7 +12,7 @@ i18n.configure({
   updateFiles: false,
   defaultLocale: 'en',
   staticCatalog: {
-    en,
+    en: en as any,
   },
 });
 
