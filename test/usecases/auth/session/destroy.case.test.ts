@@ -1,5 +1,5 @@
-import { AuthSessionDestroyCase } from '../../../../src/usecases/auth/session/destroy.case';
 import { UserSession } from '../../../../src/models/user/session.model';
+import { AuthSessionDestroyCase } from '../../../../src/usecases/auth/session/destroy.case';
 import { UserSessionFactory } from '../../../factories/user/session.factory';
 
 describe('Auth | Session', () => {

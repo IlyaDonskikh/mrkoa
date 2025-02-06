@@ -1,8 +1,8 @@
 import request from 'supertest';
 
-import { buildAuthHeaderTestHelper } from '../../../../helpers';
 import { app } from '../../../../../src';
 import { UserFactory } from '../../../../factories/user.factory';
+import { buildAuthHeaderTestHelper } from '../../../../helpers';
 
 describe('Panel', () => {
   describe('Sessions Controller', () => {

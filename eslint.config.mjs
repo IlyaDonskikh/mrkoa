@@ -25,6 +25,7 @@ export default [
       '**/node_modules',
       '**/dist',
       '**/coverage',
+      'index.js',
     ],
   },
   ...fixupConfigRules(
@@ -78,6 +79,17 @@ export default [
       'max-params': ['error', 3],
       complexity: ['error', 6],
       'no-console': ['error'],
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', 'index'],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   },
 ];

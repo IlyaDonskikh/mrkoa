@@ -1,9 +1,9 @@
 import cors from '@koa/cors';
-import koaQs from 'koa-qs';
 import Koa from 'koa';
-import logger from 'koa-logger';
-import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
+import json from 'koa-json';
+import logger from 'koa-logger';
+import koaQs from 'koa-qs';
 
 import { sequelize } from './models';
 import { router } from './routers/index';

@@ -1,10 +1,10 @@
 import faker from 'faker';
 
-import { AuthSessionCreateCase } from '../../../../src/usecases/auth/session/create.case';
-import { User } from '../../../../src/models/user.model';
 import { UserSession } from '../../../../src/models/user/session.model';
-import { UserFactory } from '../../../factories/user.factory';
+import { User } from '../../../../src/models/user.model';
+import { AuthSessionCreateCase } from '../../../../src/usecases/auth/session/create.case';
 import { ErrorsBuilder } from '../../../../src/utils/errors.builder';
+import { UserFactory } from '../../../factories/user.factory';
 
 describe('Auth | Session', () => {
   describe('AuthSessionCreateCase', () => {
