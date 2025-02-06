@@ -1,6 +1,6 @@
 import * as i18n from 'i18n';
 
-import EnLocale from '../../locales/en';
+import { en } from '../locales';
 
 const customI18n: any = {};
 
@@ -12,7 +12,7 @@ i18n.configure({
   updateFiles: false,
   defaultLocale: 'en',
   staticCatalog: {
-    en: EnLocale,
+    en: en as any,
   },
 });
 

@@ -1,4 +1,4 @@
-module.exports = {
+const requestValidator = {
   email: {
     required: 'Fill in the Email filed',
   },
@@ -12,3 +12,5 @@ module.exports = {
     type: 'Set the Page parameter as an integer',
   },
 };
+
+export { requestValidator };

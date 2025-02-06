@@ -1,4 +1,4 @@
-module.exports = {
+const panelUserCreateCase = {
   email: {
     uniq: 'Email already in use',
     format: 'Email has the wrong format',
@@ -7,3 +7,5 @@ module.exports = {
     length: 'The minimum length of the password is {{ length }} characters',
   },
 };
+
+export { panelUserCreateCase };
