@@ -4,6 +4,7 @@
     "strictPropertyInitialization": false,
     "outDir": "./dist",
     "baseUrl": "./src",
+    "rootDir": "./src",
     "target": "es2019",
     "lib": ["es2020", "dom"],
     "esModuleInterop": true,

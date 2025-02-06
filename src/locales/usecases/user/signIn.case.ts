@@ -1,4 +1,4 @@
-module.exports = {
+const userSignInCase = {
   email: {
     presence: 'Email fill in the field',
     find: 'Email {{ email }} not found',
@@ -9,3 +9,5 @@ module.exports = {
     presence: 'Fill in the Password field',
   },
 };
+
+export { userSignInCase };
