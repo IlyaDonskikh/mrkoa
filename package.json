@@ -36,7 +36,7 @@
     "i18n": "^0.15.1",
     "json-schema-deref-sync": "^0.14.0",
     "jsonwebtoken": "^9.0.2",
-    "koa": "^2.15.3",
+    "koa": "^2.16.1",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.1",
