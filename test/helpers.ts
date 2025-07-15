@@ -11,7 +11,7 @@ export async function buildAuthHeaderTestHelper(
 
 /// private
 async function buildAuthTokenBy(user: User): Promise<string> {
-  const session: any = await UserSessionFactory.create({ userId: user.id });
+  const session: any = await UserSessionFactory.create({ userUUID: user.uuid });
 
   return session.tokenJWT;
 }
