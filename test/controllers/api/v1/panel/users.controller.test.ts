@@ -61,7 +61,7 @@ describe('Panel', () => {
         const currentRequest = await createRequest(itemAttrs, authHeader);
 
         expect(currentRequest.body.item).toMatchObject({
-          id: expect.any(Number),
+          uuid: expect.any(String),
           email: itemAttrs.email,
         });
       });
