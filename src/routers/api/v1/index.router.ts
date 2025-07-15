@@ -7,6 +7,7 @@ import {
   create as panelUsersCreate,
 } from '../../../controllers/api/v1/panel/users.controller';
 import { authRouterHelper } from '../../../helpers/routers/auth.router.helper';
+import { validateCurrentUserRouterHelper } from '../../../helpers/routers/validateCurrentUser.router.helper';
 
 const router = new Router();
 
@@ -19,11 +20,15 @@ router.post('/auth/sessions', authSessionsCreate);
 router.use('/panel', authRouterHelper); // access to panel only for authorized persons
 
 // Sessions
-router.delete('/panel/sessions', panelSessionsDestroy);
+router.delete(
+  '/panel/sessions',
+  validateCurrentUserRouterHelper,
+  panelSessionsDestroy,
+);
 
 // Users
-router.get('/panel/users', panelUsersIndex);
-router.post('/panel/users', panelUsersCreate);
+router.get('/panel/users', validateCurrentUserRouterHelper, panelUsersIndex);
+router.post('/panel/users', validateCurrentUserRouterHelper, panelUsersCreate);
 
 // Export
 export const v1Routes = router.routes();
