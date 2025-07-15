@@ -1,6 +1,5 @@
 import * as Koa from 'koa';
 
-import { SessionDefaultSerializer } from '../../../../serializers/session/default.serializer';
 import { components } from '../../../../types/api';
 import { AuthSessionCreateCase } from '../../../../usecases/auth/session/create.case';
 import { validate } from '../../../../utils/request.validator';
@@ -12,11 +11,9 @@ const create = async (ctx: Koa.Context) => {
     data: ctx.request.body,
   });
 
-  const { session } = await AuthSessionCreateCase.call(attrs);
+  const { item } = await AuthSessionCreateCase.call(attrs);
 
-  ctx.body = {
-    item: await SessionDefaultSerializer.serialize(session),
-  };
+  ctx.body = { item };
 };
 
 export { create };

@@ -17,7 +17,7 @@ describe('Panel | User Services', () => {
 
       const useCase = await useCaseCall(userAttrs);
 
-      expect(useCase.user).toBeInstanceOf(User);
+      expect(useCase.item).toBeInstanceOf(User);
     });
 
     describe('when email contains capital chars', () => {

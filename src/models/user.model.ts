@@ -5,11 +5,12 @@ import {
   Model,
   Sequelize,
 } from 'sequelize';
+import { v7 as uuidV7 } from 'uuid';
 
 import { UserSession } from './user/session.model';
 
 interface UserAttributes {
-  id?: number;
+  uuid?: string;
   email: string;
   password: string;
   passwordConfirmation?: string;
@@ -18,7 +19,7 @@ interface UserAttributes {
 }
 
 export class User extends Model<UserAttributes> implements UserAttributes {
-  public id!: number;
+  public uuid!: string;
 
   public email!: string;
 
@@ -45,11 +46,11 @@ export class User extends Model<UserAttributes> implements UserAttributes {
 
     User.init(
       {
-        id: {
+        uuid: {
           allowNull: false,
-          autoIncrement: true,
           primaryKey: true,
-          type: DataTypes.INTEGER,
+          defaultValue: () => uuidV7(),
+          type: DataTypes.UUID,
         },
         email: {
           allowNull: false,
@@ -82,6 +83,6 @@ export class User extends Model<UserAttributes> implements UserAttributes {
   }
 
   static setupAssociations() {
-    User.hasMany(UserSession, { as: 'sessions', foreignKey: 'user_id' });
+    User.hasMany(UserSession, { as: 'sessions', foreignKey: 'user_uuid' });
   }
 }

@@ -14,7 +14,7 @@ interface Request {
 }
 
 interface Response {
-  session: UserSession;
+  item: UserSession;
 }
 
 export class AuthSessionCreateCase extends UseCase<Request, Response>() {
@@ -29,8 +29,8 @@ export class AuthSessionCreateCase extends UseCase<Request, Response>() {
     await this.validate();
 
     return {
-      session: await UserSession.create({
-        userId: this.userValidated.id,
+      item: await UserSession.create({
+        userUUID: this.userValidated.uuid,
         token: await this.buildNewUniqToken(),
       }),
     };
@@ -65,7 +65,7 @@ export class AuthSessionCreateCase extends UseCase<Request, Response>() {
     while (!newToken) {
       const token: string = crypto.randomBytes(64).toString('hex');
       session = await UserSession.findOne({
-        where: { userId: this.userValidated.id, token },
+        where: { userUUID: this.userValidated.uuid, token },
       });
 
       if (!session) {

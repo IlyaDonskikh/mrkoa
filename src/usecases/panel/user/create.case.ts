@@ -13,7 +13,7 @@ interface Request {
 }
 
 interface Response {
-  user: User;
+  item: User;
 }
 
 export class PanelUserCreateCase extends UseCase<Request, Response>() {
@@ -26,7 +26,7 @@ export class PanelUserCreateCase extends UseCase<Request, Response>() {
 
     const user = await this.createUser();
 
-    return { user };
+    return { item: user };
   }
 
   // private

@@ -4,7 +4,7 @@ import { AuthSessionDestroyCase } from '../../../../usecases/auth/session/destro
 
 const destroy = async (ctx: Koa.Context) => {
   await AuthSessionDestroyCase.call({
-    id: ctx.currentSession.id,
+    uuid: ctx.currentSession.uuid,
   });
 
   ctx.body = {};

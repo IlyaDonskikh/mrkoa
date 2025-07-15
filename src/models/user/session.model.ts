@@ -6,12 +6,13 @@ import {
   Model,
   Sequelize,
 } from 'sequelize';
+import { v7 as uuidV7 } from 'uuid';
 
 import { User } from './../user.model';
 
 interface UserSessionAttributes {
-  id?: number;
-  userId: number;
+  uuid?: string;
+  userUUID: string;
   token: string;
   tokenJWT?: string;
   createdAt?: Date;
@@ -23,9 +24,9 @@ export class UserSession
   extends Model<UserSessionAttributes>
   implements UserSessionAttributes
 {
-  public id!: number;
+  public uuid!: string;
 
-  public userId!: number;
+  public userUUID!: string;
 
   public token!: string;
 
@@ -49,15 +50,13 @@ export class UserSession
 
   // Scopes
   public static scopes = {
-    filterByUserId(id: number) {
+    filterByUserUUID(uuid: string) {
       return {
         include: [
           {
             model: User,
             as: 'user',
-            where: {
-              id,
-            },
+            where: { uuid },
           },
         ],
       };
@@ -69,11 +68,11 @@ export class UserSession
 
     UserSession.init(
       {
-        id: {
+        uuid: {
           allowNull: false,
-          autoIncrement: true,
           primaryKey: true,
-          type: DataTypes.INTEGER,
+          defaultValue: () => uuidV7(),
+          type: DataTypes.UUID,
         },
         token: {
           allowNull: false,
@@ -90,11 +89,11 @@ export class UserSession
             return jwt.sign({ sessionToken: token }, secret);
           },
         },
-        userId: {
+        userUUID: {
           allowNull: false,
-          type: DataTypes.INTEGER,
-          references: { model: 'users', key: 'id' },
-          field: 'user_id',
+          type: DataTypes.UUID,
+          references: { model: 'users', key: 'uuid' },
+          field: 'user_uuid',
         },
         createdAt: {
           allowNull: false,
@@ -121,6 +120,6 @@ export class UserSession
   }
 
   static setupAssociations() {
-    UserSession.belongsTo(User, { as: 'user', foreignKey: 'user_id' });
+    UserSession.belongsTo(User, { as: 'user', foreignKey: 'user_uuid' });
   }
 }

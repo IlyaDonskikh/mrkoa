@@ -41,7 +41,7 @@ module.exports = {
         { transaction },
       );
 
-      await queryInterface.addIndex('user_sessions', ['user_id'], {
+      await queryInterface.addIndex('user_sessions', ['user_uuid'], {
         transaction,
       });
       await queryInterface.addIndex('user_sessions', ['token'], {
