@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { User } from '../../../../src/models/user.model';
 import { PanelUserCreateCase } from '../../../../src/usecases/panel/user/create.case';
@@ -30,7 +30,7 @@ describe('Panel | User Services', () => {
         const useCase = await useCaseCall(userAttrs);
 
         expect(emailWithCapitalChars).not.toEqual(lowercaseEmail);
-        expect(useCase.user.email).toEqual(lowercaseEmail);
+        expect(useCase.item.email).toEqual(lowercaseEmail);
       });
     });
 
@@ -50,8 +50,8 @@ describe('Panel | User Services', () => {
       it('reject with password confirmation error', async () => {
         const userAttrs = await buildUserAttrs({
           overrides: {
-            password: faker.datatype.uuid(),
-            passwordConfirmation: faker.datatype.uuid(),
+            password: faker.string.uuid(),
+            passwordConfirmation: faker.string.uuid(),
           },
         });
 
