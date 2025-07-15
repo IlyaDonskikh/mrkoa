@@ -47,5 +47,5 @@ function throwErrors(err: any) {
 function buildPropertyName({ element }: { element: any }) {
   const propertyName = element.params.missingProperty || element.instancePath;
 
-  return propertyName.replace(/^\/+|\/+$/gm, '').replace('/', '_');
+  return propertyName.replace(/^\/+|\/+$/gm, '').replace('/', '.');
 }
