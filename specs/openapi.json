@@ -31,7 +31,9 @@
   "paths": {
     "/auth/sessions": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Sign In",
         "description": "Sign In",
         "operationId": "postAuthSessions",
@@ -61,7 +63,9 @@
     },
     "/panel/sessions": {
       "delete": {
-        "tags": ["Panel"],
+        "tags": [
+          "Panel"
+        ],
         "summary": "Sign Out",
         "description": "Sign Out",
         "operationId": "deletePanelSessions",
@@ -87,7 +91,9 @@
     },
     "/panel/users": {
       "get": {
-        "tags": ["Panel"],
+        "tags": [
+          "Panel"
+        ],
         "summary": "Users List",
         "description": "List of users.",
         "operationId": "getPanelUsers",
@@ -151,7 +157,9 @@
             "token": []
           }
         ],
-        "tags": ["Panel"],
+        "tags": [
+          "Panel"
+        ],
         "requestBody": {
           "description": "Create new user",
           "content": {
@@ -168,7 +176,9 @@
   "components": {
     "schemas": {
       "MrAuthSessionCreateRequest": {
-        "required": ["session"],
+        "required": [
+          "session"
+        ],
         "type": "object",
         "properties": {
           "session": {
@@ -186,10 +196,15 @@
             "type": "string"
           }
         },
-        "required": ["email", "password"]
+        "required": [
+          "email",
+          "password"
+        ]
       },
       "MrAuthSessionCreateResponse": {
-        "required": ["item"],
+        "required": [
+          "item"
+        ],
         "type": "object",
         "properties": {
           "item": {
@@ -198,11 +213,16 @@
         }
       },
       "MrAuthSessionCreateResponseItem": {
-        "required": ["createdAt", "tokenJWT", "id", "updatedAt"],
+        "required": [
+          "createdAt",
+          "tokenJWT",
+          "uuid",
+          "updatedAt"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer"
+          "uuid": {
+            "type": "string"
           },
           "tokenJWT": {
             "type": "string"
@@ -224,7 +244,9 @@
             "$ref": "#/components/schemas/MrPanelUserCreateRequestUser"
           }
         },
-        "required": ["user"]
+        "required": [
+          "user"
+        ]
       },
       "MrPanelUserCreateRequestUser": {
         "type": "object",
@@ -239,10 +261,19 @@
             "type": "string"
           }
         },
-        "required": ["email", "password", "passwordConfirmation"]
+        "required": [
+          "email",
+          "password",
+          "passwordConfirmation"
+        ]
       },
       "MrPanelUserIndexResponse": {
-        "required": ["items", "itemsTotalCount", "page", "perPage"],
+        "required": [
+          "items",
+          "itemsTotalCount",
+          "page",
+          "perPage"
+        ],
         "type": "object",
         "properties": {
           "items": {
@@ -264,11 +295,16 @@
         "x-internal": false
       },
       "MrPanelUserIndexResponseItem": {
-        "required": ["createdAt", "email", "id", "updatedAt"],
+        "required": [
+          "createdAt",
+          "email",
+          "uuid",
+          "updatedAt"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer"
+          "uuid": {
+            "type": "string"
           },
           "email": {
             "type": "string"
@@ -284,7 +320,9 @@
         }
       },
       "MrPanelUserCreateResponse": {
-        "required": ["item"],
+        "required": [
+          "item"
+        ],
         "type": "object",
         "properties": {
           "item": {
@@ -293,11 +331,16 @@
         }
       },
       "MrPanelUserCreateResponseItem": {
-        "required": ["createdAt", "email", "id", "updatedAt"],
+        "required": [
+          "createdAt",
+          "email",
+          "uuid",
+          "updatedAt"
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer"
+          "uuid": {
+            "type": "string"
           },
           "email": {
             "type": "string"

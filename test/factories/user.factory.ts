@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { User } from '../../src/models/user.model';
 import { encryptBySimpleBcrypt } from '../../src/utils/encryptors';
@@ -26,7 +26,7 @@ export class UserFactory {
   // private
   private static data(props: Partial<User> = {}) {
     const password = faker.internet.password();
-    const email = `${faker.datatype.uuid()}${faker.internet
+    const email = `${faker.string.uuid()}${faker.internet
       .email()
       .toLowerCase()}`;
 

@@ -1,18 +1,24 @@
+import { faker } from '@faker-js/faker';
+
 import { UserSession } from '../../../../src/models/user/session.model';
 import { AuthSessionDestroyCase } from '../../../../src/usecases/auth/session/destroy.case';
 import { UserSessionFactory } from '../../../factories/user/session.factory';
+import { UserFactory } from '../../../factories/user.factory';
 
 describe('Auth | Session', () => {
   describe('AuthSessionDestroyCase', () => {
     describe('#call', () => {
       test('delete session', async () => {
-        const session = await UserSessionFactory.create();
-
-        await AuthSessionDestroyCase.call({
-          id: session.id,
+        const user = await UserFactory.create();
+        const session = await UserSessionFactory.create({
+          userUUID: user.uuid,
         });
 
-        const deletedSession = await UserSession.findByPk(session.id, {
+        await AuthSessionDestroyCase.call({
+          uuid: session.uuid,
+        });
+
+        const deletedSession = await UserSession.findByPk(session.uuid, {
           paranoid: false,
           rejectOnEmpty: true,
         });
@@ -20,14 +26,16 @@ describe('Auth | Session', () => {
         expect(deletedSession.deletedAt).not.toBeNull();
       });
 
-      describe('when currentSession id is wrong', () => {
-        test('reject with id find error', async () => {
+      describe('when currentSession uuid is wrong', () => {
+        test('reject with uuid find error', async () => {
+          const uuid = faker.string.uuid();
+
           const servicePromise = AuthSessionDestroyCase.call({
-            id: -1,
+            uuid,
           });
 
           await expect(servicePromise).rejects.toMatchObject({
-            errors: { id: ['find'] },
+            errors: { uuid: ['find'] },
           });
         });
       });

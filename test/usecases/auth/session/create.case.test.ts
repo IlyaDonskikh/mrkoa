@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { UserSession } from '../../../../src/models/user/session.model';
 import { User } from '../../../../src/models/user.model';
@@ -16,7 +16,7 @@ describe('Auth | Session', () => {
           session: buildSessionsAttributes({ user }),
         });
 
-        expect(useCase.session).toBeInstanceOf(UserSession);
+        expect(useCase.item).toBeInstanceOf(UserSession);
       });
 
       test('return user session', async () => {
@@ -26,7 +26,7 @@ describe('Auth | Session', () => {
           session: buildSessionsAttributes({ user }),
         });
 
-        expect(useCase.session.userId).toEqual(user.id);
+        expect(useCase.item.userUUID).toEqual(user.uuid);
       });
 
       describe('when password is wrong', () => {
@@ -68,7 +68,7 @@ describe('Auth | Session', () => {
 
       describe('when email is wrong', () => {
         test('reject with email error', async () => {
-          const emailWrong = `${faker.datatype.uuid()}@iam.wrong`;
+          const emailWrong = `${faker.string.uuid()}@iam.wrong`;
           const user = await UserFactory.create({});
           const attrs = buildSessionsAttributes({
             user,

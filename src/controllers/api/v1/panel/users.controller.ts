@@ -1,6 +1,5 @@
 import * as Koa from 'koa';
 
-import { UserDefaultSerializer } from '../../../../serializers/user/default.serializer';
 import { components, operations } from '../../../../types/api';
 import { PanelUserCreateCase } from '../../../../usecases/panel/user/create.case';
 import { PanelUserListCase } from '../../../../usecases/panel/user/list.case';
@@ -35,11 +34,9 @@ const create = async (ctx: Koa.Context) => {
     data: ctx.request.body,
   });
 
-  const { user } = await PanelUserCreateCase.call(attrs);
+  const { item } = await PanelUserCreateCase.call(attrs);
 
-  ctx.body = {
-    item: await UserDefaultSerializer.serialize(user),
-  };
+  ctx.body = { item };
 };
 
 export { index, create };

@@ -2,7 +2,7 @@ import { UserSession } from '../../../models/user/session.model';
 import { UseCase } from '../../../utils/use.case';
 
 interface Request {
-  id: number;
+  uuid: string;
 }
 
 export class AuthSessionDestroyCase extends UseCase<Request, null>() {
@@ -22,7 +22,7 @@ export class AuthSessionDestroyCase extends UseCase<Request, null>() {
   // private
   protected async checks() {
     if (!this.session) {
-      this.errors.add('id', 'find');
+      this.errors.add('uuid', 'find');
 
       return;
     }
@@ -31,6 +31,6 @@ export class AuthSessionDestroyCase extends UseCase<Request, null>() {
   }
 
   private async setupVariables() {
-    this.session = await UserSession.findByPk(this.request.id);
+    this.session = await UserSession.findByPk(this.request.uuid);
   }
 }
