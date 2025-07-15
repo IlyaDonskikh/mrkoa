@@ -1,13 +1,16 @@
 import { validateCurrentUserRouterHelper } from '../../../src/helpers/routers/validateCurrentUser.router.helper';
 import type { AuthenticatedContext } from '../../../src/types/koa';
+import { UserSessionFactory } from '../../factories/user/session.factory';
 import { UserFactory } from '../../factories/user.factory';
 
 describe('Helpers', () => {
   describe('validateCurrentUser', () => {
     it('success', async () => {
       const user = await UserFactory.create();
+      const session = await UserSessionFactory.create({ userUUID: user.uuid });
       const ctx: AuthenticatedContext = {
         currentUser: user,
+        currentSession: session,
       } as unknown as AuthenticatedContext;
       const next: jest.Mock = jest.fn().mockResolvedValue(undefined);
 
